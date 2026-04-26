@@ -216,5 +216,3 @@ npm run start
 本项目采用 MIT 许可证 - 详见 LICENSE 文件。
 
 ---
-
-使用 Next.js、TypeScript 和 AI 技术用心打造 ❤️# AI-Image-and-Video-Generator-Minimalist-Template

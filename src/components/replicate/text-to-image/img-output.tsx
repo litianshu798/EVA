@@ -15,9 +15,9 @@ export default function Output({
 }) {
   const t = useTranslations("PhotoToCartoon.generator");
   return (
-    <div className="flex flex-col w-full md:w-1/2 px-4 mt-8 md:mt-0">
+    <div className="flex flex-col w-full md:w-1/2 p-6 md:p-8 bg-gray-50">
       {error && error !== "" && (
-        <div className="flex justify-center items-center text-red-500 mb-4">
+        <div className="flex justify-center items-center text-red-500 text-sm mb-4">
           {error}
         </div>
       )}
@@ -25,7 +25,7 @@ export default function Output({
         {prediction ? (
           <>
             {prediction.output ? (
-              <div className="flex justify-center items-center relative group rounded-lg">
+              <div className="flex justify-center items-center relative group rounded-xl w-full overflow-hidden">
                 <img
                   src={
                     showImage
@@ -36,11 +36,11 @@ export default function Output({
                       : prediction.output
                   }
                   alt="Result"
-                  className="object-contain max-w-full max-h-[420px] rounded-lg"
+                  className="object-contain max-w-full max-h-[420px] rounded-xl"
                 />
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <Button
-                    className="bg-black text-white"
+                    className="bg-gray-900/80 backdrop-blur-sm text-white text-sm rounded-lg px-4 py-2 border-0"
                     onClick={() => {
                       const link = document.createElement("a");
                       link.href = showImage
@@ -59,25 +59,23 @@ export default function Output({
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center h-full w-full bg-gray-200 border-2 border-dashed animate-pulse rounded-lg">
+              <div className="flex flex-col items-center justify-center h-full w-full bg-white border border-dashed border-gray-200 rounded-xl gap-3 min-h-[280px]">
                 <CircularProgress
                   color="primary"
                   aria-label="Loading..."
-                  classNames={{
-                    svg: "text-black",
-                  }}
+                  classNames={{ svg: "text-gray-900" }}
                 />
-                <span className="text-black font-semibold">
+                <span className="text-xs text-gray-500 font-medium capitalize">
                   {prediction.status}
                 </span>
               </div>
             )}
           </>
         ) : (
-          <div className="flex items-center justify-center w-full h-full border-2 border-dashed rounded-lg">
+          <div className="flex items-center justify-center w-full h-full border border-dashed border-gray-200 rounded-xl bg-white min-h-[280px]">
             <img
               src={defaultImage}
-              className="object-contain max-w-full max-h-[420px] rounded-lg py-6"
+              className="object-contain max-w-full max-h-[420px] rounded-xl py-6"
             />
           </div>
         )}

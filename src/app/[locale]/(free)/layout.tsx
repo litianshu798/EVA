@@ -10,7 +10,7 @@ export default async function LocaleLayout({
   params: { locale: string };
 }) {
   return (
-    <div className="bg-gradient-to-br from-indigo-100 via-white to-indigo-100">
+    <div className="bg-white min-h-screen">
       <Navbar />
       {children}
       <Footer locale={locale} />

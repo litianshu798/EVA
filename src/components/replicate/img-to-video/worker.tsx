@@ -91,12 +91,10 @@ export default function Worker(props: {
       return;
     }
 
-    // step1: create prediction
     try {
       setGenerating(true);
       setError(null);
 
-      // Convert image to file
       const imageFile = await convertImageToFile();
       if (!imageFile) {
         setGenerating(false);
@@ -122,7 +120,6 @@ export default function Worker(props: {
         body: formData,
       });
 
-      // Read response.json() only once and store result
       newPrediction = await response.json();
       const canContinue = await handleApiErrors({
         response,
@@ -141,7 +138,6 @@ export default function Worker(props: {
       return;
     }
 
-    // step2: wait for prediction to be succeeded or failed
     while (
       newPrediction.status !== "succeeded" &&
       newPrediction.status !== "failed"
@@ -156,7 +152,6 @@ export default function Worker(props: {
       setPrediction(newPrediction);
     }
 
-    // update effect result
     const runningTime =
       (newPrediction.created_at
         ? new Date().getTime() - new Date(newPrediction.created_at).getTime()
@@ -171,8 +166,8 @@ export default function Worker(props: {
         status: newPrediction.status,
         running_time: runningTime,
         updated_at: new Date(),
-        original_image_url: "", // : webhook will update this
-        object_key: newPrediction.id, // : webhook will update this
+        original_image_url: "",
+        object_key: newPrediction.id,
       }),
     });
     await sleep(4000);
@@ -196,164 +191,158 @@ export default function Worker(props: {
   };
 
   return (
-    <>
-      <div
-        className="container mx-auto flex flex-col md:flex-row my-4 px-4 py-8 border-1 border-blue-200 rounded-lg shadow-lg shadow-blue-200 bg-white"
-        style={{
-          boxShadow:
-            "0 0 20px rgba(59, 130, 246, 0.3), 0 0 40px rgba(59, 130, 246, 0.1)",
-        }}
-      >
-        <div className="w-full md:w-1/2 md:px-6 md:border-r border-divider border-default-300">
-          {/* Upload Controls */}
-          <div className="">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-800">
-                {t("input.title")}
-              </h2>
-              <CreditInfo
-                credit={userSubscriptionInfo?.remain_count?.toString() || ""}
-              />
-            </div>
-
-            {/* Single Image Upload */}
-            <div>
-              <label className="relative flex flex-col items-center justify-center h-64 bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:bg-gray-100 transition duration-300">
-                {image ? (
-                  <div className="relative w-full h-full">
-                    <img
-                      src={image}
-                      alt="Uploaded"
-                      className="h-full w-full object-contain rounded-lg"
-                    />
-                    <DeleteButton onClick={handleDeleteImage} />
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center p-4">
-                    <svg
-                      className="w-12 h-12 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                      />
-                    </svg>
-                    <span className="mt-2 text-sm text-gray-500">
-                      {t("input.upload-tips")}
-                    </span>
-                  </div>
-                )}
-                <input
-                  type="file"
-                  className="hidden"
-                  onChange={handleImageUpload}
-                  accept="image/*"
-                />
-              </label>
-            </div>
-
-            {/* Prompt Input */}
-            <div className="mt-6">
-              <textarea
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
-                placeholder={t("input.promptTips")}
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                rows={3}
-              />
-            </div>
-
-            {/* Generate Button */}
-            {generating ? (
-              <Button
-                isLoading
-                className="w-full mt-4 bg-blue-600 text-white hover:bg-blue-700 transition duration-200"
-              >
-                {prediction
-                  ? prediction.status === "succeeded"
-                    ? "Processing..."
-                    : prediction.status
-                  : "Processing..."}
-              </Button>
-            ) : (
-              <Button
-                className="w-full mt-4 bg-blue-600 text-white hover:bg-blue-700 transition duration-200"
-                onClick={handleGenerate}
-              >
-                {t("input.createButton")} ( credit: {props.credit} )
-              </Button>
-            )}
-          </div>
+    <div className="container mx-auto flex flex-col md:flex-row my-2 rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+      {/* Left Panel */}
+      <div className="w-full md:w-1/2 p-6 md:p-8 md:border-r border-gray-100">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-base font-semibold text-gray-900">
+            {t("input.title")}
+          </h2>
+          <CreditInfo
+            credit={userSubscriptionInfo?.remain_count?.toString() || ""}
+          />
         </div>
 
-        {/* output */}
-        <div className="flex w-full md:w-1/2 px-4 mt-8 md:mt-0">
-          {error && (
-            <div className="flex justify-center items-center text-red-500">
-              {error}
+        {/* Image Upload */}
+        <label className="relative flex flex-col items-center justify-center h-56 bg-gray-50 border border-dashed border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors duration-200">
+          {image ? (
+            <div className="relative w-full h-full">
+              <img
+                src={image}
+                alt="Uploaded"
+                className="h-full w-full object-contain rounded-xl"
+              />
+              <DeleteButton onClick={handleDeleteImage} />
             </div>
-          )}
-          {prediction ? (
-            <>
-              {prediction.output ? (
-                <div className="flex justify-center items-center relative group rounded-lg">
-                  <video
-                    src={prediction.output}
-                    className="flex justify-center items-center w-auto h-auto rounded-lg"
-                    controls
-                  />
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Button
-                      className="bg-black text-white"
-                      onClick={() => {
-                        const link = document.createElement("a");
-                        link.href = prediction.output || "";
-                        link.setAttribute("download", "");
-                        link.setAttribute("target", "_blank");
-                        link.click();
-                      }}
-                    >
-                      {t("output.downloadButton")}
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center h-full w-full bg-gray-200 border-2 border-dashed animate-pulse rounded-lg">
-                  <CircularProgress
-                    color="primary"
-                    aria-label="Loading..."
-                    classNames={{
-                      svg: "text-indigo-600",
-                    }}
-                  />
-                  <span className="text-indigo-600 font-semibold mb-2">
-                    {prediction.status}
-                  </span>
-                  <span className="text-indigo-600 font-semibold">
-                    please wait for about two to three minutes.
-                  </span>
-                </div>
-              )}
-            </>
           ) : (
-            <div className="hidden md:flex items-center md:px-4 justify-center w-full h-full border-2 border-dashed  rounded-lg">
-              <video
-                src={props.promotion}
-                className="flex justify-center items-center w-auto h-full rounded-lg"
-                loop
-                autoPlay
-                muted
-                playsInline
-              />
+            <div className="flex flex-col items-center gap-2 p-4 text-center">
+              <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                <svg
+                  className="w-5 h-5 text-gray-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.5"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
+                </svg>
+              </div>
+              <span className="text-sm text-gray-400">
+                {t("input.upload-tips")}
+              </span>
             </div>
           )}
+          <input
+            type="file"
+            className="hidden"
+            onChange={handleImageUpload}
+            accept="image/*"
+          />
+        </label>
+
+        {/* Prompt */}
+        <div className="mt-5">
+          <label className="block text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
+            Prompt(提示词)
+          </label>
+          <textarea
+            className="w-full p-3 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-300 transition duration-200 resize-none"
+            placeholder={t("input.promptTips")}
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            rows={3}
+          />
         </div>
+
+        {/* Generate Button */}
+        {generating ? (
+          <Button
+            isLoading
+            className="w-full mt-5 bg-gray-900 text-white rounded-xl h-11 text-sm font-medium"
+          >
+            {prediction
+              ? prediction.status === "succeeded"
+                ? "Processing..."
+                : prediction.status
+              : "Processing..."}
+          </Button>
+        ) : (
+          <Button
+            className="w-full mt-5 bg-gray-900 text-white rounded-xl h-11 text-sm font-medium hover:bg-gray-700 transition-colors duration-200"
+            onClick={handleGenerate}
+          >
+            {t("input.createButton")}
+            <span className="ml-2 text-gray-400 text-xs">
+              {props.credit} credit
+            </span>
+          </Button>
+        )}
       </div>
-    </>
+
+      {/* Right Panel - Output */}
+      <div className="flex w-full md:w-1/2 p-6 md:p-8 mt-0 bg-gray-50">
+        {error && (
+          <div className="flex justify-center items-center text-red-500 text-sm">
+            {error}
+          </div>
+        )}
+        {prediction ? (
+          <>
+            {prediction.output ? (
+              <div className="flex justify-center items-center relative group rounded-xl w-full overflow-hidden">
+                <video
+                  src={prediction.output}
+                  className="w-full h-auto rounded-xl"
+                  controls
+                />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <Button
+                    className="bg-gray-900/80 backdrop-blur-sm text-white text-sm rounded-lg px-4 py-2 border-0"
+                    onClick={() => {
+                      const link = document.createElement("a");
+                      link.href = prediction.output || "";
+                      link.setAttribute("download", "");
+                      link.setAttribute("target", "_blank");
+                      link.click();
+                    }}
+                  >
+                    {t("output.downloadButton")}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center h-full w-full bg-white border border-dashed border-gray-200 rounded-xl gap-3">
+                <CircularProgress
+                  color="primary"
+                  aria-label="Loading..."
+                  classNames={{ svg: "text-gray-900" }}
+                />
+                <span className="text-xs text-gray-500 font-medium capitalize">
+                  {prediction.status}
+                </span>
+                <span className="text-xs text-gray-400">
+                  Please wait 2–3 minutes
+                </span>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="hidden md:flex items-center justify-center w-full h-full rounded-xl overflow-hidden">
+            <video
+              src={props.promotion}
+              className="w-full h-full object-cover rounded-xl"
+              loop
+              autoPlay
+              muted
+              playsInline
+            />
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

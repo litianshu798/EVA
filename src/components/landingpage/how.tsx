@@ -1,53 +1,50 @@
 import React from "react";
-import { Button, Tab } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
-import { localesName } from "@/i18n/routing";
 
-export default function How(params: { multiLanguage: string, image: string }) {
+export default function How(params: { multiLanguage: string; image: string }) {
   const t = useTranslations(params.multiLanguage);
 
+  const steps = [
+    t("how.item1"),
+    t("how.item2"),
+    t("how.item3"),
+  ];
+
   return (
-    <section className="z-20 flex flex-col items-center ">
-      <div className="flex flex-col items-center w-full max-w-7xl px-4">
-        <h2 className="text-3xl md:text-4xl mb-20 font-extrabold text-blue-700 text-center">
+    <section className="flex flex-col items-center">
+      <div className="flex flex-col items-center w-full max-w-7xl px-4 md:px-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-16 tracking-tight">
           {t("how.title")}
         </h2>
-        <div className="flex flex-col md:flex-row items-center justify-between w-full">
-          <div className="md:w-1/2 relative pr-4">
-            <p className="sm:text-xl mb-4 sm:mb-6 text-black">
+        <div className="flex flex-col md:flex-row items-center justify-between w-full gap-12 md:gap-20">
+          <div className="md:w-1/2">
+            <p className="text-base md:text-lg text-gray-500 mb-8 leading-relaxed">
               {t("how.description")}
             </p>
-            <ol className="space-y-4 text-lg sm:text-xl text-black">
-              <li className="flex items-center">
-                <span className="mr-2 text-blue-700">
-                  ✦
-                </span>
-                <h3>{t("how.item1")}</h3>
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2 text-blue-700">
-                  ✦
-                </span>
-                <h3>{t("how.item2")}</h3>
-              </li>
-              <li className="flex items-center">
-                  <span className="mr-2 text-blue-700">
-                  ✦
-                </span>
-                <h3>{t("how.item3")}</h3>
-              </li>
+            <ol className="space-y-6">
+              {steps.map((step, i) => (
+                <li key={i} className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-7 h-7 rounded-full bg-gray-900 text-white text-xs font-semibold flex items-center justify-center mt-0.5">
+                    {i + 1}
+                  </div>
+                  <p className="text-sm md:text-base text-gray-700 leading-relaxed pt-0.5">
+                    {step}
+                  </p>
+                </li>
+              ))}
             </ol>
           </div>
-          <div className="md:w-1/3 relative mt-8 md:mt-0">
-            <div className="absolute -inset-1 bg-black rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-            <img
-              src={params.image}
-              alt="How to Use AImage"
-              width={500}
-              height={500}
-              className="rounded-lg shadow-2xl transform hover:scale-110 transition duration-300"
-              loading="lazy"
-            />
+          <div className="md:w-2/5">
+            <div className="relative overflow-hidden rounded-2xl bg-gray-100 aspect-square">
+              <img
+                src={params.image}
+                alt="How to use"
+                width={500}
+                height={500}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </div>

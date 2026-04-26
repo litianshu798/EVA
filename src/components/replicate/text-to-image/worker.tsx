@@ -75,14 +75,12 @@ export default function Worker(props: {
       toast.warning("Please enter a prompt");
       return;
     }
-    // step1: create prediction
+
     try {
       setGenerating(true);
       const response = await fetch("/api/predictions/text_to_image", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           model: props.model,
           version: props.version,
@@ -103,9 +101,7 @@ export default function Worker(props: {
         newPrediction,
         router,
       });
-      if (!canContinue) {
-        return;
-      }
+      if (!canContinue) return;
       setPrediction(newPrediction);
     } catch (error) {
       console.error("Error generating image:", error);
@@ -114,7 +110,6 @@ export default function Worker(props: {
       return;
     }
 
-    // step2: wait for prediction to be succeeded or failed
     while (
       newPrediction.status !== "succeeded" &&
       newPrediction.status !== "failed"
@@ -128,16 +123,14 @@ export default function Worker(props: {
       }
       setPrediction(newPrediction);
     }
-    // update effect result
+
     const runningTime =
       (newPrediction.created_at
         ? new Date().getTime() - new Date(newPrediction.created_at).getTime()
         : -1) / 1000;
     fetch("/api/effect_result/update", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         original_id: newPrediction.id,
         status: newPrediction.status,
@@ -153,89 +146,90 @@ export default function Worker(props: {
   };
 
   return (
-    <>
-      <div
-        className="container mx-auto flex flex-col md:flex-row my-4 px-4 py-8 rounded-lg shadow-lg bg-white border-1 border-blue-200 rounded-lg shadow-lg shadow-blue-200 bg-white"
-        style={{
-          boxShadow:
-            "0 0 20px rgba(59, 130, 246, 0.3), 0 0 40px rgba(59, 130, 246, 0.1)",
-        }}
-      >
-        <div className="w-full md:w-1/2 md:px-6 md:border-r border-divider border-default-300">
-          <div className="mb-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-800">
-                {t("input.title")}
-              </h2>
-              <div className="flex items-center gap-3">
-                <CreditInfo
-                  credit={userSubscriptionInfo?.remain_count?.toString() || ""}
-                />
-              </div>
-            </div>
-            <label className="block ml-1 text-sm mb-2">Prompt</label>
-            <Textarea
-              className="min-h-[40px]"
-              minRows={5}
-              placeholder={props.promptTips || "Enter a prompt here"}
-              radius="lg"
-              variant="bordered"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              aria-label="Prompt"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block ml-1 text-sm mb-2">Output Format</label>
-            <Select
-              placeholder="Choose a format"
-              className="max-w-xs"
-              value={outputFormat}
-              onChange={(e) => setOutputFormat(e.target.value)}
-              aria-label="Output Format"
-            >
-              <SelectItem key="webp" value="webp">
-                WEBP
-              </SelectItem>
-              <SelectItem key="jpg" value="jpg">
-                JPG
-              </SelectItem>
-              <SelectItem key="png" value="png">
-                PNG
-              </SelectItem>
-            </Select>
-          </div>
-
-          {generating ? (
-            <Button
-              isLoading
-              className="w-full mt-4 bg-indigo-600 text-white hover:bg-indigo-700 transition duration-200"
-            >
-              {prediction
-                ? prediction.status === "succeeded"
-                  ? "Processing..."
-                  : prediction.status
-                : "Processing..."}
-            </Button>
-          ) : (
-            <Button
-              className="w-full mt-4 bg-blue-600 text-white hover:bg-blue-700 transition duration-200"
-              onClick={handleGenerate}
-            >
-              Generate Image（1 credit）
-            </Button>
-          )}
+    <div className="container mx-auto flex flex-col md:flex-row my-2 rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+      {/* Left Panel */}
+      <div className="w-full md:w-1/2 p-6 md:p-8 md:border-r border-gray-100">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-base font-semibold text-gray-900">
+            {t("input.title")}
+          </h2>
+          <CreditInfo
+            credit={userSubscriptionInfo?.remain_count?.toString() || ""}
+          />
         </div>
 
-        {/* output */}
-        <Output
-          error={error || ""}
-          prediction={prediction}
-          defaultImage={props.defaultImage || ""}
-          showImage={null}
-        />
+        <div className="mb-5">
+          <label className="block text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
+            Prompt
+          </label>
+          <Textarea
+            minRows={5}
+            placeholder={props.promptTips || "Describe the product image you want to generate..."}
+            radius="lg"
+            variant="bordered"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            aria-label="Prompt(提示词)"
+            classNames={{
+              inputWrapper: "border-gray-200 bg-gray-50 hover:border-gray-300 focus-within:border-gray-900",
+              input: "text-sm text-gray-800 placeholder:text-gray-400",
+            }}
+          />
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
+            Output Format
+          </label>
+          <Select
+            placeholder="Choose a format"
+            className="max-w-[160px]"
+            value={outputFormat}
+            onChange={(e) => setOutputFormat(e.target.value)}
+            aria-label="Output Format"
+            size="sm"
+            classNames={{
+              trigger: "bg-gray-50 border border-gray-200 rounded-lg h-9",
+              value: "text-sm text-gray-700",
+            }}
+          >
+            <SelectItem key="webp" value="webp">WEBP</SelectItem>
+            <SelectItem key="jpg" value="jpg">JPG</SelectItem>
+            <SelectItem key="png" value="png">PNG</SelectItem>
+          </Select>
+        </div>
+
+        {generating ? (
+          <Button
+            isLoading
+            className="w-full bg-gray-900 text-white rounded-xl h-11 text-sm font-medium"
+          >
+            {prediction
+              ? prediction.status === "succeeded"
+                ? "Processing..."
+                : prediction.status
+              : "Processing..."}
+          </Button>
+        ) : (
+          <Button
+            className="w-full bg-gray-900 text-white rounded-xl h-11 text-sm font-medium hover:bg-gray-700 transition-colors duration-200"
+            onClick={handleGenerate}
+          >
+            Generate Image
+            <span className="ml-2 text-gray-400 text-xs">
+              {props.credit} credit
+            </span>
+          </Button>
+        )}
       </div>
-    </>
+
+      {/* Right Panel */}
+      <Output
+        error={error || ""}
+        prediction={prediction}
+        defaultImage={props.defaultImage || ""}
+        showImage={null}
+      />
+    </div>
   );
 }

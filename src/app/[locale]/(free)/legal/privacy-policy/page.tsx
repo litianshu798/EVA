@@ -5,7 +5,7 @@ const text = `
 
 
 
-Welcome to AI Video Generator. Your privacy is important to us, and we are committed to protecting the information you share with us. This Privacy Policy outlines how we collect, use, disclose, and safeguard your data when you visit our website or use our services.
+Welcome to EVA. Your privacy is important to us, and we are committed to protecting the information you share with us. This Privacy Policy outlines how we collect, use, disclose, and safeguard your data when you visit our website or use our services.
 
 
 ## 1. Information We Collect
@@ -94,10 +94,10 @@ We may update this Privacy Policy from time to time to reflect changes in our pr
 
 If you have any questions or concerns about this Privacy Policy or your personal data, please contact us at:
 
-**Email**: support@${getDomain().replace("https://", "")}
+**Email**: support@8ilx.com
 
 
-By using AI Video Generator, you agree to the terms of this Privacy Policy. If you do not agree, please refrain from using our services.
+By using EVA, you agree to the terms of this Privacy Policy. If you do not agree, please refrain from using our services.
 
 
 

@@ -21,14 +21,14 @@ export default function TextToImage({
 }) {
   const effectId = "2";
   const multiLanguage = "TextToImage";
-  const outputDefaultImage = "/resources/text-to-image.jpg";
+  const outputDefaultImage = "/aipic.png";
 
   return (
-    <main className="flex flex-col items-center rounded-2xl px-3 md:rounded-3xl md:px-0">
-      <div className="pt-10">
+    <main className="flex flex-col items-center px-3 md:px-0">
+      <div className="pt-12 pb-8 w-full flex justify-center bg-gray-50/60 border-b border-gray-100">
         <TopHero multiLanguage={multiLanguage} locale={locale} />
       </div>
-      <div className="w-full flex justify-center items-center pt-3 pb-10">
+      <div className="w-full flex justify-center items-center py-8 pb-16">
         <WorkerWrapper
           effectId={effectId}
           multiLanguage={multiLanguage}

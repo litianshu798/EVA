@@ -8,40 +8,34 @@ export default function CreateButton(params: { multiLanguage: string }) {
   };
 
   return (
-    <>
-      <div>
-        <h2 className="flex flex-col items-center text-3xl md:text-4xl font-extrabold mb-4 text-center text-blue-700">
+    <div className="w-full max-w-7xl mx-auto px-4 md:px-8">
+      <div className="bg-gray-900 rounded-3xl px-8 py-16 md:py-20 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
           {tCreateButton("cta.title")}
         </h2>
-        <div className="flex flex-col items-center">
-          <div className="max-w-5xl text-center mb-8">
-            <p className="text-xl text-gray-700 leading-relaxed">
-              {tCreateButton("cta.description")}
-            </p>
-          </div>
-          <div className="flex justify-center">
-            <button
-              onClick={scrollToTop}
-              className="inline-flex items-center px-8 py-4 bg-blue-700 text-white text-lg font-semibold rounded-lg hover:bg-indigo-500 transition-colors duration-200"
-            >
-              {tCreateButton("cta.cta")}
-              <svg
-                className="ml-2 w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
+        <p className="text-base text-gray-400 mb-10 max-w-xl mx-auto leading-relaxed">
+          {tCreateButton("cta.description")}
+        </p>
+        <button
+          onClick={scrollToTop}
+          className="inline-flex items-center gap-2 px-8 py-3.5 bg-white text-gray-900 text-sm font-semibold rounded-full hover:bg-gray-100 transition-colors duration-200"
+        >
+          {tCreateButton("cta.cta")}
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+          </svg>
+        </button>
       </div>
-    </>
+    </div>
   );
 }

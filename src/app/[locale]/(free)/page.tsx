@@ -36,7 +36,7 @@ export default function Home({
     },
   ];
 
-  const video = "/resources/example3.webm";
+  const video = "/aivideo.mp4";
   const whatImage = "/resources/example3.webp";
   const howImage = "/resources/example2.webp";
 
@@ -45,38 +45,38 @@ export default function Home({
   const multiLanguageOfGenerator = "HomePage.generator";
 
   return (
-    <main className="flex flex-col items-center rounded-2xl px-3 md:rounded-3xl md:px-0">
-      <div className="py-10 ">
+    <main className="flex flex-col items-center">
+      <div className="w-full">
         <TopHero multiLanguage={multiLanguage} locale={locale} />
       </div>
-      <div className="w-full flex justify-center items-center pt-3 mb-8">
+      <div className="w-full flex justify-center items-center py-8 px-3 md:px-0">
         <WorkerWrapper
           effectId={effectId}
           promotion={video}
           lang={multiLanguageOfGenerator}
         />
       </div>
-      <div className="pt-20 md:pt-40">
+      <div className="pt-24 md:pt-32 w-full flex justify-center">
         <UserExample multiLanguage={multiLanguage} images={images} />
       </div>
 
-      <div className="pt-20 md:pt-40 w-full">
+      <div className="pt-24 md:pt-32 w-full">
         <What multiLanguage={multiLanguage} image={whatImage} />
       </div>
 
-      <div className="pt-20 md:pt-40 w-full">
+      <div className="pt-24 md:pt-32 w-full">
         <How multiLanguage={multiLanguage} image={howImage} />
       </div>
 
-      <div className="pt-20 md:pt-40 w-full">
+      <div className="pt-24 md:pt-32 w-full">
         <FeatureHero multiLanguage={multiLanguage} />
       </div>
 
-      <div className="pt-20 md:pt-40 w-full">
+      <div className="pt-24 md:pt-32 w-full">
         <Faq multiLanguage={multiLanguage} grid={true} />
       </div>
 
-      <div className="py-20 md:py-40 w-full">
+      <div className="pt-24 md:pt-32 pb-24 w-full">
         <Cta multiLanguage={multiLanguage} />
       </div>
     </main>

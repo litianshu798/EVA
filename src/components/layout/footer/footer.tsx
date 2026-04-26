@@ -24,58 +24,47 @@ export default function Footer({ locale }: { locale: string }) {
       { name: "Partners", href: "/partners" },
     ],
     social: [
-      {
-        name: "Facebook",
-        href: "#",
-        icon: "fontisto:facebook",
-      },
-      {
-        name: "Instagram",
-        href: "#",
-        icon: "fontisto:instagram",
-      },
-      {
-        name: "Twitter",
-        href: "#",
-        icon: "fontisto:twitter",
-      },
-      {
-        name: "GitHub",
-        href: "#",
-        icon: "fontisto:github",
-      },
+      { name: "Facebook", href: "#", icon: "fontisto:facebook" },
+      { name: "Instagram", href: "#", icon: "fontisto:instagram" },
+      { name: "Twitter", href: "#", icon: "fontisto:twitter" },
+      { name: "GitHub", href: "#", icon: "fontisto:github" },
     ],
   };
+
   return (
-    <footer className="flex w-full flex-col items-center text-black">
-      <div className="max-w-7xl w-full px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-24 text-black mx-auto">
+    <footer className="flex w-full flex-col items-center border-t border-gray-100">
+      <div className="max-w-7xl w-full px-6 pb-10 pt-16 lg:px-8 text-gray-600 mx-auto">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-          <div className="space-y-8 md:pr-8">
-            <div className="flex items-center justify-center xl:justify-start">
+          <div className="space-y-4 md:pr-8">
+            <div className="flex items-center justify-center xl:justify-start gap-2">
               <img
                 src="/logo.jpeg"
-                alt="AI Video Generator"
-                className="w-8 h-8 mr-2"
+                alt="EVA"
+                className="w-7 h-7 rounded-md"
                 loading="lazy"
               />
-              <span className="text-medium font-medium">
-                AI Video Generator
-              </span>
+              <div className="flex flex-col leading-none">
+                <span className="text-sm font-bold text-gray-900">EVA</span>
+                <span className="text-[10px] text-gray-400 uppercase tracking-widest font-medium">E-Commerce AI</span>
+              </div>
             </div>
-            <p className="text-small text-black text-center xl:text-left">
+            <p className="text-sm text-gray-400 text-center xl:text-left leading-relaxed">
               {t("description")}
             </p>
           </div>
-          <div className="mt-16 grid grid-cols-1 gap-8 xl:col-span-2 xl:mt-0">
+          <div className="mt-12 grid grid-cols-1 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-4 md:gap-8">
               <div className="mt-10 md:mt-0">
-                <p className="text-small font-semibold text-center xl:text-left text-black">
+                <p className="text-xs font-semibold text-gray-900 uppercase tracking-wider text-center xl:text-left mb-4">
                   {t("recommend.title")}
                 </p>
-                <ul className="mt-6 space-y-4">
+                <ul className="space-y-3">
                   {footerNavigation.supportOptions.map((item) => (
                     <li key={item.name} className="text-center xl:text-left">
-                      <Link className="text-black" href={item.href} size="sm">
+                      <Link
+                        className="text-sm text-gray-400 hover:text-gray-900 transition-colors"
+                        href={item.href}
+                      >
                         {item.name}
                       </Link>
                     </li>
@@ -83,13 +72,16 @@ export default function Footer({ locale }: { locale: string }) {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <p className="text-small font-semibold text-center xl:text-left text-black">
+                <p className="text-xs font-semibold text-gray-900 uppercase tracking-wider text-center xl:text-left mb-4">
                   {t("multiLanguage.title")}
                 </p>
-                <ul className="mt-6 space-y-4">
+                <ul className="space-y-3">
                   {footerNavigation.multiLanguage.map((item) => (
                     <li key={item.name} className="text-center xl:text-left">
-                      <Link className="text-black" href={item.href} size="sm">
+                      <Link
+                        className="text-sm text-gray-400 hover:text-gray-900 transition-colors"
+                        href={item.href}
+                      >
                         {item.name}
                       </Link>
                     </li>
@@ -97,13 +89,16 @@ export default function Footer({ locale }: { locale: string }) {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <p className="text-small font-semibold text-center xl:text-left text-black">
+                <p className="text-xs font-semibold text-gray-900 uppercase tracking-wider text-center xl:text-left mb-4">
                   {t("legal.title")}
                 </p>
-                <ul className="mt-6 space-y-4">
+                <ul className="space-y-3">
                   {footerNavigation.legal.map((item) => (
                     <li key={item.name} className="text-center xl:text-left">
-                      <Link className="text-black" href={item.href} size="sm">
+                      <Link
+                        className="text-sm text-gray-400 hover:text-gray-900 transition-colors"
+                        href={item.href}
+                      >
                         {item.name}
                       </Link>
                     </li>
@@ -111,17 +106,17 @@ export default function Footer({ locale }: { locale: string }) {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <p className="text-small font-semibold text-center xl:text-left text-black">
+                <p className="text-xs font-semibold text-gray-900 uppercase tracking-wider text-center xl:text-left mb-4">
                   {t("contact.title")}
                 </p>
-                <ul className="mt-6 space-y-4">
+                <ul className="space-y-3">
                   <li className="text-center xl:text-left">
                     <Link
-                      href={`mailto:support@${domain.replace("https://", "")}`}
-                      className="text-black text-sm"
+                      href={`mailto:support@8ilx.com`}
+                      className="text-sm text-gray-400 hover:text-gray-900 transition-colors inline-flex items-center gap-1.5"
                     >
-                      <Icon icon="mdi:email" className="text-black" /> :
-                      support@{domain.replace("https://", "")}
+                      <Icon icon="mdi:email" className="w-4 h-4" />
+                      support@8ilx.com
                     </Link>
                   </li>
                 </ul>
@@ -129,10 +124,10 @@ export default function Footer({ locale }: { locale: string }) {
             </div>
           </div>
         </div>
-        <Divider className="mt-16 sm:mt-20 lg:mt-24" />
+        <Divider className="mt-12" />
         <div className="flex justify-center pt-8">
-          <p className="text-small text-black">
-            &copy; 2025 AI Video Generator. All rights reserved.
+          <p className="text-xs text-gray-400">
+            &copy; 2025 EVA. All rights reserved.
           </p>
         </div>
       </div>

@@ -23,7 +23,6 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Icon } from "@iconify/react/dist/iconify.js";
 
 const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
   ({ classNames = {}, ...props }, ref) => {
@@ -50,7 +49,7 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
 
     const handleTagClick = (tag: string) => {
       setActiveTag(tag);
-      setIsMenuOpen(false); // Close menu after clicking
+      setIsMenuOpen(false);
     };
 
     return (
@@ -58,26 +57,26 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
         ref={ref}
         {...props}
         classNames={{
-          base: cn("border-default-100 bg-transparent text-black"),
+          base: cn("border-b border-gray-100 bg-white/95 backdrop-blur-sm text-gray-900"),
           wrapper:
-            "w-full max-w-7xl lg:px-0 justify-center md:h-[100px] h-[70px]",
-          item: "md:flex", // Removed hidden to show on mobile
+            "w-full max-w-7xl lg:px-0 justify-center md:h-[72px] h-[60px]",
+          item: "md:flex",
           ...classNames,
         }}
-        // height="100px"
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
       >
         <NavbarBrand>
           <img
             src="/logo.jpeg"
-            alt="logo"
-            className="w-9 h-9 md:w-11 md:h-11 mr-2 mb-1 ml-1"
+            alt="EVA"
+            className="w-8 h-8 md:w-9 md:h-9 mr-2.5 rounded-md"
             loading="lazy"
           />
-          <p className="text-2xl font-bold hidden lg:block text-blue-700">
-            AI Video Generator
-          </p>
+          <div className="hidden lg:flex flex-col leading-none">
+            <span className="text-base font-bold text-gray-900 tracking-tight">EVA</span>
+            <span className="text-[10px] text-gray-400 tracking-widest uppercase font-medium">E-Commerce AI</span>
+          </div>
         </NavbarBrand>
 
         <NavbarContent className="hidden md:flex" justify="center">
@@ -85,8 +84,10 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
             <Link
               aria-current="page"
               className={cn(
-                "text-black mx-4",
-                activeTag === "home" ? "text-black font-bold" : ""
+                "text-sm mx-4 transition-colors duration-200",
+                activeTag === "home"
+                  ? "text-gray-900 font-semibold"
+                  : "text-gray-500 hover:text-gray-900"
               )}
               href={`/${locale}`}
               size="md"
@@ -94,11 +95,13 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
               {t("home")}
             </Link>
           </NavbarItem>
-          <NavbarItem onClick={() => handleTagClick("pricing")}>
+          <NavbarItem onClick={() => handleTagClick("text-to-image")}>
             <Link
               className={cn(
-                "text-black mx-4",
-                activeTag === "text-to-image" ? "text-black font-bold" : ""
+                "text-sm mx-4 transition-colors duration-200",
+                activeTag === "text-to-image"
+                  ? "text-gray-900 font-semibold"
+                  : "text-gray-500 hover:text-gray-900"
               )}
               href={`/${locale}/text-to-image`}
               size="md"
@@ -109,8 +112,10 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
           <NavbarItem onClick={() => handleTagClick("pricing")}>
             <Link
               className={cn(
-                "text-black mx-4",
-                activeTag === "pricing" ? "text-black font-bold" : ""
+                "text-sm mx-4 transition-colors duration-200",
+                activeTag === "pricing"
+                  ? "text-gray-900 font-semibold"
+                  : "text-gray-500 hover:text-gray-900"
               )}
               href={`/${locale}/pricing`}
               size="md"
@@ -126,16 +131,13 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
         >
           <Locales />
           {user ? (
-            <div className="flex flex-row gap-2">
-              <button className="flex justify-center items-center gap-3 mr-6 hover:scale-110 transition-all duration-300">
-                <a href={`/${locale}/dashboard`}>
-                  My creations
-                  {/* <Icon
-                    icon="lucide:settings-2"
-                    className="w-[1.3em] h-[1.3em] text-black"
-                  /> */}
-                </a>
-              </button>
+            <div className="flex flex-row gap-3 items-center">
+              <a
+                href={`/${locale}/dashboard`}
+                className="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-200 mr-2"
+              >
+                My Creations
+              </a>
               <UserButton />
             </div>
           ) : (
@@ -143,21 +145,21 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
           )}
         </NavbarContent>
 
-        <NavbarMenuToggle className="text-black md:hidden" />
+        <NavbarMenuToggle className="text-gray-700 md:hidden" />
 
         <NavbarMenu
-          className="top-[calc(var(--navbar-height)_-_1px)] max-h-fit bg-white pb-6 pt-6 shadow-medium backdrop-blur-md backdrop-saturate-150 text-black mx-1"
+          className="top-[calc(var(--navbar-height)_-_1px)] max-h-fit bg-white pb-6 pt-6 shadow-sm border-t border-gray-100"
           motionProps={{
-            initial: { opacity: 0, y: -20 },
+            initial: { opacity: 0, y: -10 },
             animate: { opacity: 1, y: 0 },
-            exit: { opacity: 0, y: -20 },
+            exit: { opacity: 0, y: -10 },
             transition: {
-              ease: "easeInOut",
-              duration: 0.2,
+              ease: "easeOut",
+              duration: 0.15,
             },
           }}
         >
-          <div className="flex flex-col w-full px-6">
+          <div className="flex flex-col w-full px-6 gap-1">
             {[
               { tag: "home", path: "" },
               { tag: "text-to-image", path: "text-to-image" },
@@ -173,34 +175,29 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
               >
                 <Link
                   className={cn(
-                    "text-black",
-                    activeTag === tag ? "text-black font-bold" : ""
+                    "py-2 block text-sm",
+                    activeTag === tag
+                      ? "text-gray-900 font-semibold"
+                      : "text-gray-500"
                   )}
                   href={`/${locale}/${path}`}
                   size="lg"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    handleTagClick(tag);
-                  }}
                 >
                   {t(tag)}
                 </Link>
               </NavbarMenuItem>
             ))}
 
-            <div className="flex flex-row gap-2">
-              <button className="flex justify-center items-center gap-3 mr-6 hover:scale-110 transition-all duration-300 pt-2">
-                <a href={`/${locale}/dashboard`}>
-                  My creations
-                  {/* <Icon
-                    icon="lucide:settings-2"
-                    className="w-[1.3em] h-[1.3em] text-black"
-                  /> */}
-                </a>
-              </button>
+            <div className="pt-4 border-t border-gray-100 mt-2">
+              <a
+                href={`/${locale}/dashboard`}
+                className="block py-2 text-sm text-gray-500 hover:text-gray-900 transition-colors"
+              >
+                My Creations
+              </a>
             </div>
-            <div className="flex flex-col gap-2 mt-4">
-              <div>{user ? <UserButton /> : <LoginButton />}</div>
+            <div className="mt-3">
+              {user ? <UserButton /> : <LoginButton />}
             </div>
           </div>
         </NavbarMenu>
