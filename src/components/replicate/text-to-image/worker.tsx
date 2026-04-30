@@ -10,7 +10,7 @@ import { handleApiErrors } from "@/components/replicate/common-logic/response";
 import Output from "@/components/replicate/text-to-image/img-output";
 import { UserSubscriptionInfo } from "@/backend/type/domain/user_subscription_info";
 import CreditInfo from "@/components/landingpage/credit-info";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -35,6 +35,7 @@ export default function Worker(props: {
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
   const { user } = useAppContext();
   const router = useRouter();
+  const locale = useLocale();
   const t = useTranslations(props.lang || "index");
 
   useEffect(() => {
@@ -73,6 +74,13 @@ export default function Worker(props: {
 
     if (prompt.length === 0) {
       toast.warning("Please enter a prompt");
+      return;
+    }
+
+    if (!user?.uuid) {
+      toast.warning("Please login first");
+      await sleep(1000);
+      router.push(`/${locale}/login`);
       return;
     }
 

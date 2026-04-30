@@ -13,9 +13,17 @@ CREATE TABLE users (
   signin_ip text NULL,                      -- 最后登录IP地址
   signin_provider text NULL,                -- 第三方登录提供商（如：google, github等）
   signin_openid text NULL,                  -- 第三方登录的OpenID
+  password_hash text NULL,                  -- 账号密码登录的密码哈希
+  invite_code text NULL,                    -- 用户的邀请码
+  invited_by text NULL,                     -- 邀请人的用户UUID
+  invited_at timestamp with time zone NULL, -- 被邀请注册的时间
   created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP, -- 账户创建时间
   update_time timestamp with time zone NULL -- 最后更新时间
 );
+CREATE UNIQUE INDEX idx_users_email_unique ON users (lower(email));
+CREATE UNIQUE INDEX idx_users_uuid_unique ON users (uuid);
+CREATE UNIQUE INDEX idx_users_invite_code_unique ON users (invite_code) WHERE invite_code IS NOT NULL;
+CREATE INDEX idx_users_invited_by ON users (invited_by);
 
 -- 积分使用记录表：跟踪用户在特定订阅周期内的积分使用情况
 CREATE TABLE credit_usage (

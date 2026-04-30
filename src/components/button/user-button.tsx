@@ -14,9 +14,10 @@ import { useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { useAppContext } from "@/contexts/app";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 export default function UserButton() {
   const router = useRouter();
+  const locale = useLocale();
   const { data: session } = useSession();
   const { user, setUser } = useAppContext();
   const t = useTranslations("Nav");
@@ -84,9 +85,16 @@ export default function UserButton() {
         >
           Help & Feedback
         </DropdownItem> */}
-              <DropdownItem
+        <DropdownItem
+          key="invites"
+          onClick={() => router.push(`/${locale}/invites`)}
+          startContent={<Icon icon="lucide:gift" width="16" height="16" />}
+        >
+          {t("invites")}
+        </DropdownItem>
+        <DropdownItem
           key="analytics"
-          onClick={() => router.push('/dashboard')}
+          onClick={() => router.push(`/${locale}/dashboard`)}
           startContent={<Icon icon="lucide:settings-2" width="16" height="16" />}
         >
           {t("dashboard")}

@@ -1,7 +1,6 @@
 "use client";
 
 import { toast } from "sonner";
-import { signIn } from "next-auth/react";
 
 interface ErrorHandlingParams {
   response: Response;
@@ -19,7 +18,7 @@ export const handleApiErrors = async ({
   if (response.status === 401) {
     toast.error("Please login first.");
     await sleep(1000);
-    await signIn("google");
+    router.push(getLoginPath());
     return false;
   }
 
@@ -46,3 +45,14 @@ export const handleApiErrors = async ({
 
   return true;
 };
+
+function getLoginPath() {
+  if (typeof window === "undefined") return "/login";
+
+  const locale = window.location.pathname.split("/")[1];
+  if (locale === "zh" || locale === "en") {
+    return `/${locale}/login`;
+  }
+
+  return "/login";
+}

@@ -10,6 +10,10 @@ export interface User {
   signin_ip?: string;
   signin_provider?: string;
   signin_openid?: string;
+  password_hash?: string;
+  invite_code?: string;
+  invited_by?: string;
+  invited_at?: string;
   update_time?: Date;
 }
 

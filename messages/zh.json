@@ -5,6 +5,7 @@
     "logOut": "退出登录",
     "login": "登录",
     "dashboard": "我的作品",
+    "invites": "邀请好友",
     "pricing": "定价",
     "create": "生成视频",
     "generator": "视频生成"
@@ -184,6 +185,50 @@
       "noContent": "暂无内容",
       "effect": "效果",
       "status": "状态"
+    }
+  },
+  "Auth": {
+    "title": "登录 EVA",
+    "subtitle": "使用邮箱和密码进入你的工作台",
+    "loginTab": "登录",
+    "registerTab": "注册",
+    "email": "邮箱",
+    "password": "密码",
+    "nickname": "昵称",
+    "inviteCode": "邀请码",
+    "inviteCodeOptional": "邀请码（选填）",
+    "signIn": "登录",
+    "register": "创建账号",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "至少 8 位字符",
+    "nicknamePlaceholder": "你的昵称",
+    "invitePlaceholder": "朋友分享的邀请码",
+    "loginSuccess": "登录成功",
+    "registerSuccess": "注册成功",
+    "loginFailed": "邮箱或密码不正确",
+    "registerFailed": "注册失败，请稍后重试",
+    "invalidInviteCode": "邀请码无效",
+    "emailExists": "该邮箱已注册",
+    "weakPassword": "密码至少需要 8 位字符",
+    "selfInvite": "不能使用自己的邀请码"
+  },
+  "Invites": {
+    "title": "邀请好友",
+    "subtitle": "分享你的邀请码，朋友注册后会记录在这里",
+    "codeLabel": "我的邀请码",
+    "linkLabel": "邀请链接",
+    "copy": "复制",
+    "copied": "已复制",
+    "invitedTitle": "已邀请用户",
+    "empty": "还没有邀请记录",
+    "loading": "正在加载邀请记录",
+    "loginRequired": "登录后查看你的邀请码",
+    "loginButton": "去登录",
+    "table": {
+      "user": "用户",
+      "email": "邮箱",
+      "registeredAt": "注册时间",
+      "invitedAt": "邀请时间"
     }
   },
   "Seo": {

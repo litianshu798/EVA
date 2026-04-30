@@ -5,12 +5,11 @@ import { Button, CircularProgress } from "@nextui-org/react";
 import Prediction from "@/backend/type/domain/replicate";
 import { useAppContext } from "@/contexts/app";
 import { toast } from "sonner";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { UserSubscriptionInfo } from "@/backend/type/domain/user_subscription_info";
 import DeleteButton from "@/components/button/delete-button";
 import { handleApiErrors } from "@/components/replicate/common-logic/response";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
 import CreditInfo from "@/components/landingpage/credit-info";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -29,6 +28,7 @@ export default function Worker(props: {
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const locale = useLocale();
   const [userSubscriptionInfo, setUserSubscriptionInfo] =
     useState<UserSubscriptionInfo | null>(null);
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
@@ -87,7 +87,7 @@ export default function Worker(props: {
     if (user === undefined || user === null) {
       toast.warning("Please login first");
       await sleep(1000);
-      signIn("google");
+      router.push(`/${locale}/login`);
       return;
     }
 

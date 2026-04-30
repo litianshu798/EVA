@@ -5,6 +5,7 @@
     "logOut": "Log Out",
     "login": "Sign In",
     "dashboard": "My Workspace",
+    "invites": "Invites",
     "pricing": "Pricing",
     "create": "Create",
     "generator": "Generator"
@@ -185,6 +186,50 @@
       "noContent": "No content available",
       "effect": "Effect",
       "status": "Status"
+    }
+  },
+  "Auth": {
+    "title": "Sign In to EVA",
+    "subtitle": "Use your email and password to access your workspace",
+    "loginTab": "Sign In",
+    "registerTab": "Register",
+    "email": "Email",
+    "password": "Password",
+    "nickname": "Nickname",
+    "inviteCode": "Invite Code",
+    "inviteCodeOptional": "Invite Code (optional)",
+    "signIn": "Sign In",
+    "register": "Create Account",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "At least 8 characters",
+    "nicknamePlaceholder": "Your nickname",
+    "invitePlaceholder": "Invite code from a friend",
+    "loginSuccess": "Signed in successfully",
+    "registerSuccess": "Account created",
+    "loginFailed": "Email or password is incorrect",
+    "registerFailed": "Registration failed. Please try again",
+    "invalidInviteCode": "Invite code is invalid",
+    "emailExists": "This email is already registered",
+    "weakPassword": "Password must be at least 8 characters",
+    "selfInvite": "You cannot use your own invite code"
+  },
+  "Invites": {
+    "title": "Invite Friends",
+    "subtitle": "Share your invite code and see who joined from it",
+    "codeLabel": "My Invite Code",
+    "linkLabel": "Invite Link",
+    "copy": "Copy",
+    "copied": "Copied",
+    "invitedTitle": "Invited Users",
+    "empty": "No invited users yet",
+    "loading": "Loading invites",
+    "loginRequired": "Sign in to view your invite code",
+    "loginButton": "Sign In",
+    "table": {
+      "user": "User",
+      "email": "Email",
+      "registeredAt": "Registered",
+      "invitedAt": "Invited"
     }
   },
   "Seo": {
