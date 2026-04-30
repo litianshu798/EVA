@@ -27,7 +27,7 @@ export const tiers: Array<Tier> = [
     amount: {
       [FrequencyEnum.Monthly]: 1490,
       [FrequencyEnum.Yearly]: 15000,
-      [FrequencyEnum.OneTime]: 1590,
+      [FrequencyEnum.OneTime]: 2500,
     },
     interval: {
       [FrequencyEnum.Monthly]: "month",
