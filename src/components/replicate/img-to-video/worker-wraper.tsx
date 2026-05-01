@@ -1,6 +1,7 @@
 import Worker from "@/components/replicate/img-to-video/worker";
-import { getEffectById } from "@/backend/service/effect";
+import { getEffectById, listEffectByType } from "@/backend/service/effect";
 import { Effect } from "@/backend/type/type";
+import { toModelOption } from "@/components/replicate/model-option";
 
 export default async function WorkerWraper(params: {
   effectId: string;
@@ -9,14 +10,19 @@ export default async function WorkerWraper(params: {
 }) {
   const effect: Effect | null = await getEffectById(Number(params.effectId));
   if (!effect) return null;
+  const effects = await listEffectByType(1);
+  const modelOptions = effects.length > 0 ? effects : [effect];
+
   return (
     <div className="flex flex-col w-full max-w-7xl rounded-lg md:mt-6 ">
       <Worker
-        model={effect?.model}
-        credit={effect?.credit}
-        version={effect?.version}
-        effect_link_name={effect?.link_name}
-        prompt={effect?.pre_prompt}
+        modelOptions={modelOptions.map(toModelOption)}
+        defaultModelId={effect.id}
+        model={effect.model}
+        credit={effect.credit}
+        version={effect.version}
+        effect_link_name={effect.link_name}
+        prompt={effect.pre_prompt}
         promotion={params.promotion}
         lang={params.lang}
       />

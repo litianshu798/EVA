@@ -11,6 +11,7 @@ import Output from "@/components/replicate/text-to-image/img-output";
 import { UserSubscriptionInfo } from "@/backend/type/domain/user_subscription_info";
 import CreditInfo from "@/components/landingpage/credit-info";
 import { useLocale, useTranslations } from "next-intl";
+import { ModelOption } from "@/components/replicate/model-option";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -22,10 +23,15 @@ export default function Worker(props: {
   promptTips?: string;
   defaultImage?: string;
   lang?: string;
+  modelOptions?: ModelOption[];
+  defaultModelId?: number;
 }) {
   const [prompt, setPrompt] = useState("");
   const [generating, setGenerating] = useState<boolean>(false);
   const [outputFormat, setOutputFormat] = useState<string>("png");
+  const [selectedModelId, setSelectedModelId] = useState<string>(
+    props.defaultModelId?.toString() || props.modelOptions?.[0]?.id.toString() || ""
+  );
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [error, setError] = useState<string | null>(null);
   const width = 1024;
@@ -37,6 +43,17 @@ export default function Worker(props: {
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations(props.lang || "index");
+  const selectedModel =
+    props.modelOptions?.find((option) => option.id.toString() === selectedModelId) ||
+    props.modelOptions?.[0] || {
+      id: props.defaultModelId || 0,
+      name: props.model,
+      model: props.model,
+      version: props.version,
+      link_name: props.effect_link_name,
+      credit: props.credit,
+      pre_prompt: "",
+    };
 
   useEffect(() => {
     if (user?.uuid) {
@@ -62,10 +79,10 @@ export default function Worker(props: {
 
   const handleGenerate = async () => {
     let newPrediction: Prediction;
-    if (props.credit > 0) {
+    if (selectedModel.credit > 0) {
       if (
         typeof userSubscriptionInfo?.remain_count === "number" &&
-        userSubscriptionInfo.remain_count < props.credit
+        userSubscriptionInfo.remain_count < selectedModel.credit
       ) {
         toast.warning("No credit left");
         return;
@@ -90,8 +107,8 @@ export default function Worker(props: {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: props.model,
-          version: props.version,
+          model: selectedModel.model,
+          version: selectedModel.version,
           prompt,
           width,
           height,
@@ -99,8 +116,8 @@ export default function Worker(props: {
           aspect_ratio: "custom",
           user_id: user?.uuid,
           user_email: user?.email,
-          effect_link_name: props.effect_link_name,
-          credit: props.credit,
+          effect_link_name: selectedModel.link_name,
+          credit: selectedModel.credit,
         }),
       });
       newPrediction = await response.json();
@@ -154,7 +171,7 @@ export default function Worker(props: {
   };
 
   return (
-    <div className="container mx-auto flex flex-col md:flex-row my-2 rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+    <div className="container mx-auto flex flex-col md:flex-row my-2 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
       {/* Left Panel */}
       <div className="w-full md:w-1/2 p-6 md:p-8 md:border-r border-gray-100">
         <div className="flex items-center justify-between mb-6">
@@ -164,6 +181,58 @@ export default function Worker(props: {
           <CreditInfo
             credit={userSubscriptionInfo?.remain_count?.toString() || ""}
           />
+        </div>
+
+        <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_150px]">
+          <div>
+            <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+              Model
+            </label>
+            <Select
+              aria-label="Model"
+              selectedKeys={selectedModelId ? [selectedModelId] : []}
+              onSelectionChange={(keys) => {
+                const [key] = Array.from(keys);
+                if (key) setSelectedModelId(String(key));
+              }}
+              radius="lg"
+              variant="bordered"
+              classNames={{
+                trigger:
+                  "h-11 border-gray-200 bg-white hover:border-gray-300 data-[open=true]:border-gray-900",
+                value: "text-sm text-gray-800",
+              }}
+            >
+              {(props.modelOptions || [selectedModel]).map((option) => (
+                <SelectItem key={option.id.toString()} value={option.id.toString()}>
+                  {option.name}
+                </SelectItem>
+              ))}
+            </Select>
+          </div>
+          <div>
+            <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+              Format
+            </label>
+            <Select
+              aria-label="Output Format"
+              selectedKeys={[outputFormat]}
+              onSelectionChange={(keys) => {
+                const [key] = Array.from(keys);
+                if (key) setOutputFormat(String(key));
+              }}
+              radius="lg"
+              variant="bordered"
+              classNames={{
+                trigger: "h-11 border-gray-200 bg-white hover:border-gray-300",
+                value: "text-sm text-gray-800",
+              }}
+            >
+              <SelectItem key="webp" value="webp">WEBP</SelectItem>
+              <SelectItem key="jpg" value="jpg">JPG</SelectItem>
+              <SelectItem key="png" value="png">PNG</SelectItem>
+            </Select>
+          </div>
         </div>
 
         <div className="mb-5">
@@ -179,32 +248,12 @@ export default function Worker(props: {
             onChange={(e) => setPrompt(e.target.value)}
             aria-label="Prompt(提示词)"
             classNames={{
-              inputWrapper: "border-gray-200 bg-gray-50 hover:border-gray-300 focus-within:border-gray-900",
-              input: "text-sm text-gray-800 placeholder:text-gray-400",
+              inputWrapper:
+                "min-h-[156px] border-gray-200 bg-gray-50 hover:border-gray-300 focus-within:border-gray-900",
+              input:
+                "text-sm leading-6 text-gray-800 placeholder:text-gray-400",
             }}
           />
-        </div>
-
-        <div className="mb-6">
-          <label className="block text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
-            Output Format
-          </label>
-          <Select
-            placeholder="Choose a format"
-            className="max-w-[160px]"
-            value={outputFormat}
-            onChange={(e) => setOutputFormat(e.target.value)}
-            aria-label="Output Format"
-            size="sm"
-            classNames={{
-              trigger: "bg-gray-50 border border-gray-200 rounded-lg h-9",
-              value: "text-sm text-gray-700",
-            }}
-          >
-            <SelectItem key="webp" value="webp">WEBP</SelectItem>
-            <SelectItem key="jpg" value="jpg">JPG</SelectItem>
-            <SelectItem key="png" value="png">PNG</SelectItem>
-          </Select>
         </div>
 
         {generating ? (
@@ -225,7 +274,7 @@ export default function Worker(props: {
           >
             Generate Image
             <span className="ml-2 text-gray-400 text-xs">
-              {props.credit} credit
+              {selectedModel.credit} credit
             </span>
           </Button>
         )}

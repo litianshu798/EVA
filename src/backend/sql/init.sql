@@ -57,7 +57,7 @@ CREATE TABLE effect (
   created_at timestamp with time zone NULL -- 创建时间
 );
 INSERT INTO effect (id, name, type, des, platform, link, api, is_open, link_name, credit, model, version, pre_prompt, created_at) VALUES (1, 'Kling v2.1', 1, NULL, 'replicate', 'https://replicate.com/kwaivgi/kling-v2.1/api', 'kwaivgi/kling-v2.1', 1, 'kling-v12', 15, 'kwaivgi/kling-v2.1', NULL, NULL, NULL);
-INSERT INTO effect (id, name, type, des, platform, link, api, is_open, link_name, credit, model, version, pre_prompt, created_at) VALUES (2, 'Flux1.1 Pro', 1, NULL, 'replicate', 'https://replicate.com/black-forest-labs/flux-1.1-pro', 'black-forest-labs/flux-1.1-pro', 1, 'flux-1-pro', 1, 'black-forest-labs/flux-1.1-pro', NULL, NULL, NULL);
+INSERT INTO effect (id, name, type, des, platform, link, api, is_open, link_name, credit, model, version, pre_prompt, created_at) VALUES (2, 'Flux1.1 Pro', 2, NULL, 'replicate', 'https://replicate.com/black-forest-labs/flux-1.1-pro', 'black-forest-labs/flux-1.1-pro', 1, 'flux-1-pro', 1, 'black-forest-labs/flux-1.1-pro', NULL, NULL, NULL);
 
 -- 效果执行结果表：存储用户使用AI效果后的生成结果和相关信息
 CREATE TABLE effect_result (

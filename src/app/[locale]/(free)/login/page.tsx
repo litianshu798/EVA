@@ -168,26 +168,43 @@ export default function LoginPage() {
               <Input
                 type="email"
                 label={t("email")}
+                labelPlacement="outside"
+                variant="bordered"
+                radius="lg"
                 placeholder={t("emailPlaceholder")}
                 value={email}
                 onValueChange={setEmail}
                 startContent={<Mail className="h-4 w-4 text-gray-400" />}
+                classNames={{
+                  label: "text-xs font-medium uppercase tracking-wider text-gray-500",
+                  inputWrapper: "h-12 bg-white border-gray-200 hover:border-gray-300",
+                }}
                 isRequired
               />
 
               {mode === "register" && (
                 <Input
                   label={t("nickname")}
+                  labelPlacement="outside"
+                  variant="bordered"
+                  radius="lg"
                   placeholder={t("nicknamePlaceholder")}
                   value={nickname}
                   onValueChange={setNickname}
                   startContent={<User className="h-4 w-4 text-gray-400" />}
+                  classNames={{
+                    label: "text-xs font-medium uppercase tracking-wider text-gray-500",
+                    inputWrapper: "h-12 bg-white border-gray-200 hover:border-gray-300",
+                  }}
                 />
               )}
 
               <Input
                 type={showPassword ? "text" : "password"}
                 label={t("password")}
+                labelPlacement="outside"
+                variant="bordered"
+                radius="lg"
                 placeholder={t("passwordPlaceholder")}
                 value={password}
                 onValueChange={setPassword}
@@ -207,16 +224,27 @@ export default function LoginPage() {
                   </button>
                 }
                 minLength={8}
+                classNames={{
+                  label: "text-xs font-medium uppercase tracking-wider text-gray-500",
+                  inputWrapper: "h-12 bg-white border-gray-200 hover:border-gray-300",
+                }}
                 isRequired
               />
 
               {mode === "register" && (
                 <Input
                   label={t("inviteCodeOptional")}
+                  labelPlacement="outside"
+                  variant="bordered"
+                  radius="lg"
                   placeholder={t("invitePlaceholder")}
                   value={inviteCode}
                   onValueChange={(value) => setInviteCode(value.toUpperCase())}
                   startContent={<Gift className="h-4 w-4 text-gray-400" />}
+                  classNames={{
+                    label: "text-xs font-medium uppercase tracking-wider text-gray-500",
+                    inputWrapper: "h-12 bg-white border-gray-200 hover:border-gray-300",
+                  }}
                 />
               )}
 

@@ -7,6 +7,7 @@ import FeatureHero from "@/components/landingpage/feature";
 import { getMetadata } from "@/components/seo/seo";
 import UserExample from "@/components/landingpage/example";
 import Cta from "@/components/landingpage/cta";
+import CommerceShowcase from "@/components/landingpage/commerce-showcase";
 
 export async function generateMetadata({
   params,
@@ -45,16 +46,19 @@ export default function Home({
   const multiLanguageOfGenerator = "HomePage.generator";
 
   return (
-    <main className="flex flex-col items-center">
+    <main className="flex flex-col items-center bg-white">
       <div className="w-full">
         <TopHero multiLanguage={multiLanguage} locale={locale} />
       </div>
-      <div className="w-full flex justify-center items-center py-8 px-3 md:px-0">
+      <div className="w-full border-y border-gray-100 bg-[linear-gradient(180deg,#ffffff,#f8fafc)] px-3 py-10 md:px-0 md:py-14">
         <WorkerWrapper
           effectId={effectId}
           promotion={video}
           lang={multiLanguageOfGenerator}
         />
+      </div>
+      <div className="pt-20 md:pt-28 w-full">
+        <CommerceShowcase locale={locale} />
       </div>
       <div className="pt-24 md:pt-32 w-full flex justify-center">
         <UserExample multiLanguage={multiLanguage} images={images} />

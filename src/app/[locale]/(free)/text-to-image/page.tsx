@@ -2,6 +2,7 @@ import React from "react";
 import TopHero from "@/components/landingpage/top";
 import WorkerWrapper from "@/components/replicate/text-to-image/worker-wraper";
 import { getMetadata } from "@/components/seo/seo";
+import CommerceShowcase from "@/components/landingpage/commerce-showcase";
 export async function generateMetadata({
   params,
 }: {
@@ -24,16 +25,19 @@ export default function TextToImage({
   const outputDefaultImage = "/aipic.png";
 
   return (
-    <main className="flex flex-col items-center px-3 md:px-0">
-      <div className="pt-12 pb-8 w-full flex justify-center bg-gray-50/60 border-b border-gray-100">
+    <main className="flex flex-col items-center bg-white">
+      <div className="w-full flex justify-center border-b border-gray-100">
         <TopHero multiLanguage={multiLanguage} locale={locale} />
       </div>
-      <div className="w-full flex justify-center items-center py-8 pb-16">
+      <div className="w-full bg-[linear-gradient(180deg,#ffffff,#f8fafc)] px-3 py-10 pb-16 md:px-0 md:py-14">
         <WorkerWrapper
           effectId={effectId}
           multiLanguage={multiLanguage}
           outputDefaultImage={outputDefaultImage}
         />
+      </div>
+      <div className="w-full py-20 md:py-28">
+        <CommerceShowcase locale={locale} />
       </div>
     </main>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button, CircularProgress } from "@nextui-org/react";
+import { Button, CircularProgress, Select, SelectItem } from "@nextui-org/react";
 import Prediction from "@/backend/type/domain/replicate";
 import { useAppContext } from "@/contexts/app";
 import { toast } from "sonner";
@@ -11,6 +11,7 @@ import DeleteButton from "@/components/button/delete-button";
 import { handleApiErrors } from "@/components/replicate/common-logic/response";
 import { useRouter } from "next/navigation";
 import CreditInfo from "@/components/landingpage/credit-info";
+import { ModelOption } from "@/components/replicate/model-option";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export default function Worker(props: {
@@ -21,8 +22,13 @@ export default function Worker(props: {
   version: string;
   effect_link_name: string;
   promotion: string;
+  modelOptions?: ModelOption[];
+  defaultModelId?: number;
 }) {
   const t = useTranslations(props.lang);
+  const [selectedModelId, setSelectedModelId] = useState<string>(
+    props.defaultModelId?.toString() || props.modelOptions?.[0]?.id.toString() || ""
+  );
   const [prompt, setPrompt] = useState(props.prompt);
   const [generating, setGenerating] = useState<boolean>(false);
   const [prediction, setPrediction] = useState<Prediction | null>(null);
@@ -34,6 +40,23 @@ export default function Worker(props: {
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
   const [image, setImage] = useState<string | null>(null);
   const { user } = useAppContext();
+  const selectedModel =
+    props.modelOptions?.find((option) => option.id.toString() === selectedModelId) ||
+    props.modelOptions?.[0] || {
+      id: props.defaultModelId || 0,
+      name: props.model,
+      model: props.model,
+      version: props.version,
+      link_name: props.effect_link_name,
+      credit: props.credit,
+      pre_prompt: props.prompt || "",
+    };
+
+  useEffect(() => {
+    if (selectedModel.pre_prompt) {
+      setPrompt(selectedModel.pre_prompt);
+    }
+  }, [selectedModel.id, selectedModel.pre_prompt]);
 
   useEffect(() => {
     if (user?.uuid) {
@@ -74,10 +97,10 @@ export default function Worker(props: {
 
   const handleGenerate = async () => {
     let newPrediction: Prediction;
-    if (props.credit > 0) {
+    if (selectedModel.credit > 0) {
       if (
         typeof userSubscriptionInfo?.remain_count === "number" &&
-        userSubscriptionInfo.remain_count < props.credit
+        userSubscriptionInfo.remain_count < selectedModel.credit
       ) {
         toast.warning("No credit left");
         return;
@@ -103,12 +126,12 @@ export default function Worker(props: {
 
       const formData = new FormData();
       formData.append("image", imageFile);
-      formData.append("model", props.model);
+      formData.append("model", selectedModel.model);
       formData.append("user_id", user?.uuid || "");
       formData.append("user_email", user?.email || "");
-      formData.append("effect_link_name", props.effect_link_name);
+      formData.append("effect_link_name", selectedModel.link_name);
       formData.append("prompt", prompt);
-      formData.append("credit", props.credit.toString());
+      formData.append("credit", selectedModel.credit.toString());
 
       if (prompt === "" || prompt === null || prompt === undefined) {
         toast.warning("Please enter a prompt");
@@ -203,6 +226,33 @@ export default function Worker(props: {
           />
         </div>
 
+        <div className="mb-5">
+          <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+            Model
+          </label>
+          <Select
+            aria-label="Model"
+            selectedKeys={selectedModelId ? [selectedModelId] : []}
+            onSelectionChange={(keys) => {
+              const [key] = Array.from(keys);
+              if (key) setSelectedModelId(String(key));
+            }}
+            radius="lg"
+            variant="bordered"
+            classNames={{
+              trigger:
+                "h-11 border-gray-200 bg-white hover:border-gray-300 data-[open=true]:border-gray-900",
+              value: "text-sm text-gray-800",
+            }}
+          >
+            {(props.modelOptions || [selectedModel]).map((option) => (
+              <SelectItem key={option.id.toString()} value={option.id.toString()}>
+                {option.name}
+              </SelectItem>
+            ))}
+          </Select>
+        </div>
+
         {/* Image Upload */}
         <label className="relative flex flex-col items-center justify-center h-56 bg-gray-50 border border-dashed border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors duration-200">
           {image ? (
@@ -277,7 +327,7 @@ export default function Worker(props: {
           >
             {t("input.createButton")}
             <span className="ml-2 text-gray-400 text-xs">
-              {props.credit} credit
+              {selectedModel.credit} credit
             </span>
           </Button>
         )}

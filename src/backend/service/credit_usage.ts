@@ -16,7 +16,7 @@ export async function checkCreditUsageByUserId(user_id: string, credit: number) 
       user_subscriptions_id: -1,
       is_subscription_active: false,
       used_count: 0,
-      period_remain_count: 5,
+      period_remain_count: 0,
       period_start: new Date(),
       period_end: new Date(new Date().setMonth(new Date().getMonth() + 1)),
       created_at: new Date(),

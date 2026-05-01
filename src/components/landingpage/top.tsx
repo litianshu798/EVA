@@ -88,7 +88,8 @@ export default function TopHero(params: {
           src="/bg.mp4"
         />
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.72),rgba(17,24,39,0.58)_45%,rgba(2,6,23,0.82))]" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(180deg,transparent,rgba(255,255,255,0.08))]" />
       </div>
 
       {/* Content */}
@@ -106,6 +107,28 @@ export default function TopHero(params: {
         <p className="mt-5 text-base md:text-lg text-white/70 max-w-2xl leading-relaxed">
           {t("top.description")}
         </p>
+
+        <div className="mt-8 grid w-full max-w-3xl grid-cols-3 overflow-hidden rounded-2xl border border-white/15 bg-white/10 text-left backdrop-blur-md">
+          {[
+            { value: "SKU", label: isZh ? "批量资产" : "Asset batch" },
+            { value: "4K", label: isZh ? "商业质感" : "Commercial grade" },
+            { value: "DTC", label: isZh ? "多渠道投放" : "Multi-channel" },
+          ].map((item, index) => (
+            <div
+              key={item.value}
+              className={`px-4 py-4 md:px-6 ${
+                index > 0 ? "border-l border-white/15" : ""
+              }`}
+            >
+              <div className="text-lg font-bold text-white md:text-2xl">
+                {item.value}
+              </div>
+              <div className="mt-1 text-[11px] font-medium uppercase tracking-wider text-white/55">
+                {item.label}
+              </div>
+            </div>
+          ))}
+        </div>
 
         {/* Prompt Templates */}
         <div className="mt-12 w-full max-w-3xl">
