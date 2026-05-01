@@ -1,5 +1,4 @@
 import React from "react";
-import TopHero from "@/components/landingpage/top";
 import WorkerWrapper from "@/components/replicate/text-to-image/worker-wraper";
 import { getMetadata } from "@/components/seo/seo";
 import CommerceShowcase from "@/components/landingpage/commerce-showcase";
@@ -27,10 +26,7 @@ export default function TextToImage({
 
   return (
     <main className="flex flex-col items-center bg-white">
-      <div className="w-full flex justify-center border-b border-gray-100">
-        <TopHero multiLanguage={multiLanguage} locale={locale} />
-      </div>
-      <div className="w-full bg-[linear-gradient(180deg,#ffffff,#f8fafc)] px-3 py-10 pb-16 md:px-0 md:py-14">
+      <div className="w-full px-3 py-8 pb-16 md:px-0 md:py-10">
         <WorkerWrapper
           effectId={effectId}
           multiLanguage={multiLanguage}

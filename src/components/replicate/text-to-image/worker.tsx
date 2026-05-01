@@ -170,56 +170,65 @@ export default function Worker(props: {
     fetchUserSubscriptionInfo();
   };
 
+  const isZh = locale === "zh";
+
   return (
-    <div className="container mx-auto flex flex-col md:flex-row my-2 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-      {/* Left Panel */}
-      <div className="w-full md:w-1/2 p-6 md:p-8 md:border-r border-gray-100">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-base font-semibold text-gray-900">
-            {t("input.title")}
-          </h2>
-          <CreditInfo
-            credit={userSubscriptionInfo?.remain_count?.toString() || ""}
-          />
-        </div>
+    <section className="relative mx-auto w-full max-w-7xl overflow-hidden rounded-[28px] border border-gray-200 bg-white shadow-2xl">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(14,165,233,0.14),transparent_32%),radial-gradient(circle_at_85%_12%,rgba(244,114,182,0.12),transparent_28%),linear-gradient(180deg,#ffffff,#f8fafc)]" />
 
-        <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_150px]">
-          <div>
-            <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
-              Model
-            </label>
-            <select
-              aria-label="Model"
-              value={selectedModelId}
-              onChange={(event) => setSelectedModelId(event.target.value)}
-              className="h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition-colors hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
-            >
-              {(props.modelOptions || [selectedModel]).map((option) => (
-                <option key={option.id.toString()} value={option.id.toString()}>
-                  {option.name}
-                </option>
-              ))}
-            </select>
+      <div className="relative grid gap-6 p-4 md:grid-cols-[1.05fr_0.95fr] md:p-8 lg:p-10">
+        <div className="rounded-3xl border border-gray-200 bg-white/90 p-5 shadow-xl backdrop-blur md:p-7">
+          <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-start">
+            <div>
+              <div className="mb-3 inline-flex rounded-full bg-gray-950 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white">
+                AI Image Studio
+              </div>
+              <h1 className="text-3xl font-bold tracking-tight text-gray-950 md:text-5xl">
+                {t("top.subTitle")}
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-gray-500">
+                {t("top.description")}
+              </p>
+            </div>
+            <CreditInfo credit={userSubscriptionInfo?.remain_count?.toString() || ""} />
           </div>
-          <div>
-            <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
-              Format
-            </label>
-            <select
-              aria-label="Output Format"
-              value={outputFormat}
-              onChange={(event) => setOutputFormat(event.target.value)}
-              className="h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition-colors hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
-            >
-              <option value="webp">WEBP</option>
-              <option value="jpg">JPG</option>
-              <option value="png">PNG</option>
-            </select>
-          </div>
-        </div>
 
-        <div className="mb-5">
-          <label className="block text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
+          <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_150px]">
+            <div>
+              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+                Model
+              </label>
+              <select
+                aria-label="Model"
+                value={selectedModelId}
+                onChange={(event) => setSelectedModelId(event.target.value)}
+                className="h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition-colors hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+              >
+                {(props.modelOptions || [selectedModel]).map((option) => (
+                  <option key={option.id.toString()} value={option.id.toString()}>
+                    {option.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+                Format
+              </label>
+              <select
+                aria-label="Output Format"
+                value={outputFormat}
+                onChange={(event) => setOutputFormat(event.target.value)}
+                className="h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition-colors hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+              >
+                <option value="webp">WEBP</option>
+                <option value="jpg">JPG</option>
+                <option value="png">PNG</option>
+              </select>
+            </div>
+          </div>
+
+          <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
             Prompt
           </label>
           <textarea
@@ -227,42 +236,44 @@ export default function Worker(props: {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             aria-label="Prompt(提示词)"
-            rows={6}
-            className="min-h-[156px] w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm leading-6 text-gray-900 outline-none transition-colors placeholder:text-gray-400 hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+            className="min-h-[260px] w-full resize-none rounded-3xl border border-gray-200 bg-gray-50 px-5 py-5 text-base leading-7 text-gray-950 outline-none transition-colors placeholder:text-gray-400 hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
           />
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
+            <div className="flex flex-wrap gap-2 text-xs text-gray-500">
+              {(isZh
+                ? ["电商白底", "详情页卖点", "场景海报", "促销 Banner"]
+                : ["White shot", "PDP detail", "Lifestyle poster", "Promo banner"]
+              ).map((tag) => (
+                <span key={tag} className="rounded-full bg-gray-100 px-3 py-1">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <Button
+              isLoading={generating}
+              className="h-12 rounded-xl bg-gray-950 px-8 text-sm font-semibold text-white hover:bg-gray-800"
+              onClick={handleGenerate}
+            >
+              {generating ? prediction?.status || "Processing..." : "Generate Image"}
+              {!generating && (
+                <span className="ml-2 text-white/55">
+                  {selectedModel.credit} credit
+                </span>
+              )}
+            </Button>
+          </div>
         </div>
 
-        {generating ? (
-          <Button
-            isLoading
-            className="w-full bg-gray-900 text-white rounded-xl h-11 text-sm font-medium"
-          >
-            {prediction
-              ? prediction.status === "succeeded"
-                ? "Processing..."
-                : prediction.status
-              : "Processing..."}
-          </Button>
-        ) : (
-          <Button
-            className="w-full bg-gray-900 text-white rounded-xl h-11 text-sm font-medium hover:bg-gray-700 transition-colors duration-200"
-            onClick={handleGenerate}
-          >
-            Generate Image
-            <span className="ml-2 text-gray-400 text-xs">
-              {selectedModel.credit} credit
-            </span>
-          </Button>
-        )}
+        <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white/75 p-4 shadow-xl backdrop-blur">
+          <Output
+            error={error || ""}
+            prediction={prediction}
+            defaultImage={props.defaultImage || ""}
+            showImage={null}
+          />
+        </div>
       </div>
-
-      {/* Right Panel */}
-      <Output
-        error={error || ""}
-        prediction={prediction}
-        defaultImage={props.defaultImage || ""}
-        showImage={null}
-      />
-    </div>
+    </section>
   );
 }

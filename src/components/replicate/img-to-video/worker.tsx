@@ -213,119 +213,131 @@ export default function Worker(props: {
     setImage(null);
   };
 
+  const isZh = locale === "zh";
+
   return (
-    <div className="container mx-auto flex flex-col md:flex-row my-2 rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
-      {/* Left Panel */}
-      <div className="w-full md:w-1/2 p-6 md:p-8 md:border-r border-gray-100">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-base font-semibold text-gray-900">
-            {t("input.title")}
-          </h2>
-          <CreditInfo
-            credit={userSubscriptionInfo?.remain_count?.toString() || ""}
-          />
-        </div>
-
-        <div className="mb-5">
-          <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
-            Model
-          </label>
-          <select
-            aria-label="Model"
-            value={selectedModelId}
-            onChange={(event) => setSelectedModelId(event.target.value)}
-            className="h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition-colors hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
-          >
-            {(props.modelOptions || [selectedModel]).map((option) => (
-              <option key={option.id.toString()} value={option.id.toString()}>
-                {option.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Image Upload */}
-        <label className="relative flex flex-col items-center justify-center h-56 bg-gray-50 border border-dashed border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors duration-200">
-          {image ? (
-            <div className="relative w-full h-full">
-              <img
-                src={image}
-                alt="Uploaded"
-                className="h-full w-full object-contain rounded-xl"
-              />
-              <DeleteButton onClick={handleDeleteImage} />
-            </div>
-          ) : (
-            <div className="flex flex-col items-center gap-2 p-4 text-center">
-              <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-                <svg
-                  className="w-5 h-5 text-gray-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="1.5"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  />
-                </svg>
-              </div>
-              <span className="text-sm text-gray-400">
-                {t("input.upload-tips")}
-              </span>
-            </div>
-          )}
-          <input
-            type="file"
-            className="hidden"
-            onChange={handleImageUpload}
-            accept="image/*"
-          />
-        </label>
-
-        {/* Prompt */}
-        <div className="mt-5">
-          <label className="block text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
-            Prompt(提示词)
-          </label>
-          <textarea
-            className="w-full p-3 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-300 transition duration-200 resize-none"
-            placeholder={t("input.promptTips")}
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            rows={3}
-          />
-        </div>
-
-        {/* Generate Button */}
-        {generating ? (
-          <Button
-            isLoading
-            className="w-full mt-5 bg-gray-900 text-white rounded-xl h-11 text-sm font-medium"
-          >
-            {prediction
-              ? prediction.status === "succeeded"
-                ? "Processing..."
-                : prediction.status
-              : "Processing..."}
-          </Button>
-        ) : (
-          <Button
-            className="w-full mt-5 bg-gray-900 text-white rounded-xl h-11 text-sm font-medium hover:bg-gray-700 transition-colors duration-200"
-            onClick={handleGenerate}
-          >
-            {t("input.createButton")}
-            <span className="ml-2 text-gray-400 text-xs">
-              {selectedModel.credit} credit
-            </span>
-          </Button>
-        )}
+    <section className="relative mx-auto w-full max-w-7xl overflow-hidden rounded-[28px] border border-white/70 bg-gray-950 shadow-2xl">
+      <div className="absolute inset-0">
+        <video
+          src="/bg.mp4"
+          className="h-full w-full object-cover opacity-35"
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.22),transparent_35%),linear-gradient(135deg,rgba(2,6,23,0.92),rgba(17,24,39,0.78)_55%,rgba(0,0,0,0.9))]" />
       </div>
 
-      {/* Right Panel - Output */}
-      <div className="flex w-full md:w-1/2 p-6 md:p-8 mt-0 bg-gray-50">
+      <div className="relative grid gap-6 p-4 md:grid-cols-[1.08fr_0.92fr] md:p-8 lg:p-10">
+        <div className="rounded-3xl border border-white/15 bg-white/95 p-5 shadow-2xl md:p-7">
+          <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-start">
+            <div>
+              <div className="mb-3 inline-flex rounded-full bg-gray-950 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white">
+                AI Video Studio
+              </div>
+              <h1 className="text-3xl font-bold tracking-tight text-gray-950 md:text-5xl">
+                {isZh ? "上传商品图，生成竖版带货视频" : "Upload a product image. Generate vertical commerce video."}
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-gray-500">
+                {isZh
+                  ? "适合详情页、短视频、广告首屏和新品上架，把产品静图转成更有购买欲的动态素材。"
+                  : "Built for PDPs, short-form ads, launch pages, and social commerce motion assets."}
+              </p>
+            </div>
+            <CreditInfo credit={userSubscriptionInfo?.remain_count?.toString() || ""} />
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-[220px_1fr]">
+            <label className="relative flex min-h-[310px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-gray-300 bg-gray-50 transition-colors hover:bg-gray-100">
+              {image ? (
+                <div className="relative h-full min-h-[310px] w-full">
+                  <img
+                    src={image}
+                    alt="Uploaded"
+                    className="h-full w-full object-contain"
+                  />
+                  <DeleteButton onClick={handleDeleteImage} />
+                </div>
+              ) : (
+                <div className="flex flex-col items-center gap-3 p-5 text-center">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-900 text-white">
+                    +
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">
+                    {t("input.upload-tips")}
+                  </span>
+                  <span className="text-xs leading-5 text-gray-400">
+                    {isZh ? "建议上传清晰商品主图" : "Use a clean product hero image"}
+                  </span>
+                </div>
+              )}
+              <input
+                type="file"
+                className="hidden"
+                onChange={handleImageUpload}
+                accept="image/*"
+              />
+            </label>
+
+            <div className="flex min-h-[310px] flex-col">
+              <div className="mb-4 grid gap-3 sm:grid-cols-[1fr_120px]">
+                <div>
+                  <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+                    Model
+                  </label>
+                  <select
+                    aria-label="Model"
+                    value={selectedModelId}
+                    onChange={(event) => setSelectedModelId(event.target.value)}
+                    className="h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition-colors hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                  >
+                    {(props.modelOptions || [selectedModel]).map((option) => (
+                      <option key={option.id.toString()} value={option.id.toString()}>
+                        {option.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+                    Ratio
+                  </label>
+                  <div className="flex h-11 items-center rounded-xl border border-gray-200 bg-gray-50 px-3 text-sm font-medium text-gray-700">
+                    9:16
+                  </div>
+                </div>
+              </div>
+
+              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+                Prompt
+              </label>
+              <textarea
+                className="min-h-[170px] flex-1 resize-none rounded-2xl border border-gray-200 bg-gray-50 px-4 py-4 text-sm leading-6 text-gray-950 outline-none transition-colors placeholder:text-gray-400 hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                placeholder={t("input.promptTips")}
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+              />
+
+              <Button
+                isLoading={generating}
+                className="mt-4 h-12 w-full rounded-xl bg-gray-950 text-sm font-semibold text-white hover:bg-gray-800"
+                onClick={handleGenerate}
+              >
+                {generating
+                  ? prediction?.status || "Processing..."
+                  : t("input.createButton")}
+                {!generating && (
+                  <span className="ml-2 text-white/55">
+                    {selectedModel.credit} credit
+                  </span>
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex min-h-[520px] items-center justify-center rounded-3xl border border-white/15 bg-white/10 p-5 backdrop-blur-md">
         {error && (
           <div className="flex justify-center items-center text-red-500 text-sm">
             {error}
@@ -372,10 +384,10 @@ export default function Worker(props: {
             )}
           </>
         ) : (
-          <div className="hidden md:flex items-center justify-center w-full h-full rounded-xl overflow-hidden">
+          <div className="relative mx-auto aspect-[9/16] h-full max-h-[560px] overflow-hidden rounded-[34px] border-[10px] border-gray-950 bg-gray-950 shadow-2xl">
             <video
               src={props.promotion}
-              className="w-full h-full object-cover rounded-xl"
+              className="h-full w-full object-cover"
               loop
               autoPlay
               muted
@@ -384,6 +396,7 @@ export default function Worker(props: {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </section>
   );
 }

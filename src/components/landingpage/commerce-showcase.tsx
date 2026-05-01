@@ -18,13 +18,12 @@ const VIDEO_SHOWCASE_ITEMS: ShowcaseItem[] = [
   {
     title: "奢华美妆主视觉",
     titleEn: "Luxury Beauty Hero",
-    type: "image",
-    asset: "/resources/example3.webp",
+    type: "video",
     style: "黑金棚拍 / 高光材质 / 礼盒套装",
     styleEn: "Black-gold studio / glossy material / gift set",
-    prompt: "黑金高级棚拍背景，护肤礼盒套装作为主体，柔和轮廓光，玻璃质感反射，精致电商主视觉，8K商业摄影",
+    prompt: "黑金高级棚拍背景，护肤礼盒套装作为主体，镜头缓慢推进，柔和轮廓光，玻璃质感反射，竖版电商广告视频",
     promptEn:
-      "Black and gold premium studio background, skincare gift set as hero subject, soft rim lighting, glass reflections, refined e-commerce hero visual, 8K commercial photography",
+      "Black and gold premium studio background, skincare gift set as hero subject, slow camera push-in, soft rim lighting, glass reflections, vertical e-commerce ad video",
   },
   {
     title: "家居生活方式视频",
@@ -190,7 +189,13 @@ export default function CommerceShowcase({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div
+          className={
+            variant === "video"
+              ? "grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6"
+              : "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+          }
+        >
           {items.map((item, index) => {
             const title = isZh ? item.title : item.titleEn;
             const style = isZh ? item.style : item.styleEn;
@@ -202,7 +207,11 @@ export default function CommerceShowcase({
                 key={title}
                 className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-[linear-gradient(135deg,#f8fafc,#eef2ff_45%,#fff7ed)]">
+                <div
+                  className={`relative overflow-hidden bg-[linear-gradient(135deg,#f8fafc,#eef2ff_45%,#fff7ed)] ${
+                    variant === "video" ? "aspect-[9/16]" : "aspect-[4/3]"
+                  }`}
+                >
                   {item.asset ? (
                     item.type === "video" ? (
                       <video
@@ -223,7 +232,11 @@ export default function CommerceShowcase({
                     )
                   ) : (
                     <div className="flex h-full w-full flex-col items-center justify-center gap-3 border-b border-dashed border-gray-200 text-gray-400">
-                      <ImageIcon className="h-8 w-8" />
+                      {variant === "video" ? (
+                        <Video className="h-8 w-8" />
+                      ) : (
+                        <ImageIcon className="h-8 w-8" />
+                      )}
                       <span className="text-xs font-medium uppercase tracking-widest">
                         {isZh ? "素材占位" : "Asset Placeholder"}
                       </span>
@@ -239,14 +252,18 @@ export default function CommerceShowcase({
                   </div>
                 </div>
 
-                <div className="p-5">
-                  <h3 className="text-base font-semibold text-gray-950">
+                <div className={variant === "video" ? "p-4" : "p-5"}>
+                  <h3 className="text-sm font-semibold text-gray-950 md:text-base">
                     {title}
                   </h3>
                   <p className="mt-1 text-xs font-medium uppercase tracking-wider text-gray-400">
                     {style}
                   </p>
-                  <p className="mt-4 line-clamp-3 min-h-[60px] text-sm leading-5 text-gray-600">
+                  <p
+                    className={`mt-4 line-clamp-3 text-sm leading-5 text-gray-600 ${
+                      variant === "video" ? "min-h-[80px]" : "min-h-[60px]"
+                    }`}
+                  >
                     {prompt}
                   </p>
                   <button

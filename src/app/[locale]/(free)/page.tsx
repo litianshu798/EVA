@@ -1,5 +1,4 @@
 import WorkerWrapper from "@/components/replicate/img-to-video/worker-wraper";
-import TopHero from "@/components/landingpage/top";
 import What from "@/components/landingpage/what";
 import How from "@/components/landingpage/how";
 import Faq from "@/components/landingpage/faq";
@@ -48,10 +47,7 @@ export default function Home({
 
   return (
     <main className="flex flex-col items-center bg-white">
-      <div className="w-full">
-        <TopHero multiLanguage={multiLanguage} locale={locale} />
-      </div>
-      <div className="w-full border-y border-gray-100 bg-[linear-gradient(180deg,#ffffff,#f8fafc)] px-3 py-10 md:px-0 md:py-14">
+      <div className="w-full px-3 py-8 md:px-0 md:py-10">
         <WorkerWrapper
           effectId={effectId}
           promotion={video}
