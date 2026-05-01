@@ -173,20 +173,20 @@ export default function Worker(props: {
   const isZh = locale === "zh";
 
   return (
-    <section className="relative mx-auto w-full max-w-7xl overflow-hidden rounded-[28px] border border-gray-200 bg-white shadow-2xl">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(14,165,233,0.14),transparent_32%),radial-gradient(circle_at_85%_12%,rgba(244,114,182,0.12),transparent_28%),linear-gradient(180deg,#ffffff,#f8fafc)]" />
+    <section className="relative w-full overflow-hidden border-b border-white/10 bg-gray-950 shadow-2xl">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(14,165,233,0.2),transparent_32%),radial-gradient(circle_at_85%_12%,rgba(244,114,182,0.16),transparent_28%),linear-gradient(135deg,#020617,#111827_55%,#030712)]" />
 
-      <div className="relative grid gap-6 p-4 md:grid-cols-[1.05fr_0.95fr] md:p-8 lg:p-10">
-        <div className="rounded-3xl border border-gray-200 bg-white/90 p-5 shadow-xl backdrop-blur md:p-7">
+      <div className="relative grid gap-6 p-4 md:grid-cols-[1.05fr_0.95fr] md:p-8 lg:p-10 xl:p-12">
+        <div className="rounded-3xl border border-white/10 bg-gray-900/88 p-5 text-white shadow-2xl backdrop-blur md:p-7">
           <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-start">
             <div>
               <div className="mb-3 inline-flex rounded-full bg-gray-950 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white">
                 AI Image Studio
               </div>
-              <h1 className="text-3xl font-bold tracking-tight text-gray-950 md:text-5xl">
+              <h1 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
                 {t("top.subTitle")}
               </h1>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-gray-500">
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-white/58">
                 {t("top.description")}
               </p>
             </div>
@@ -195,14 +195,14 @@ export default function Worker(props: {
 
           <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_150px]">
             <div>
-              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
                 Model
               </label>
               <select
                 aria-label="Model"
                 value={selectedModelId}
                 onChange={(event) => setSelectedModelId(event.target.value)}
-                className="h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition-colors hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                className="h-11 w-full rounded-xl border border-white/10 bg-white/10 px-3 text-sm text-white outline-none transition-colors hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
               >
                 {(props.modelOptions || [selectedModel]).map((option) => (
                   <option key={option.id.toString()} value={option.id.toString()}>
@@ -212,14 +212,14 @@ export default function Worker(props: {
               </select>
             </div>
             <div>
-              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
                 Format
               </label>
               <select
                 aria-label="Output Format"
                 value={outputFormat}
                 onChange={(event) => setOutputFormat(event.target.value)}
-                className="h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition-colors hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                className="h-11 w-full rounded-xl border border-white/10 bg-white/10 px-3 text-sm text-white outline-none transition-colors hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
               >
                 <option value="webp">WEBP</option>
                 <option value="jpg">JPG</option>
@@ -228,7 +228,7 @@ export default function Worker(props: {
             </div>
           </div>
 
-          <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+          <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
             Prompt
           </label>
           <textarea
@@ -236,23 +236,23 @@ export default function Worker(props: {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             aria-label="Prompt(提示词)"
-            className="min-h-[260px] w-full resize-none rounded-3xl border border-gray-200 bg-gray-50 px-5 py-5 text-base leading-7 text-gray-950 outline-none transition-colors placeholder:text-gray-400 hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+            className="min-h-[300px] w-full resize-none rounded-3xl border border-white/10 bg-white/[0.07] px-5 py-5 text-base leading-7 text-white outline-none transition-colors placeholder:text-white/35 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
           />
 
           <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
-            <div className="flex flex-wrap gap-2 text-xs text-gray-500">
+            <div className="flex flex-wrap gap-2 text-xs">
               {(isZh
                 ? ["电商白底", "详情页卖点", "场景海报", "促销 Banner"]
                 : ["White shot", "PDP detail", "Lifestyle poster", "Promo banner"]
               ).map((tag) => (
-                <span key={tag} className="rounded-full bg-gray-100 px-3 py-1">
+                <span key={tag} className="rounded-full bg-white/10 px-3 py-1 text-white/58">
                   {tag}
                 </span>
               ))}
             </div>
             <Button
               isLoading={generating}
-              className="h-12 rounded-xl bg-gray-950 px-8 text-sm font-semibold text-white hover:bg-gray-800"
+              className="h-12 rounded-xl bg-white px-8 text-sm font-semibold text-gray-950 hover:bg-white/90"
               onClick={handleGenerate}
             >
               {generating ? prediction?.status || "Processing..." : "Generate Image"}
@@ -265,7 +265,7 @@ export default function Worker(props: {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white/75 p-4 shadow-xl backdrop-blur">
+        <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.07] p-4 shadow-xl backdrop-blur">
           <Output
             error={error || ""}
             prediction={prediction}

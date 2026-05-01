@@ -11,7 +11,7 @@ export async function generateMetadata({
 
 export default function PricingPage() {
   return (
-    <div className="mb-24 flex flex-col items-center bg-[linear-gradient(180deg,#f8fafc,#ffffff_36%)] pt-16 md:pt-24">
+    <div className="flex flex-col items-center bg-gray-950 pb-24">
       <div className="flex w-full flex-col items-center">
         <Price />
       </div>

@@ -10,7 +10,7 @@ export default async function LocaleLayout({
   params: { locale: string };
 }) {
   return (
-    <div className="bg-white min-h-screen">
+    <div className="min-h-screen bg-gray-950 text-gray-100">
       <Navbar />
       {children}
       <Footer locale={locale} />

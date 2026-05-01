@@ -166,19 +166,19 @@ export default function CommerceShowcase({
   }
 
   return (
-    <section className="w-full bg-white">
+    <section className="w-full bg-gray-950 text-white">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-medium uppercase tracking-wider text-gray-600">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white/60">
               <Sparkles className="h-3.5 w-3.5 text-amber-500" />
               AI Commerce Creative Library
             </div>
-            <h2 className="max-w-2xl text-2xl font-bold tracking-tight text-gray-950 md:text-4xl">
+            <h2 className="max-w-2xl text-2xl font-bold tracking-tight text-white md:text-4xl">
               {isZh ? "高转化电商素材样例库" : "High-converting commerce examples"}
             </h2>
           </div>
-          <p className="max-w-xl text-sm leading-6 text-gray-500">
+          <p className="max-w-xl text-sm leading-6 text-white/55">
             {isZh
               ? variant === "image"
                 ? "覆盖商品主图、详情页卖点图、品牌海报、促销 Banner。没有现成素材的样例先保留占位，方便后续替换真实资产。"
@@ -192,7 +192,7 @@ export default function CommerceShowcase({
         <div
           className={
             variant === "video"
-              ? "grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6"
+              ? "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
               : "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
           }
         >
@@ -205,7 +205,7 @@ export default function CommerceShowcase({
             return (
               <article
                 key={title}
-                className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.09] hover:shadow-2xl"
               >
                 <div
                   className={`relative overflow-hidden bg-[linear-gradient(135deg,#f8fafc,#eef2ff_45%,#fff7ed)] ${
@@ -231,7 +231,7 @@ export default function CommerceShowcase({
                       />
                     )
                   ) : (
-                    <div className="flex h-full w-full flex-col items-center justify-center gap-3 border-b border-dashed border-gray-200 text-gray-400">
+                    <div className="flex h-full w-full flex-col items-center justify-center gap-3 border-b border-dashed border-white/15 text-white/35">
                       {variant === "video" ? (
                         <Video className="h-8 w-8" />
                       ) : (
@@ -253,14 +253,14 @@ export default function CommerceShowcase({
                 </div>
 
                 <div className={variant === "video" ? "p-4" : "p-5"}>
-                  <h3 className="text-sm font-semibold text-gray-950 md:text-base">
+                  <h3 className="text-sm font-semibold text-white md:text-base">
                     {title}
                   </h3>
-                  <p className="mt-1 text-xs font-medium uppercase tracking-wider text-gray-400">
+                  <p className="mt-1 text-xs font-medium uppercase tracking-wider text-white/35">
                     {style}
                   </p>
                   <p
-                    className={`mt-4 line-clamp-3 text-sm leading-5 text-gray-600 ${
+                    className={`mt-4 line-clamp-3 text-sm leading-5 text-white/58 ${
                       variant === "video" ? "min-h-[80px]" : "min-h-[60px]"
                     }`}
                   >
@@ -269,7 +269,7 @@ export default function CommerceShowcase({
                   <button
                     type="button"
                     onClick={() => copyPrompt(prompt, index)}
-                    className="mt-5 inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 px-3 text-sm font-medium text-gray-700 transition-colors hover:border-gray-900 hover:text-gray-950"
+                    className="mt-5 inline-flex h-9 items-center gap-2 rounded-lg border border-white/15 px-3 text-sm font-medium text-white/70 transition-colors hover:border-white/35 hover:text-white"
                   >
                     <Copy className="h-3.5 w-3.5" />
                     {isCopied ? (isZh ? "已复制" : "Copied") : "Prompt"}

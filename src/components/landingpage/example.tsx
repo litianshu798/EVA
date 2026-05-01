@@ -11,7 +11,7 @@ export default function UserExample(params: {
 
   return (
     <div className="flex flex-col w-full items-center max-w-7xl px-4 md:px-8">
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-12 tracking-tight">
+      <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-12 tracking-tight">
         {t("userExample.title")}
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-full">
@@ -19,7 +19,7 @@ export default function UserExample(params: {
           <div
             key={index}
             onClick={() => setSelectedVideo(src.video)}
-            className="group relative overflow-hidden rounded-2xl bg-gray-100 aspect-video cursor-pointer"
+            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 aspect-video cursor-pointer"
           >
             <img
               src={src.img}

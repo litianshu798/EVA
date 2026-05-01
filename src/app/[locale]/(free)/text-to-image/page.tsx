@@ -25,18 +25,18 @@ export default function TextToImage({
   const outputDefaultImage = "/aipic.png";
 
   return (
-    <main className="flex flex-col items-center bg-white">
-      <div className="w-full px-3 py-8 pb-16 md:px-0 md:py-10">
+    <main className="flex flex-col items-center bg-gray-950">
+      <div className="w-full">
         <WorkerWrapper
           effectId={effectId}
           multiLanguage={multiLanguage}
           outputDefaultImage={outputDefaultImage}
         />
       </div>
-      <div className="w-full py-20 md:py-28">
+      <div className="w-full bg-gray-950 py-20 md:py-28">
         <CommerceShowcase locale={locale} variant="image" />
       </div>
-      <div className="w-full">
+      <div className="w-full bg-gray-950">
         <CommerceIntelligence locale={locale} variant="image" />
       </div>
     </main>

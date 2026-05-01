@@ -11,7 +11,7 @@ export default function () {
 
   return (
     <Button
-      className="capitalize text-black rounded-full"
+      className="rounded-full bg-white px-5 font-medium capitalize text-gray-950"
       onClick={() => router.push(`/${locale}/login`)}
     >
       {t("login")}

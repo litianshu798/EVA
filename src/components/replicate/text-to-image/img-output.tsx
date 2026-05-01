@@ -15,7 +15,7 @@ export default function Output({
 }) {
   const t = useTranslations("PhotoToCartoon.generator");
   return (
-    <div className="flex flex-col w-full md:w-1/2 p-6 md:p-8 bg-gray-50">
+    <div className="flex h-full w-full flex-col bg-transparent">
       {error && error !== "" && (
         <div className="flex justify-center items-center text-red-500 text-sm mb-4">
           {error}
@@ -25,7 +25,7 @@ export default function Output({
         {prediction ? (
           <>
             {prediction.output ? (
-              <div className="flex justify-center items-center relative group rounded-xl w-full overflow-hidden">
+              <div className="group relative flex min-h-[520px] w-full items-center justify-center overflow-hidden rounded-3xl border border-white/10 bg-gray-950/60">
                 <img
                   src={
                     showImage
@@ -36,7 +36,7 @@ export default function Output({
                       : prediction.output
                   }
                   alt="Result"
-                  className="object-contain max-w-full max-h-[420px] rounded-xl"
+                  className="max-h-[560px] max-w-full rounded-2xl object-contain p-4"
                 />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <Button
@@ -59,23 +59,23 @@ export default function Output({
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center h-full w-full bg-white border border-dashed border-gray-200 rounded-xl gap-3 min-h-[280px]">
+              <div className="flex min-h-[520px] w-full flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-white/15 bg-gray-950/60">
                 <CircularProgress
                   color="primary"
                   aria-label="Loading..."
-                  classNames={{ svg: "text-gray-900" }}
+                  classNames={{ svg: "text-white" }}
                 />
-                <span className="text-xs text-gray-500 font-medium capitalize">
+                <span className="text-xs font-medium capitalize text-white/60">
                   {prediction.status}
                 </span>
               </div>
             )}
           </>
         ) : (
-          <div className="flex items-center justify-center w-full h-full border border-dashed border-gray-200 rounded-xl bg-white min-h-[280px]">
+          <div className="flex min-h-[520px] w-full items-center justify-center rounded-3xl border border-dashed border-white/15 bg-gray-950/60">
             <img
               src={defaultImage}
-              className="object-contain max-w-full max-h-[420px] rounded-xl py-6"
+              className="max-h-[560px] max-w-full rounded-2xl object-contain p-4"
             />
           </div>
         )}

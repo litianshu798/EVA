@@ -216,7 +216,7 @@ export default function Worker(props: {
   const isZh = locale === "zh";
 
   return (
-    <section className="relative mx-auto w-full max-w-7xl overflow-hidden rounded-[28px] border border-white/70 bg-gray-950 shadow-2xl">
+    <section className="relative w-full overflow-hidden border-b border-white/10 bg-gray-950 shadow-2xl">
       <div className="absolute inset-0">
         <video
           src="/bg.mp4"
@@ -229,17 +229,17 @@ export default function Worker(props: {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.22),transparent_35%),linear-gradient(135deg,rgba(2,6,23,0.92),rgba(17,24,39,0.78)_55%,rgba(0,0,0,0.9))]" />
       </div>
 
-      <div className="relative grid gap-6 p-4 md:grid-cols-[1.08fr_0.92fr] md:p-8 lg:p-10">
-        <div className="rounded-3xl border border-white/15 bg-white/95 p-5 shadow-2xl md:p-7">
+      <div className="relative grid gap-6 p-4 md:grid-cols-[1.08fr_0.92fr] md:p-8 lg:p-10 xl:p-12">
+        <div className="rounded-3xl border border-white/10 bg-gray-900/88 p-5 text-white shadow-2xl backdrop-blur md:p-7">
           <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-start">
             <div>
               <div className="mb-3 inline-flex rounded-full bg-gray-950 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white">
                 AI Video Studio
               </div>
-              <h1 className="text-3xl font-bold tracking-tight text-gray-950 md:text-5xl">
+              <h1 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
                 {isZh ? "上传商品图，生成竖版带货视频" : "Upload a product image. Generate vertical commerce video."}
               </h1>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-gray-500">
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-white/58">
                 {isZh
                   ? "适合详情页、短视频、广告首屏和新品上架，把产品静图转成更有购买欲的动态素材。"
                   : "Built for PDPs, short-form ads, launch pages, and social commerce motion assets."}
@@ -249,7 +249,7 @@ export default function Worker(props: {
           </div>
 
           <div className="grid gap-4 lg:grid-cols-[220px_1fr]">
-            <label className="relative flex min-h-[310px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-gray-300 bg-gray-50 transition-colors hover:bg-gray-100">
+            <label className="relative flex min-h-[310px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-white/20 bg-white/[0.06] transition-colors hover:bg-white/[0.09]">
               {image ? (
                 <div className="relative h-full min-h-[310px] w-full">
                   <img
@@ -261,13 +261,13 @@ export default function Worker(props: {
                 </div>
               ) : (
                 <div className="flex flex-col items-center gap-3 p-5 text-center">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-900 text-white">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-gray-950">
                     +
                   </div>
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-sm font-medium text-white">
                     {t("input.upload-tips")}
                   </span>
-                  <span className="text-xs leading-5 text-gray-400">
+                  <span className="text-xs leading-5 text-white/45">
                     {isZh ? "建议上传清晰商品主图" : "Use a clean product hero image"}
                   </span>
                 </div>
@@ -283,14 +283,14 @@ export default function Worker(props: {
             <div className="flex min-h-[310px] flex-col">
               <div className="mb-4 grid gap-3 sm:grid-cols-[1fr_120px]">
                 <div>
-                  <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
                     Model
                   </label>
                   <select
                     aria-label="Model"
                     value={selectedModelId}
                     onChange={(event) => setSelectedModelId(event.target.value)}
-                    className="h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition-colors hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                    className="h-11 w-full rounded-xl border border-white/10 bg-white/10 px-3 text-sm text-white outline-none transition-colors hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
                   >
                     {(props.modelOptions || [selectedModel]).map((option) => (
                       <option key={option.id.toString()} value={option.id.toString()}>
@@ -300,20 +300,20 @@ export default function Worker(props: {
                   </select>
                 </div>
                 <div>
-                  <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
                     Ratio
                   </label>
-                  <div className="flex h-11 items-center rounded-xl border border-gray-200 bg-gray-50 px-3 text-sm font-medium text-gray-700">
+                  <div className="flex h-11 items-center rounded-xl border border-white/10 bg-white/10 px-3 text-sm font-medium text-white/75">
                     9:16
                   </div>
                 </div>
               </div>
 
-              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
                 Prompt
               </label>
               <textarea
-                className="min-h-[170px] flex-1 resize-none rounded-2xl border border-gray-200 bg-gray-50 px-4 py-4 text-sm leading-6 text-gray-950 outline-none transition-colors placeholder:text-gray-400 hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                className="min-h-[170px] flex-1 resize-none rounded-2xl border border-white/10 bg-white/[0.07] px-4 py-4 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/35 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
                 placeholder={t("input.promptTips")}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
@@ -321,7 +321,7 @@ export default function Worker(props: {
 
               <Button
                 isLoading={generating}
-                className="mt-4 h-12 w-full rounded-xl bg-gray-950 text-sm font-semibold text-white hover:bg-gray-800"
+                className="mt-4 h-12 w-full rounded-xl bg-white text-sm font-semibold text-gray-950 hover:bg-white/90"
                 onClick={handleGenerate}
               >
                 {generating
@@ -337,7 +337,7 @@ export default function Worker(props: {
           </div>
         </div>
 
-        <div className="flex min-h-[520px] items-center justify-center rounded-3xl border border-white/15 bg-white/10 p-5 backdrop-blur-md">
+        <div className="flex min-h-[560px] items-center justify-center rounded-3xl border border-white/15 bg-white/[0.07] p-5 backdrop-blur-md">
         {error && (
           <div className="flex justify-center items-center text-red-500 text-sm">
             {error}
@@ -346,12 +346,8 @@ export default function Worker(props: {
         {prediction ? (
           <>
             {prediction.output ? (
-              <div className="flex justify-center items-center relative group rounded-xl w-full overflow-hidden">
-                <video
-                  src={prediction.output}
-                  className="w-full h-auto rounded-xl"
-                  controls
-                />
+              <div className="relative mx-auto aspect-[9/16] h-full max-h-[600px] overflow-hidden rounded-[34px] border-[10px] border-gray-950 bg-gray-950 shadow-2xl">
+                <video src={prediction.output} className="h-full w-full object-cover" controls />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <Button
                     className="bg-gray-900/80 backdrop-blur-sm text-white text-sm rounded-lg px-4 py-2 border-0"
@@ -368,16 +364,16 @@ export default function Worker(props: {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center h-full w-full bg-white border border-dashed border-gray-200 rounded-xl gap-3">
+              <div className="flex h-full w-full flex-col items-center justify-center gap-3 rounded-[34px] border border-dashed border-white/15 bg-gray-950/50">
                 <CircularProgress
                   color="primary"
                   aria-label="Loading..."
-                  classNames={{ svg: "text-gray-900" }}
+                  classNames={{ svg: "text-white" }}
                 />
-                <span className="text-xs text-gray-500 font-medium capitalize">
+                <span className="text-xs font-medium capitalize text-white/60">
                   {prediction.status}
                 </span>
-                <span className="text-xs text-gray-400">
+                <span className="text-xs text-white/40">
                   Please wait 2–3 minutes
                 </span>
               </div>

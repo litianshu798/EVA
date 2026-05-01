@@ -14,7 +14,7 @@ export default async function WorkerWraper(params: {
   const modelOptions = effects.length > 0 ? effects : [effect];
 
   return (
-    <div className="flex flex-col w-full max-w-7xl rounded-lg md:mt-6 ">
+    <div className="flex w-full flex-col">
       <Worker
         modelOptions={modelOptions.map(toModelOption)}
         defaultModelId={effect.id}

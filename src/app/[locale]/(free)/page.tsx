@@ -46,41 +46,41 @@ export default function Home({
   const multiLanguageOfGenerator = "HomePage.generator";
 
   return (
-    <main className="flex flex-col items-center bg-white">
-      <div className="w-full px-3 py-8 md:px-0 md:py-10">
+    <main className="flex flex-col items-center bg-gray-950">
+      <div className="w-full">
         <WorkerWrapper
           effectId={effectId}
           promotion={video}
           lang={multiLanguageOfGenerator}
         />
       </div>
-      <div className="pt-20 md:pt-28 w-full">
+      <div className="w-full bg-gray-950 pt-20 md:pt-28">
         <CommerceShowcase locale={locale} variant="video" />
       </div>
-      <div className="pt-24 md:pt-32 w-full">
+      <div className="w-full bg-gray-950 pt-24 md:pt-32">
         <CommerceIntelligence locale={locale} variant="home" />
       </div>
-      <div className="pt-24 md:pt-32 w-full flex justify-center">
+      <div className="w-full bg-gray-950 pt-24 md:pt-32 flex justify-center">
         <UserExample multiLanguage={multiLanguage} images={images} />
       </div>
 
-      <div className="pt-24 md:pt-32 w-full">
+      <div className="w-full bg-gray-950 pt-24 md:pt-32">
         <What multiLanguage={multiLanguage} image={whatImage} />
       </div>
 
-      <div className="pt-24 md:pt-32 w-full">
+      <div className="w-full bg-gray-950 pt-24 md:pt-32">
         <How multiLanguage={multiLanguage} image={howImage} />
       </div>
 
-      <div className="pt-24 md:pt-32 w-full">
+      <div className="w-full bg-gray-950 pt-24 md:pt-32">
         <FeatureHero multiLanguage={multiLanguage} />
       </div>
 
-      <div className="pt-24 md:pt-32 w-full">
+      <div className="w-full bg-gray-950 pt-24 md:pt-32">
         <Faq multiLanguage={multiLanguage} grid={true} />
       </div>
 
-      <div className="pt-24 md:pt-32 pb-24 w-full">
+      <div className="w-full bg-gray-950 pt-24 md:pt-32 pb-24">
         <Cta multiLanguage={multiLanguage} />
       </div>
     </main>

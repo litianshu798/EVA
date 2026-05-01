@@ -57,7 +57,7 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
         ref={ref}
         {...props}
         classNames={{
-          base: cn("border-b border-gray-100 bg-white/95 backdrop-blur-sm text-gray-900"),
+          base: cn("border-b border-white/10 bg-gray-950/90 backdrop-blur-sm text-white"),
           wrapper:
             "w-full max-w-7xl lg:px-0 justify-center md:h-[72px] h-[60px]",
           item: "md:flex",
@@ -74,8 +74,8 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
             loading="lazy"
           />
           <div className="hidden lg:flex flex-col leading-none">
-            <span className="text-base font-bold text-gray-900 tracking-tight">EVA</span>
-            <span className="text-[10px] text-gray-400 tracking-widest uppercase font-medium">E-Commerce AI</span>
+            <span className="text-base font-bold text-white tracking-tight">EVA</span>
+            <span className="text-[10px] text-white/40 tracking-widest uppercase font-medium">E-Commerce AI</span>
           </div>
         </NavbarBrand>
 
@@ -86,8 +86,8 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
               className={cn(
                 "text-sm mx-4 transition-colors duration-200",
                 activeTag === "home"
-                  ? "text-gray-900 font-semibold"
-                  : "text-gray-500 hover:text-gray-900"
+                  ? "text-white font-semibold"
+                  : "text-white/50 hover:text-white"
               )}
               href={`/${locale}`}
               size="md"
@@ -100,8 +100,8 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
               className={cn(
                 "text-sm mx-4 transition-colors duration-200",
                 activeTag === "text-to-image"
-                  ? "text-gray-900 font-semibold"
-                  : "text-gray-500 hover:text-gray-900"
+                  ? "text-white font-semibold"
+                  : "text-white/50 hover:text-white"
               )}
               href={`/${locale}/text-to-image`}
               size="md"
@@ -114,8 +114,8 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
               className={cn(
                 "text-sm mx-4 transition-colors duration-200",
                 activeTag === "pricing"
-                  ? "text-gray-900 font-semibold"
-                  : "text-gray-500 hover:text-gray-900"
+                  ? "text-white font-semibold"
+                  : "text-white/50 hover:text-white"
               )}
               href={`/${locale}/pricing`}
               size="md"
@@ -134,7 +134,7 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
             <div className="flex flex-row gap-3 items-center">
               <a
                 href={`/${locale}/dashboard`}
-                className="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-200 mr-2"
+                className="text-sm text-white/50 hover:text-white transition-colors duration-200 mr-2"
               >
                 My Creations
               </a>
@@ -145,10 +145,10 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
           )}
         </NavbarContent>
 
-        <NavbarMenuToggle className="text-gray-700 md:hidden" />
+        <NavbarMenuToggle className="text-white md:hidden" />
 
         <NavbarMenu
-          className="top-[calc(var(--navbar-height)_-_1px)] max-h-fit bg-white pb-6 pt-6 shadow-sm border-t border-gray-100"
+          className="top-[calc(var(--navbar-height)_-_1px)] max-h-fit bg-gray-950 pb-6 pt-6 shadow-sm border-t border-white/10"
           motionProps={{
             initial: { opacity: 0, y: -10 },
             animate: { opacity: 1, y: 0 },
@@ -177,8 +177,8 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
                   className={cn(
                     "py-2 block text-sm",
                     activeTag === tag
-                      ? "text-gray-900 font-semibold"
-                      : "text-gray-500"
+                      ? "text-white font-semibold"
+                      : "text-white/55"
                   )}
                   href={`/${locale}/${path}`}
                   size="lg"
@@ -188,10 +188,10 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
               </NavbarMenuItem>
             ))}
 
-            <div className="pt-4 border-t border-gray-100 mt-2">
+            <div className="pt-4 border-t border-white/10 mt-2">
               <a
                 href={`/${locale}/dashboard`}
-                className="block py-2 text-sm text-gray-500 hover:text-gray-900 transition-colors"
+                className="block py-2 text-sm text-white/55 hover:text-white transition-colors"
               >
                 My Creations
               </a>

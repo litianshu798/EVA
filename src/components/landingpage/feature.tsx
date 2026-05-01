@@ -40,24 +40,24 @@ export default function FeatureHero(params: { multiLanguage: string }) {
   return (
     <section className="flex flex-col items-center justify-center">
       <div className="flex flex-col items-center w-full max-w-7xl px-4 md:px-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-16 tracking-tight">
+        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-16 tracking-tight">
           {t("Features.heading")}
         </h2>
-        <div className="grid gap-px sm:grid-cols-2 lg:grid-cols-3 w-full bg-gray-100 border border-gray-100 rounded-2xl overflow-hidden">
+        <div className="grid gap-px sm:grid-cols-2 lg:grid-cols-3 w-full bg-white/10 border border-white/10 rounded-2xl overflow-hidden">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-white p-8 hover:bg-gray-50 transition-colors duration-200"
+              className="bg-white/[0.05] p-8 hover:bg-white/[0.08] transition-colors duration-200"
             >
               <div className="mb-4">
-                <div className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100">
-                  <Icon icon={feature.icon} width={18} height={18} className="text-gray-700" />
+                <div className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white/10">
+                  <Icon icon={feature.icon} width={18} height={18} className="text-cyan-200" />
                 </div>
               </div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-2">
+              <h3 className="text-sm font-semibold text-white mb-2">
                 {feature.title}
               </h3>
-              <p className="text-sm text-gray-500 leading-relaxed">
+              <p className="text-sm text-white/52 leading-relaxed">
                 {feature.description}
               </p>
             </div>
