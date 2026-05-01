@@ -8,6 +8,7 @@ import { getMetadata } from "@/components/seo/seo";
 import UserExample from "@/components/landingpage/example";
 import Cta from "@/components/landingpage/cta";
 import CommerceShowcase from "@/components/landingpage/commerce-showcase";
+import CommerceIntelligence from "@/components/landingpage/commerce-intelligence";
 
 export async function generateMetadata({
   params,
@@ -58,7 +59,10 @@ export default function Home({
         />
       </div>
       <div className="pt-20 md:pt-28 w-full">
-        <CommerceShowcase locale={locale} />
+        <CommerceShowcase locale={locale} variant="video" />
+      </div>
+      <div className="pt-24 md:pt-32 w-full">
+        <CommerceIntelligence locale={locale} variant="home" />
       </div>
       <div className="pt-24 md:pt-32 w-full flex justify-center">
         <UserExample multiLanguage={multiLanguage} images={images} />

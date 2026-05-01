@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button, CircularProgress, Select, SelectItem } from "@nextui-org/react";
+import { Button, CircularProgress } from "@nextui-org/react";
 import Prediction from "@/backend/type/domain/replicate";
 import { useAppContext } from "@/contexts/app";
 import { toast } from "sonner";
@@ -230,27 +230,18 @@ export default function Worker(props: {
           <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
             Model
           </label>
-          <Select
+          <select
             aria-label="Model"
-            selectedKeys={selectedModelId ? [selectedModelId] : []}
-            onSelectionChange={(keys) => {
-              const [key] = Array.from(keys);
-              if (key) setSelectedModelId(String(key));
-            }}
-            radius="lg"
-            variant="bordered"
-            classNames={{
-              trigger:
-                "h-11 border-gray-200 bg-white hover:border-gray-300 data-[open=true]:border-gray-900",
-              value: "text-sm text-gray-800",
-            }}
+            value={selectedModelId}
+            onChange={(event) => setSelectedModelId(event.target.value)}
+            className="h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition-colors hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
           >
             {(props.modelOptions || [selectedModel]).map((option) => (
-              <SelectItem key={option.id.toString()} value={option.id.toString()}>
+              <option key={option.id.toString()} value={option.id.toString()}>
                 {option.name}
-              </SelectItem>
+              </option>
             ))}
-          </Select>
+          </select>
         </div>
 
         {/* Image Upload */}

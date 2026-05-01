@@ -14,7 +14,7 @@ interface ShowcaseItem {
   styleEn: string;
 }
 
-const SHOWCASE_ITEMS: ShowcaseItem[] = [
+const VIDEO_SHOWCASE_ITEMS: ShowcaseItem[] = [
   {
     title: "奢华美妆主视觉",
     titleEn: "Luxury Beauty Hero",
@@ -40,23 +40,23 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
   {
     title: "3C 产品发售海报",
     titleEn: "Tech Launch Poster",
-    type: "image",
-    asset: "/resources/text-to-image.jpg",
-    style: "科技蓝图 / 微距细节 / 发售物料",
-    styleEn: "Tech blueprint / macro detail / launch creative",
-    prompt: "未来感科技蓝图背景，无线耳机产品微距特写，金属与塑料材质清晰，边缘冷光，适合新品发售海报",
+    type: "video",
+    asset: "/resources/example1.mp4",
+    style: "科技光轨 / 快速转场 / 新品首发",
+    styleEn: "Light trails / fast cuts / launch motion",
+    prompt: "未来感科技蓝图背景，无线耳机产品微距穿梭，快速切换材质细节，冷色边缘光，新品发售广告视频",
     promptEn:
-      "Futuristic technical blueprint background, macro close-up of wireless earbuds, clear metal and plastic materials, cool edge lighting, suitable for a product launch poster",
+      "Futuristic technical blueprint background, macro fly-through of wireless earbuds, quick cuts across material details, cool edge lighting, launch commercial video",
   },
   {
     title: "食品饮料场景图",
-    titleEn: "Food & Beverage Scene",
-    type: "image",
+    titleEn: "Food & Beverage Motion",
+    type: "video",
     style: "清爽冰感 / 水珠 / 夏季促销",
     styleEn: "Icy fresh / droplets / summer campaign",
-    prompt: "清爽冰块与水珠背景，罐装饮料居中，明亮夏季光线，飞溅动效定格，适合电商促销Banner",
+    prompt: "清爽冰块与水珠背景，罐装饮料居中，明亮夏季光线，飞溅液体慢动作，适合电商促销短视频",
     promptEn:
-      "Refreshing ice cubes and water droplets background, canned drink centered, bright summer lighting, frozen splash motion, suitable for e-commerce campaign banner",
+      "Refreshing ice cubes and water droplets background, canned drink centered, bright summer lighting, slow-motion splash, suitable for e-commerce campaign short video",
   },
   {
     title: "服饰动态 Lookbook",
@@ -71,6 +71,19 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
   },
   {
     title: "电商白底 SKU 图",
+    titleEn: "Marketplace SKU Spin",
+    type: "video",
+    style: "白底规范 / 360 展示 / 平台上架",
+    styleEn: "White background / 360 spin / marketplace ready",
+    prompt: "纯白无缝背景，单个产品居中，缓慢360度旋转，真实接触阴影，比例准确，适合商品详情页视频",
+    promptEn:
+      "Pure white seamless background, single product centered, slow 360-degree rotation, realistic contact shadow, accurate proportions, ready for product detail page video",
+  },
+];
+
+const IMAGE_SHOWCASE_ITEMS: ShowcaseItem[] = [
+  {
+    title: "电商白底 SKU 图",
     titleEn: "Marketplace SKU White Shot",
     type: "image",
     style: "白底规范 / 阴影真实 / 平台上架",
@@ -79,11 +92,72 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     promptEn:
       "Pure white seamless background, single product centered, realistic contact shadow, accurate proportions, no extra props, ready for Amazon and DTC storefronts",
   },
+  {
+    title: "美妆套装主图",
+    titleEn: "Beauty Set Hero Image",
+    type: "image",
+    asset: "/resources/example3.webp",
+    style: "高端棚拍 / 套装陈列 / 柔光",
+    styleEn: "Premium studio / set composition / soft light",
+    prompt: "浅米白高级棚拍背景，护肤套装按主次层级陈列，柔和阴影，包装文字清晰，电商首页主视觉",
+    promptEn:
+      "Warm off-white premium studio background, skincare set arranged with visual hierarchy, soft shadows, clear package typography, e-commerce homepage hero image",
+  },
+  {
+    title: "服饰详情卖点图",
+    titleEn: "Fashion Detail Selling Point",
+    type: "image",
+    asset: "/resources/example1.webp",
+    style: "材质细节 / 拼贴构图 / 卖点标注",
+    styleEn: "Material detail / collage layout / selling points",
+    prompt: "高级服饰产品详情图，主图加面料微距细节拼贴，干净留白，适合展示防皱、透气、剪裁卖点",
+    promptEn:
+      "Premium fashion product detail image, hero shot plus fabric macro detail collage, clean whitespace, suitable for wrinkle-resistant, breathable, tailored selling points",
+  },
+  {
+    title: "食品饮料促销 Banner",
+    titleEn: "Food & Beverage Promo Banner",
+    type: "image",
+    style: "清爽冰感 / 水珠 / 夏季促销",
+    styleEn: "Icy fresh / droplets / summer campaign",
+    prompt: "清爽冰块与水珠背景，罐装饮料居中，明亮夏季光线，飞溅动效定格，适合电商促销Banner",
+    promptEn:
+      "Refreshing ice cubes and water droplets background, canned drink centered, bright summer lighting, frozen splash motion, suitable for e-commerce campaign banner",
+  },
+  {
+    title: "科技新品海报",
+    titleEn: "Tech Launch Poster",
+    type: "image",
+    asset: "/resources/text-to-image.jpg",
+    style: "科技蓝图 / 微距细节 / 发售物料",
+    styleEn: "Tech blueprint / macro detail / launch creative",
+    prompt: "未来感科技蓝图背景，无线耳机产品微距特写，金属与塑料材质清晰，边缘冷光，适合新品发售海报",
+    promptEn:
+      "Futuristic technical blueprint background, macro close-up of wireless earbuds, clear metal and plastic materials, cool edge lighting, suitable for a product launch poster",
+  },
+  {
+    title: "家居生活方式图",
+    titleEn: "Home Lifestyle Image",
+    type: "image",
+    asset: "/resources/example2.webp",
+    style: "真实场景 / 家居日光 / 使用氛围",
+    styleEn: "Real scene / home daylight / in-use mood",
+    prompt: "现代家居场景，自然日光，产品摆放在桌面使用环境中，背景轻微虚化，真实可信的生活方式摄影",
+    promptEn:
+      "Modern home scene, natural daylight, product placed in an in-use tabletop environment, slight background blur, authentic lifestyle photography",
+  },
 ];
 
-export default function CommerceShowcase({ locale }: { locale: string }) {
+export default function CommerceShowcase({
+  locale,
+  variant = "video",
+}: {
+  locale: string;
+  variant?: "video" | "image";
+}) {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const isZh = locale === "zh";
+  const items = variant === "image" ? IMAGE_SHOWCASE_ITEMS : VIDEO_SHOWCASE_ITEMS;
 
   function copyPrompt(prompt: string, index: number) {
     navigator.clipboard.writeText(prompt).then(() => {
@@ -107,13 +181,17 @@ export default function CommerceShowcase({ locale }: { locale: string }) {
           </div>
           <p className="max-w-xl text-sm leading-6 text-gray-500">
             {isZh
-              ? "覆盖商品主图、场景图、品牌海报、短视频动效。没有现成素材的样例先保留占位，方便后续替换真实资产。"
-              : "Covers hero images, lifestyle scenes, brand posters, and motion assets. Empty samples keep a clean slot for future real assets."}
+              ? variant === "image"
+                ? "覆盖商品主图、详情页卖点图、品牌海报、促销 Banner。没有现成素材的样例先保留占位，方便后续替换真实资产。"
+                : "覆盖商品展示视频、场景短片、社媒动效、详情页 360 展示。没有现成素材的样例先保留占位，方便后续替换真实资产。"
+              : variant === "image"
+                ? "Covers hero shots, detail visuals, brand posters, and campaign banners. Empty samples keep clean slots for future assets."
+                : "Covers product motion, lifestyle shorts, social clips, and 360 detail-page videos. Empty samples keep clean slots for future assets."}
           </p>
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {SHOWCASE_ITEMS.map((item, index) => {
+          {items.map((item, index) => {
             const title = isZh ? item.title : item.titleEn;
             const style = isZh ? item.style : item.styleEn;
             const prompt = isZh ? item.prompt : item.promptEn;

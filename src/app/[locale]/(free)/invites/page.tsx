@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import {
   Avatar,
   Button,
-  Input,
   Spinner,
   Table,
   TableBody,
@@ -151,12 +150,10 @@ export default function InvitesPage() {
                   {t("linkLabel")}
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row">
-                  <Input
+                  <input
                     value={inviteUrl}
-                    isReadOnly
-                    classNames={{
-                      input: "font-mono text-xs",
-                    }}
+                    readOnly
+                    className="h-10 min-w-0 flex-1 rounded-xl border border-gray-200 bg-white px-3 font-mono text-xs text-gray-700 outline-none"
                   />
                   <Button
                     className="h-10 rounded-xl bg-gray-900 px-5 text-white"

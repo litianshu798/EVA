@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button, Textarea, Select, SelectItem } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import Prediction from "@/backend/type/domain/replicate";
 import { useAppContext } from "@/contexts/app";
 import { toast } from "sonner";
@@ -188,50 +188,33 @@ export default function Worker(props: {
             <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
               Model
             </label>
-            <Select
+            <select
               aria-label="Model"
-              selectedKeys={selectedModelId ? [selectedModelId] : []}
-              onSelectionChange={(keys) => {
-                const [key] = Array.from(keys);
-                if (key) setSelectedModelId(String(key));
-              }}
-              radius="lg"
-              variant="bordered"
-              classNames={{
-                trigger:
-                  "h-11 border-gray-200 bg-white hover:border-gray-300 data-[open=true]:border-gray-900",
-                value: "text-sm text-gray-800",
-              }}
+              value={selectedModelId}
+              onChange={(event) => setSelectedModelId(event.target.value)}
+              className="h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition-colors hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
             >
               {(props.modelOptions || [selectedModel]).map((option) => (
-                <SelectItem key={option.id.toString()} value={option.id.toString()}>
+                <option key={option.id.toString()} value={option.id.toString()}>
                   {option.name}
-                </SelectItem>
+                </option>
               ))}
-            </Select>
+            </select>
           </div>
           <div>
             <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
               Format
             </label>
-            <Select
+            <select
               aria-label="Output Format"
-              selectedKeys={[outputFormat]}
-              onSelectionChange={(keys) => {
-                const [key] = Array.from(keys);
-                if (key) setOutputFormat(String(key));
-              }}
-              radius="lg"
-              variant="bordered"
-              classNames={{
-                trigger: "h-11 border-gray-200 bg-white hover:border-gray-300",
-                value: "text-sm text-gray-800",
-              }}
+              value={outputFormat}
+              onChange={(event) => setOutputFormat(event.target.value)}
+              className="h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition-colors hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
             >
-              <SelectItem key="webp" value="webp">WEBP</SelectItem>
-              <SelectItem key="jpg" value="jpg">JPG</SelectItem>
-              <SelectItem key="png" value="png">PNG</SelectItem>
-            </Select>
+              <option value="webp">WEBP</option>
+              <option value="jpg">JPG</option>
+              <option value="png">PNG</option>
+            </select>
           </div>
         </div>
 
@@ -239,20 +222,13 @@ export default function Worker(props: {
           <label className="block text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
             Prompt
           </label>
-          <Textarea
-            minRows={5}
+          <textarea
             placeholder={props.promptTips || "Describe the product image you want to generate..."}
-            radius="lg"
-            variant="bordered"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             aria-label="Prompt(提示词)"
-            classNames={{
-              inputWrapper:
-                "min-h-[156px] border-gray-200 bg-gray-50 hover:border-gray-300 focus-within:border-gray-900",
-              input:
-                "text-sm leading-6 text-gray-800 placeholder:text-gray-400",
-            }}
+            rows={6}
+            className="min-h-[156px] w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm leading-6 text-gray-900 outline-none transition-colors placeholder:text-gray-400 hover:border-gray-300 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
           />
         </div>
 

@@ -1,13 +1,13 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { FormEvent, useEffect, useState } from "react";
 import {
   Button,
-  Input,
   Tab,
   Tabs,
 } from "@nextui-org/react";
-import { Eye, EyeOff, Gift, Lock, Mail, User } from "lucide-react";
+import { Eye, EyeOff, Gift, Lock, LucideIcon, Mail, User } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -21,6 +21,49 @@ const authErrorMessageKey: Record<string, string> = {
   WEAK_PASSWORD: "weakPassword",
   SELF_INVITE_NOT_ALLOWED: "selfInvite",
 };
+
+function AuthField({
+  label,
+  type = "text",
+  placeholder,
+  value,
+  onChange,
+  icon: Icon,
+  required,
+  minLength,
+  endContent,
+}: {
+  label: string;
+  type?: string;
+  placeholder: string;
+  value: string;
+  onChange: (value: string) => void;
+  icon: LucideIcon;
+  required?: boolean;
+  minLength?: number;
+  endContent?: ReactNode;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+        {label}
+      </span>
+      <span className="flex h-12 items-center rounded-xl border border-gray-200 bg-white px-3 transition-colors focus-within:border-gray-900 focus-within:ring-2 focus-within:ring-gray-900/10">
+        <Icon className="mr-3 h-4 w-4 flex-shrink-0 text-gray-400" />
+        <input
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          required={required}
+          minLength={minLength}
+          className="h-full min-w-0 flex-1 bg-transparent text-sm text-gray-900 outline-none placeholder:text-gray-400"
+        />
+        {endContent}
+      </span>
+    </label>
+  );
+}
 
 export default function LoginPage() {
   const t = useTranslations("Auth");
@@ -165,54 +208,39 @@ export default function LoginPage() {
             </Tabs>
 
             <form className="mt-7 space-y-5" onSubmit={handleSubmit}>
-              <Input
+              <AuthField
                 type="email"
                 label={t("email")}
-                labelPlacement="outside"
-                variant="bordered"
-                radius="lg"
                 placeholder={t("emailPlaceholder")}
                 value={email}
-                onValueChange={setEmail}
-                startContent={<Mail className="h-4 w-4 text-gray-400" />}
-                classNames={{
-                  label: "text-xs font-medium uppercase tracking-wider text-gray-500",
-                  inputWrapper: "h-12 bg-white border-gray-200 hover:border-gray-300",
-                }}
-                isRequired
+                onChange={setEmail}
+                icon={Mail}
+                required
               />
 
               {mode === "register" && (
-                <Input
+                <AuthField
                   label={t("nickname")}
-                  labelPlacement="outside"
-                  variant="bordered"
-                  radius="lg"
                   placeholder={t("nicknamePlaceholder")}
                   value={nickname}
-                  onValueChange={setNickname}
-                  startContent={<User className="h-4 w-4 text-gray-400" />}
-                  classNames={{
-                    label: "text-xs font-medium uppercase tracking-wider text-gray-500",
-                    inputWrapper: "h-12 bg-white border-gray-200 hover:border-gray-300",
-                  }}
+                  onChange={setNickname}
+                  icon={User}
                 />
               )}
 
-              <Input
+              <AuthField
                 type={showPassword ? "text" : "password"}
                 label={t("password")}
-                labelPlacement="outside"
-                variant="bordered"
-                radius="lg"
                 placeholder={t("passwordPlaceholder")}
                 value={password}
-                onValueChange={setPassword}
-                startContent={<Lock className="h-4 w-4 text-gray-400" />}
+                onChange={setPassword}
+                icon={Lock}
+                minLength={8}
+                required
                 endContent={
                   <button
                     type="button"
-                    className="rounded-md p-1 text-gray-400 transition-colors hover:text-gray-700"
+                    className="ml-2 rounded-md p-1 text-gray-400 transition-colors hover:text-gray-700"
                     onClick={() => setShowPassword((value) => !value)}
                     aria-label={showPassword ? "Hide password" : "Show password"}
                   >
@@ -223,28 +251,15 @@ export default function LoginPage() {
                     )}
                   </button>
                 }
-                minLength={8}
-                classNames={{
-                  label: "text-xs font-medium uppercase tracking-wider text-gray-500",
-                  inputWrapper: "h-12 bg-white border-gray-200 hover:border-gray-300",
-                }}
-                isRequired
               />
 
               {mode === "register" && (
-                <Input
+                <AuthField
                   label={t("inviteCodeOptional")}
-                  labelPlacement="outside"
-                  variant="bordered"
-                  radius="lg"
                   placeholder={t("invitePlaceholder")}
                   value={inviteCode}
-                  onValueChange={(value) => setInviteCode(value.toUpperCase())}
-                  startContent={<Gift className="h-4 w-4 text-gray-400" />}
-                  classNames={{
-                    label: "text-xs font-medium uppercase tracking-wider text-gray-500",
-                    inputWrapper: "h-12 bg-white border-gray-200 hover:border-gray-300",
-                  }}
+                  onChange={(value) => setInviteCode(value.toUpperCase())}
+                  icon={Gift}
                 />
               )}
 

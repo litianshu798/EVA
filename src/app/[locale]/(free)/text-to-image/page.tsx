@@ -3,6 +3,7 @@ import TopHero from "@/components/landingpage/top";
 import WorkerWrapper from "@/components/replicate/text-to-image/worker-wraper";
 import { getMetadata } from "@/components/seo/seo";
 import CommerceShowcase from "@/components/landingpage/commerce-showcase";
+import CommerceIntelligence from "@/components/landingpage/commerce-intelligence";
 export async function generateMetadata({
   params,
 }: {
@@ -37,7 +38,10 @@ export default function TextToImage({
         />
       </div>
       <div className="w-full py-20 md:py-28">
-        <CommerceShowcase locale={locale} />
+        <CommerceShowcase locale={locale} variant="image" />
+      </div>
+      <div className="w-full">
+        <CommerceIntelligence locale={locale} variant="image" />
       </div>
     </main>
   );
