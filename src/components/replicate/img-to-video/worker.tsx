@@ -237,7 +237,7 @@ export default function Worker(props: {
                 AI Video Studio
               </div>
               <h1 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
-                {isZh ? "上传商品图，生成竖版带货视频" : "Upload a product image. Generate vertical commerce video."}
+                {isZh ? "上传商品图，生成带货视频" : "Upload a product image. Generate vertical commerce video."}
               </h1>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-white/58">
                 {isZh

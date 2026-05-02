@@ -38,7 +38,7 @@ export default function Home({
   ];
 
   const video = "/aivideo.mp4";
-  const whatImage = "/resources/example3.webp";
+  const whatImage = "/aivideo.mp4";
   const howImage = "/resources/example2.webp";
 
   const effectId = "1";
