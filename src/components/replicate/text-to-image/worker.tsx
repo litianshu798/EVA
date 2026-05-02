@@ -15,6 +15,109 @@ import { ModelOption } from "@/components/replicate/model-option";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+const localeKey = (locale: string) =>
+  locale === "zh" ? "zh" : locale === "pt" ? "pt" : "en";
+
+const IMAGE_COPY = {
+  zh: {
+    studio: "AI 商品图工作台",
+    model: "模型",
+    format: "格式",
+    ratio: "比例",
+    style: "风格",
+    lighting: "光线",
+    background: "背景",
+    quality: "质量",
+    prompt: "提示词",
+    negative: "负面词",
+    generate: "生成图片",
+    processing: "生成中...",
+    credit: "积分",
+    noCredit: "积分不足",
+    promptRequired: "请输入提示词",
+    loginRequired: "请先登录",
+    error: "生成图片时出错，请稍后再试。",
+    placeholder: "描述商品、场景、构图和想要的电商用途...",
+    negativePlaceholder: "不想出现的内容，例如：低清晰度、变形文字、多余手指、杂乱背景",
+    tags: ["电商白底", "详情页卖点", "场景海报", "促销 Banner", "社媒广告"],
+  },
+  en: {
+    studio: "AI Product Image Studio",
+    model: "Model",
+    format: "Format",
+    ratio: "Ratio",
+    style: "Style",
+    lighting: "Lighting",
+    background: "Background",
+    quality: "Quality",
+    prompt: "Prompt",
+    negative: "Negative prompt",
+    generate: "Generate Image",
+    processing: "Processing...",
+    credit: "credit",
+    noCredit: "No credit left",
+    promptRequired: "Please enter a prompt",
+    loginRequired: "Please login first",
+    error: "An error occurred while generating the image.",
+    placeholder: "Describe the product, scene, composition, and commerce use case...",
+    negativePlaceholder: "Things to avoid, e.g. low resolution, distorted text, extra fingers, cluttered background",
+    tags: ["White shot", "PDP detail", "Lifestyle poster", "Promo banner", "Social ad"],
+  },
+  pt: {
+    studio: "Estúdio de Imagem de Produto com IA",
+    model: "Modelo",
+    format: "Formato",
+    ratio: "Proporção",
+    style: "Estilo",
+    lighting: "Iluminação",
+    background: "Fundo",
+    quality: "Qualidade",
+    prompt: "Prompt",
+    negative: "Prompt negativo",
+    generate: "Gerar imagem",
+    processing: "Processando...",
+    credit: "crédito",
+    noCredit: "Créditos insuficientes",
+    promptRequired: "Digite um prompt",
+    loginRequired: "Faça login primeiro",
+    error: "Ocorreu um erro ao gerar a imagem.",
+    placeholder: "Descreva o produto, a cena, a composição e o uso comercial...",
+    negativePlaceholder: "O que evitar, ex.: baixa resolução, texto distorcido, dedos extras, fundo poluído",
+    tags: ["Fundo branco", "Detalhe da PDP", "Cena lifestyle", "Banner promocional", "Anúncio social"],
+  },
+} as const;
+
+const RATIO_OPTIONS = [
+  { value: "1:1", label: "1:1", width: 1024, height: 1024 },
+  { value: "4:5", label: "4:5", width: 1024, height: 1280 },
+  { value: "3:4", label: "3:4", width: 960, height: 1280 },
+  { value: "16:9", label: "16:9", width: 1280, height: 720 },
+  { value: "9:16", label: "9:16", width: 720, height: 1280 },
+];
+
+const IMAGE_CONFIGS = {
+  style: {
+    zh: ["高级棚拍", "电商白底", "生活方式", "品牌海报", "微距细节"],
+    en: ["Premium studio", "Marketplace white", "Lifestyle", "Brand poster", "Macro detail"],
+    pt: ["Estúdio premium", "Fundo branco", "Lifestyle", "Pôster de marca", "Detalhe macro"],
+  },
+  lighting: {
+    zh: ["柔和棚灯", "自然日光", "电影逆光", "高对比广告光"],
+    en: ["Soft studio", "Natural daylight", "Cinematic backlight", "High-contrast ad light"],
+    pt: ["Luz suave de estúdio", "Luz natural", "Contraluz cinematográfico", "Luz publicitária contrastada"],
+  },
+  background: {
+    zh: ["纯色高级背景", "真实使用场景", "促销活动场景", "平台合规留白"],
+    en: ["Premium solid backdrop", "Real usage scene", "Campaign scene", "Marketplace whitespace"],
+    pt: ["Fundo sólido premium", "Cena real de uso", "Cena de campanha", "Respiro para marketplace"],
+  },
+  quality: {
+    zh: ["高清商业摄影", "超写实", "干净可读包装", "广告级精修"],
+    en: ["Commercial HD photo", "Hyper-realistic", "Readable packaging", "Ad-grade retouch"],
+    pt: ["Foto comercial HD", "Hiper-realista", "Embalagem legível", "Retoque publicitário"],
+  },
+} as const;
+
 export default function Worker(props: {
   model: string;
   effect_link_name: string;
@@ -29,13 +132,17 @@ export default function Worker(props: {
   const [prompt, setPrompt] = useState("");
   const [generating, setGenerating] = useState<boolean>(false);
   const [outputFormat, setOutputFormat] = useState<string>("png");
+  const [ratio, setRatio] = useState<string>("1:1");
+  const [style, setStyle] = useState<string>("Premium studio");
+  const [lighting, setLighting] = useState<string>("Soft studio");
+  const [background, setBackground] = useState<string>("Premium solid backdrop");
+  const [quality, setQuality] = useState<string>("Commercial HD photo");
+  const [negativePrompt, setNegativePrompt] = useState<string>("");
   const [selectedModelId, setSelectedModelId] = useState<string>(
     props.defaultModelId?.toString() || props.modelOptions?.[0]?.id.toString() || ""
   );
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const width = 1024;
-  const height = 1024;
   const [userSubscriptionInfo, setUserSubscriptionInfo] =
     useState<UserSubscriptionInfo | null>(null);
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
@@ -43,6 +150,8 @@ export default function Worker(props: {
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations(props.lang || "index");
+  const copy = IMAGE_COPY[localeKey(locale)];
+  const ratioOption = RATIO_OPTIONS.find((option) => option.value === ratio) || RATIO_OPTIONS[0];
   const selectedModel =
     props.modelOptions?.find((option) => option.id.toString() === selectedModelId) ||
     props.modelOptions?.[0] || {
@@ -84,18 +193,18 @@ export default function Worker(props: {
         typeof userSubscriptionInfo?.remain_count === "number" &&
         userSubscriptionInfo.remain_count < selectedModel.credit
       ) {
-        toast.warning("No credit left");
+        toast.warning(copy.noCredit);
         return;
       }
     }
 
-    if (prompt.length === 0) {
-      toast.warning("Please enter a prompt");
+    if (prompt.trim().length === 0) {
+      toast.warning(copy.promptRequired);
       return;
     }
 
     if (!user?.uuid) {
-      toast.warning("Please login first");
+      toast.warning(copy.loginRequired);
       await sleep(1000);
       router.push(`/${locale}/login`);
       return;
@@ -103,17 +212,26 @@ export default function Worker(props: {
 
     try {
       setGenerating(true);
+      const enhancedPrompt = [
+        prompt.trim(),
+        style,
+        lighting,
+        background,
+        quality,
+        "professional e-commerce product image",
+      ].filter(Boolean).join(", ");
       const response = await fetch("/api/predictions/text_to_image", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           model: selectedModel.model,
           version: selectedModel.version,
-          prompt,
-          width,
-          height,
+          prompt: enhancedPrompt,
+          width: ratioOption.width,
+          height: ratioOption.height,
           output_format: outputFormat,
-          aspect_ratio: "custom",
+          aspect_ratio: ratio,
+          negative_prompt: negativePrompt.trim(),
           user_id: user?.uuid,
           user_email: user?.email,
           effect_link_name: selectedModel.link_name,
@@ -130,7 +248,7 @@ export default function Worker(props: {
       setPrediction(newPrediction);
     } catch (error) {
       console.error("Error generating image:", error);
-      toast.error("An error occurred while generating the image.");
+      toast.error(copy.error);
       setGenerating(false);
       return;
     }
@@ -170,7 +288,18 @@ export default function Worker(props: {
     fetchUserSubscriptionInfo();
   };
 
-  const isZh = locale === "zh";
+  const currentLocale = localeKey(locale);
+
+  useEffect(() => {
+    setStyle(IMAGE_CONFIGS.style[currentLocale][0]);
+    setLighting(IMAGE_CONFIGS.lighting[currentLocale][0]);
+    setBackground(IMAGE_CONFIGS.background[currentLocale][0]);
+    setQuality(IMAGE_CONFIGS.quality[currentLocale][0]);
+  }, [currentLocale]);
+
+  const configSelectClass =
+    "h-11 w-full rounded-xl border border-white/10 bg-white/10 px-3 text-sm text-white outline-none transition-colors hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10";
+  const optionClass = "bg-gray-950 text-white";
 
   return (
     <section className="relative w-full overflow-hidden border-b border-white/10 bg-gray-950 shadow-2xl">
@@ -181,7 +310,7 @@ export default function Worker(props: {
           <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-start">
             <div>
               <div className="mb-3 inline-flex rounded-full bg-gray-950 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white">
-                AI Image Studio
+                {copy.studio}
               </div>
               <h1 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
                 {t("top.subTitle")}
@@ -193,19 +322,19 @@ export default function Worker(props: {
             <CreditInfo credit={userSubscriptionInfo?.remain_count?.toString() || ""} />
           </div>
 
-          <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_150px]">
+          <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <div>
               <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                Model
+                {copy.model}
               </label>
               <select
                 aria-label="Model"
                 value={selectedModelId}
                 onChange={(event) => setSelectedModelId(event.target.value)}
-                className="h-11 w-full rounded-xl border border-white/10 bg-white/10 px-3 text-sm text-white outline-none transition-colors hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
+                className={configSelectClass}
               >
                 {(props.modelOptions || [selectedModel]).map((option) => (
-                  <option key={option.id.toString()} value={option.id.toString()}>
+                  <option className={optionClass} key={option.id.toString()} value={option.id.toString()}>
                     {option.name}
                   </option>
                 ))}
@@ -213,38 +342,92 @@ export default function Worker(props: {
             </div>
             <div>
               <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                Format
+                {copy.ratio}
               </label>
               <select
-                aria-label="Output Format"
+                aria-label="Aspect ratio"
+                value={ratio}
+                onChange={(event) => setRatio(event.target.value)}
+                className={configSelectClass}
+              >
+                {RATIO_OPTIONS.map((option) => (
+                  <option className={optionClass} key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                {copy.format}
+              </label>
+              <select
+                aria-label="Output format"
                 value={outputFormat}
                 onChange={(event) => setOutputFormat(event.target.value)}
-                className="h-11 w-full rounded-xl border border-white/10 bg-white/10 px-3 text-sm text-white outline-none transition-colors hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
+                className={configSelectClass}
               >
-                <option value="webp">WEBP</option>
-                <option value="jpg">JPG</option>
-                <option value="png">PNG</option>
+                <option className={optionClass} value="webp">WEBP</option>
+                <option className={optionClass} value="jpg">JPG</option>
+                <option className={optionClass} value="png">PNG</option>
               </select>
+            </div>
+            {[
+              [copy.style, style, setStyle, IMAGE_CONFIGS.style[currentLocale]],
+              [copy.lighting, lighting, setLighting, IMAGE_CONFIGS.lighting[currentLocale]],
+              [copy.background, background, setBackground, IMAGE_CONFIGS.background[currentLocale]],
+              [copy.quality, quality, setQuality, IMAGE_CONFIGS.quality[currentLocale]],
+            ].map(([label, value, setter, options]) => (
+              <div key={label as string}>
+                <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                  {label as string}
+                </label>
+                <select
+                  aria-label={label as string}
+                  value={value as string}
+                  onChange={(event) => (setter as React.Dispatch<React.SetStateAction<string>>)(event.target.value)}
+                  className={configSelectClass}
+                >
+                  {(options as readonly string[]).map((option) => (
+                    <option className={optionClass} key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid gap-4 xl:grid-cols-[1.4fr_0.8fr]">
+            <div>
+              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                {copy.prompt}
+              </label>
+              <textarea
+                placeholder={props.promptTips || copy.placeholder}
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                aria-label="Prompt"
+                className="min-h-[260px] w-full resize-none rounded-3xl border border-white/10 bg-white/[0.07] px-5 py-5 text-base leading-7 text-white outline-none transition-colors placeholder:text-white/35 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
+              />
+            </div>
+            <div>
+              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                {copy.negative}
+              </label>
+              <textarea
+                placeholder={copy.negativePlaceholder}
+                value={negativePrompt}
+                onChange={(e) => setNegativePrompt(e.target.value)}
+                aria-label="Negative prompt"
+                className="min-h-[260px] w-full resize-none rounded-3xl border border-white/10 bg-white/[0.055] px-4 py-4 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/30 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
+              />
             </div>
           </div>
 
-          <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-            Prompt
-          </label>
-          <textarea
-            placeholder={props.promptTips || "Describe the product image you want to generate..."}
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            aria-label="Prompt(提示词)"
-            className="min-h-[300px] w-full resize-none rounded-3xl border border-white/10 bg-white/[0.07] px-5 py-5 text-base leading-7 text-white outline-none transition-colors placeholder:text-white/35 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
-          />
-
           <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
             <div className="flex flex-wrap gap-2 text-xs">
-              {(isZh
-                ? ["电商白底", "详情页卖点", "场景海报", "促销 Banner"]
-                : ["White shot", "PDP detail", "Lifestyle poster", "Promo banner"]
-              ).map((tag) => (
+              {copy.tags.map((tag) => (
                 <span key={tag} className="rounded-full bg-white/10 px-3 py-1 text-white/58">
                   {tag}
                 </span>
@@ -255,10 +438,10 @@ export default function Worker(props: {
               className="h-12 rounded-xl bg-white px-8 text-sm font-semibold text-gray-950 hover:bg-white/90"
               onClick={handleGenerate}
             >
-              {generating ? prediction?.status || "Processing..." : "Generate Image"}
+              {generating ? prediction?.status || copy.processing : copy.generate}
               {!generating && (
-                <span className="ml-2 text-white/55">
-                  {selectedModel.credit} credit
+                <span className="ml-2 text-gray-500">
+                  {selectedModel.credit} {copy.credit}
                 </span>
               )}
             </Button>
