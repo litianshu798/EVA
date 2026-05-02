@@ -73,7 +73,7 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
             className="w-8 h-8 md:w-9 md:h-9 mr-2.5 rounded-md"
             loading="lazy"
           />
-          <div className="hidden lg:flex flex-col leading-none">
+          <div className="hidden sm:flex flex-col leading-none">
             <span className="text-base font-bold text-white tracking-tight">gptimage</span>
             <span className="text-[10px] text-white/40 tracking-widest uppercase font-medium">AI Commerce Studio</span>
           </div>
@@ -145,10 +145,16 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
           )}
         </NavbarContent>
 
-        <NavbarMenuToggle className="text-white md:hidden" />
+        <NavbarContent className="flex md:hidden" justify="end">
+          <Locales />
+          <NavbarMenuToggle
+            className="text-white"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          />
+        </NavbarContent>
 
         <NavbarMenu
-          className="top-[calc(var(--navbar-height)_-_1px)] max-h-fit bg-gray-950 pb-6 pt-6 shadow-sm border-t border-white/10"
+          className="top-[calc(var(--navbar-height)_-_1px)] max-h-[calc(100dvh-var(--navbar-height))] bg-gray-950 pb-6 pt-6 shadow-2xl border-t border-white/10"
           motionProps={{
             initial: { opacity: 0, y: -10 },
             animate: { opacity: 1, y: 0 },
@@ -159,7 +165,7 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
             },
           }}
         >
-          <div className="flex flex-col w-full px-6 gap-1">
+          <div className="flex w-full flex-col gap-2 px-6">
             {[
               { tag: "home", path: "" },
               { tag: "text-to-image", path: "text-to-image" },
@@ -196,7 +202,7 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
                 My Creations
               </a>
             </div>
-            <div className="mt-3">
+            <div className="mt-3 flex items-center justify-between gap-3">
               {user ? <UserButton /> : <LoginButton />}
             </div>
           </div>

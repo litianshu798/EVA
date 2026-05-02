@@ -28,8 +28,8 @@ export default function Locales() {
             <DropdownTrigger>
                 <Button
                     variant="light"
-                    className="text-sm text-gray-500 hover:text-gray-900 min-w-0 px-2 gap-1"
-                    startContent={<Icon icon="solar:global-linear" className="w-4 h-4 text-gray-400" />}
+                    className="min-w-0 gap-1 px-2 text-sm text-white/60 hover:text-white"
+                    startContent={<Icon icon="solar:global-linear" className="w-4 h-4 text-white/45" />}
                 >
                     {localesName[locale] || locale.toUpperCase()}
                 </Button>
@@ -40,7 +40,7 @@ export default function Locales() {
                 selectionMode="single"
                 selectedKeys={selectedKeys}
                 onSelectionChange={setSelectedKeys}
-                className="min-w-[100px]"
+                className="min-w-[120px]"
             >
                 {Object.keys(localesName).map((item) => (
                     <DropdownItem

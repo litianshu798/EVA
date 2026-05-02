@@ -39,7 +39,7 @@ export default function Home({
 
   const video = "/aivideo.mp4";
   const whatImage = "/resources/brandmarket.png";
-  const howImage = "/resources/showcase.png";
+  const howImage = "/resources/example6.png";
 
   const effectId = "1";
   const multiLanguage = "HomePage";

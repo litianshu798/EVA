@@ -141,15 +141,17 @@ export default function Pricing() {
       </div>
 
       <div className="mx-auto -mt-20 max-w-7xl px-4 md:px-8">
-        <div className="rounded-[28px] border border-gray-200 bg-white p-4 shadow-2xl md:p-6">
+        <div className="rounded-[28px] border border-white/10 bg-white/[0.06] p-4 shadow-2xl backdrop-blur md:p-6">
         <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
           <Tabs
             classNames={{
-              tabList: "border border-gray-200 bg-white p-1 rounded-full shadow-sm",
-              cursor: "bg-gray-950 rounded-full",
-              tab: "h-10 px-4",
+              base: "w-full overflow-x-auto md:w-auto",
+              tabList:
+                "min-w-max border border-white/10 bg-white/10 p-1 rounded-full shadow-sm",
+              cursor: "bg-white rounded-full",
+              tab: "h-10 px-4 whitespace-nowrap flex-shrink-0",
               tabContent:
-                "text-sm group-data-[selected=true]:text-white group-data-[selected=false]:text-gray-600",
+                "whitespace-nowrap text-sm group-data-[selected=true]:text-gray-950 group-data-[selected=false]:text-white/60",
             }}
             radius="full"
             onSelectionChange={onFrequencyChange}
@@ -160,7 +162,7 @@ export default function Pricing() {
               title={
                 <div className="flex items-center gap-2">
                   <span>{isZh ? "年付" : "Yearly"}</span>
-                  <Chip size="sm" className="bg-emerald-100 text-emerald-700">
+                  <Chip size="sm" className="bg-emerald-400/15 text-emerald-200">
                     {isZh ? "省 30%" : "Save 30%"}
                   </Chip>
                 </div>
@@ -170,7 +172,7 @@ export default function Pricing() {
             <Tab key={FrequencyEnum.OneTime} title={isZh ? "单次购买" : "Pay as you go"} />
           </Tabs>
 
-          <div className="inline-flex items-center gap-2 rounded-full bg-gray-950 px-4 py-2 text-sm text-white">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white/75">
             <ShieldCheck className="h-4 w-4 text-emerald-300" />
             {isZh ? "Stripe 安全支付，积分即时到账" : "Secure Stripe checkout, credits ready after payment"}
           </div>
@@ -180,35 +182,35 @@ export default function Pricing() {
           {tiers.map((tier) => (
             <div
               key={tier.key}
-              className={`relative overflow-hidden rounded-3xl border bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${
+              className={`relative overflow-hidden rounded-3xl border p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${
                 tier.mostPopular
-                  ? "border-gray-950 ring-4 ring-amber-300/30"
-                  : "border-gray-200"
+                  ? "border-amber-300/40 bg-white/[0.10] ring-4 ring-amber-300/20"
+                  : "border-white/10 bg-white/[0.055]"
               }`}
             >
               {tier.mostPopular && (
                 <div className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#06b6d4,#f59e0b,#f43f5e)]" />
               )}
               {tier.mostPopular && (
-                <div className="absolute right-5 top-5 inline-flex items-center gap-1 rounded-full bg-gray-950 px-3 py-1 text-xs font-medium text-white">
+                <div className="absolute right-5 top-5 inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-xs font-medium text-gray-950">
                   <Crown className="h-3.5 w-3.5 text-amber-300" />
                   {isZh ? "推荐" : "Most Popular"}
                 </div>
               )}
               <div className="mb-8">
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gray-100">
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-white/10">
                   {tier.mostPopular ? (
                     <Zap className="h-5 w-5 text-amber-500" />
                   ) : tier.featured ? (
                     <Sparkles className="h-5 w-5 text-cyan-600" />
                   ) : (
-                    <Layers3 className="h-5 w-5 text-gray-700" />
+                    <Layers3 className="h-5 w-5 text-cyan-200" />
                   )}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-950">
+                <h3 className="text-xl font-semibold text-white">
                   {tier.title}
                 </h3>
-                <p className="mt-2 min-h-[48px] text-sm leading-6 text-gray-500">
+                <p className="mt-2 min-h-[48px] text-sm leading-6 text-white/52">
                   {tier.description}
                 </p>
               </div>
@@ -217,24 +219,24 @@ export default function Pricing() {
                 <div className="flex items-end gap-2">
                   {typeof tier.price !== "string" &&
                     tier.previousPrice?.[selectedFrequency.key] && (
-                      <span className="pb-1 text-lg text-gray-400 line-through">
+                      <span className="pb-1 text-lg text-white/35 line-through">
                         {tier.previousPrice[selectedFrequency.key]}
                       </span>
                     )}
-                  <span className="text-5xl font-bold tracking-tight text-gray-950">
+                  <span className="text-5xl font-bold tracking-tight text-white">
                     {typeof tier.price === "string"
                       ? tier.price
                       : tier.price[selectedFrequency.key]}
                   </span>
                 </div>
-                <p className="mt-2 text-sm text-gray-400">
+                <p className="mt-2 text-sm text-white/38">
                   {selectedFrequency.priceSuffix}
                 </p>
               </div>
 
               <ul className="mb-8 space-y-3">
                 {tier.features?.[selectedFrequency.key].map((feature) => (
-                  <li key={feature} className="flex gap-3 text-sm text-gray-600">
+                  <li key={feature} className="flex gap-3 text-sm text-white/62">
                     <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-600" />
                     <span>{feature}</span>
                   </li>
@@ -245,8 +247,8 @@ export default function Pricing() {
                 fullWidth
                 className={`h-12 rounded-xl text-sm font-semibold ${
                   tier.mostPopular
-                    ? "bg-gray-950 text-white shadow-lg shadow-gray-950/20"
-                    : "bg-gray-100 text-gray-950 hover:bg-gray-200"
+                    ? "bg-white text-gray-950 shadow-lg shadow-white/10"
+                    : "bg-white/10 text-white hover:bg-white/15"
                 }`}
                 isLoading={loadingTier === tier.key}
                 onPress={() =>
@@ -265,22 +267,22 @@ export default function Pricing() {
         </div>
         </div>
 
-        <div className="mt-8 grid gap-4 rounded-3xl border border-gray-200 bg-gray-50 p-5 md:grid-cols-3">
+        <div className="mt-8 grid gap-4 rounded-3xl border border-white/10 bg-white/[0.05] p-5 md:grid-cols-3">
           {[
             [isZh ? "适合上新批次" : "Launch batches", isZh ? "集中生成主图、详情页和促销短片。" : "Generate hero shots, PDP visuals, and promo clips together."],
             [isZh ? "适合广告测试" : "Ad testing", isZh ? "快速扩展不同风格与场景，提高素材测试速度。" : "Explore more styles and scenarios for faster creative testing."],
             [isZh ? "适合团队协作" : "Team workflow", isZh ? "用积分规划产能，减少临时外包和反复沟通。" : "Plan production with credits and reduce ad hoc outsourcing."],
           ].map(([title, desc]) => (
-            <div key={title} className="rounded-xl bg-white p-5">
-              <h4 className="text-sm font-semibold text-gray-950">{title}</h4>
-              <p className="mt-2 text-sm leading-6 text-gray-500">{desc}</p>
+            <div key={title} className="rounded-xl border border-white/10 bg-white/[0.06] p-5">
+              <h4 className="text-sm font-semibold text-white">{title}</h4>
+              <p className="mt-2 text-sm leading-6 text-white/52">{desc}</p>
             </div>
           ))}
         </div>
 
         <div className="mt-8 grid gap-5 md:grid-cols-[1fr_1fr]">
-          <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h3 className="text-lg font-semibold text-gray-950">
+          <div className="rounded-3xl border border-white/10 bg-white/[0.06] p-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-white">
               {isZh ? "为什么看起来更划算" : "Why the plans pay back quickly"}
             </h3>
             <div className="mt-5 space-y-4">
@@ -289,8 +291,8 @@ export default function Pricing() {
                 [isZh ? "gptimage 可以围绕同一 SKU 反复扩展场景和素材。" : "gptimage can expand multiple scenes and assets around the same SKU."],
                 [isZh ? "素材测试速度越快，广告和上新损耗越低。" : "Faster creative testing lowers launch and ad waste."],
               ].map(([text], index) => (
-                <div key={text} className="flex gap-3 text-sm leading-6 text-gray-600">
-                  <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-700">
+                <div key={text} className="flex gap-3 text-sm leading-6 text-white/62">
+                  <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-emerald-300/15 text-xs font-bold text-emerald-200">
                     {index + 1}
                   </span>
                   {text}

@@ -41,7 +41,6 @@ const VIDEO_SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: "3C 产品发售海报",
     titleEn: "Tech Launch Poster",
     type: "video",
-    asset: "/resources/example3.mp4",
     style: "科技光轨 / 快速转场 / 新品首发",
     styleEn: "Light trails / fast cuts / launch motion",
     prompt: "未来感科技蓝图背景，无线耳机产品微距穿梭，快速切换材质细节，冷色边缘光，新品发售广告视频",
@@ -52,7 +51,6 @@ const VIDEO_SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: "食品饮料场景图",
     titleEn: "Food & Beverage Motion",
     type: "video",
-    asset: "/resources/example4.mp4",
     style: "清爽冰感 / 水珠 / 夏季促销",
     styleEn: "Icy fresh / droplets / summer campaign",
     prompt: "清爽冰块与水珠背景，罐装饮料居中，明亮夏季光线，飞溅液体慢动作，适合电商促销短视频",
@@ -74,7 +72,6 @@ const VIDEO_SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: "电商白底 SKU 图",
     titleEn: "Marketplace SKU Spin",
     type: "video",
-    asset: "/resources/example6.mp4",
     style: "白底规范 / 360 展示 / 平台上架",
     styleEn: "White background / 360 spin / marketplace ready",
     prompt: "纯白无缝背景，单个产品居中，缓慢360度旋转，真实接触阴影，比例准确，适合商品详情页视频",
@@ -88,7 +85,7 @@ const IMAGE_SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: "电商白底 SKU 图",
     titleEn: "Marketplace SKU White Shot",
     type: "image",
-    asset: "/resources/example1.jpg",
+    asset: "/resources/example1.png",
     style: "白底规范 / 阴影真实 / 平台上架",
     styleEn: "White background / realistic shadow / marketplace ready",
     prompt: "纯白无缝背景，单个产品居中，真实接触阴影，比例准确，无多余道具，适合亚马逊与独立站上架",
@@ -99,7 +96,7 @@ const IMAGE_SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: "美妆套装主图",
     titleEn: "Beauty Set Hero Image",
     type: "image",
-    asset: "/resources/example2.jpg",
+    asset: "/resources/example2.png",
     style: "高端棚拍 / 套装陈列 / 柔光",
     styleEn: "Premium studio / set composition / soft light",
     prompt: "浅米白高级棚拍背景，护肤套装按主次层级陈列，柔和阴影，包装文字清晰，电商首页主视觉",
@@ -110,7 +107,7 @@ const IMAGE_SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: "服饰详情卖点图",
     titleEn: "Fashion Detail Selling Point",
     type: "image",
-    asset: "/resources/example3.jpg",
+    asset: "/resources/example3.png",
     style: "材质细节 / 拼贴构图 / 卖点标注",
     styleEn: "Material detail / collage layout / selling points",
     prompt: "高级服饰产品详情图，主图加面料微距细节拼贴，干净留白，适合展示防皱、透气、剪裁卖点",
@@ -121,7 +118,7 @@ const IMAGE_SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: "食品饮料促销 Banner",
     titleEn: "Food & Beverage Promo Banner",
     type: "image",
-    asset: "/resources/example4.jpg",
+    asset: "/resources/example4.png",
     style: "清爽冰感 / 水珠 / 夏季促销",
     styleEn: "Icy fresh / droplets / summer campaign",
     prompt: "清爽冰块与水珠背景，罐装饮料居中，明亮夏季光线，飞溅动效定格，适合电商促销Banner",
@@ -132,7 +129,7 @@ const IMAGE_SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: "科技新品海报",
     titleEn: "Tech Launch Poster",
     type: "image",
-    asset: "/resources/example5.jpg",
+    asset: "/resources/example5.png",
     style: "科技蓝图 / 微距细节 / 发售物料",
     styleEn: "Tech blueprint / macro detail / launch creative",
     prompt: "未来感科技蓝图背景，无线耳机产品微距特写，金属与塑料材质清晰，边缘冷光，适合新品发售海报",
@@ -143,7 +140,7 @@ const IMAGE_SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: "家居生活方式图",
     titleEn: "Home Lifestyle Image",
     type: "image",
-    asset: "/resources/example6.jpg",
+    asset: "/resources/example6.png",
     style: "真实场景 / 家居日光 / 使用氛围",
     styleEn: "Real scene / home daylight / in-use mood",
     prompt: "现代家居场景，自然日光，产品摆放在桌面使用环境中，背景轻微虚化，真实可信的生活方式摄影",
@@ -197,8 +194,8 @@ export default function CommerceShowcase({
         <div
           className={
             variant === "video"
-              ? "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4"
-              : "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"
+              ? "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+              : "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
           }
         >
           {items.map((item, index) => {

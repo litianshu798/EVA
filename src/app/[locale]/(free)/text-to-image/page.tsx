@@ -22,7 +22,7 @@ export default function TextToImage({
 }) {
   const effectId = "2";
   const multiLanguage = "TextToImage";
-  const outputDefaultImage = "/aipic.png";
+  const outputDefaultImage = "/resources/showcase.png";
 
   return (
     <main className="flex flex-col items-center bg-gray-950">
