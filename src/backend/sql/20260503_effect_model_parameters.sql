@@ -3,9 +3,8 @@
 
 ALTER TABLE effect ADD COLUMN IF NOT EXISTS param_schema jsonb NULL;
 
--- Hide older seed examples from the default picker; keep records for history compatibility.
-UPDATE effect
-SET is_open = 0
+-- Remove older seed examples from the model picker.
+DELETE FROM effect
 WHERE link_name IN ('kling-v12', 'flux-1-pro');
 
 INSERT INTO effect (

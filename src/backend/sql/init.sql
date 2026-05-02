@@ -57,8 +57,20 @@ CREATE TABLE effect (
   param_schema jsonb NULL,                  -- 前端参数面板配置（JSON Schema-like）
   created_at timestamp with time zone NULL -- 创建时间
 );
-INSERT INTO effect (id, name, type, des, platform, link, api, is_open, link_name, credit, model, version, pre_prompt, created_at) VALUES (1, 'Kling v2.1', 1, NULL, 'replicate', 'https://replicate.com/kwaivgi/kling-v2.1/api', 'kwaivgi/kling-v2.1', 1, 'kling-v12', 15, 'kwaivgi/kling-v2.1', NULL, NULL, NULL);
-INSERT INTO effect (id, name, type, des, platform, link, api, is_open, link_name, credit, model, version, pre_prompt, created_at) VALUES (2, 'Flux1.1 Pro', 2, NULL, 'replicate', 'https://replicate.com/black-forest-labs/flux-1.1-pro', 'black-forest-labs/flux-1.1-pro', 1, 'flux-1-pro', 1, 'black-forest-labs/flux-1.1-pro', NULL, NULL, NULL);
+INSERT INTO effect (id, name, type, des, platform, link, api, is_open, link_name, credit, model, version, pre_prompt, param_schema, created_at) VALUES (
+  11, 'Seedance 2.0 Fast', 1, 'ByteDance fast image-to-video model for short commerce motion assets.', 'replicate',
+  'https://replicate.com/bytedance/seedance-2.0-fast', 'bytedance/seedance-2.0-fast', 1, 'seedance-2-fast', 15,
+  'bytedance/seedance-2.0-fast', NULL, NULL,
+  '{"fields":[{"key":"aspect_ratio","label":"Aspect ratio","type":"select","default":"9:16","options":[{"label":"9:16","value":"9:16"},{"label":"16:9","value":"16:9"},{"label":"1:1","value":"1:1"}]},{"key":"duration","label":"Duration","type":"select","default":"5s","options":[{"label":"5s","value":"5s"},{"label":"8s","value":"8s"},{"label":"10s","value":"10s"}]},{"key":"resolution","label":"Resolution","type":"select","default":"720p","options":[{"label":"720p","value":"720p"},{"label":"1080p","value":"1080p"}]},{"key":"camera_fixed","label":"Fixed camera","type":"boolean","default":false}]}'::jsonb,
+  NULL
+);
+INSERT INTO effect (id, name, type, des, platform, link, api, is_open, link_name, credit, model, version, pre_prompt, param_schema, created_at) VALUES (
+  22, 'Nano Banana 2', 2, 'Google image model for high-quality product and campaign visuals.', 'replicate',
+  'https://replicate.com/google/nano-banana-2', 'google/nano-banana-2', 1, 'nano-banana-2', 3,
+  'google/nano-banana-2', NULL, NULL,
+  '{"fields":[{"key":"aspect_ratio","label":"Aspect ratio","type":"select","default":"1:1","options":[{"label":"1:1","value":"1:1"},{"label":"2:3","value":"2:3"},{"label":"3:2","value":"3:2"},{"label":"3:4","value":"3:4"},{"label":"4:3","value":"4:3"},{"label":"4:5","value":"4:5"},{"label":"5:4","value":"5:4"},{"label":"9:16","value":"9:16"},{"label":"16:9","value":"16:9"},{"label":"21:9","value":"21:9"}]},{"key":"resolution","label":"Resolution","type":"select","default":"1K","options":[{"label":"1K","value":"1K"},{"label":"2K","value":"2K"},{"label":"4K","value":"4K"}]},{"key":"output_format","label":"Output format","type":"select","default":"png","options":[{"label":"PNG","value":"png"},{"label":"JPEG","value":"jpg"}]}]}'::jsonb,
+  NULL
+);
 
 -- 效果执行结果表：存储用户使用AI效果后的生成结果和相关信息
 CREATE TABLE effect_result (

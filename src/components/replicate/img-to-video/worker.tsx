@@ -425,30 +425,61 @@ export default function Worker(props: {
                 onChange={(e) => setPrompt(e.target.value)}
               />
 
-              <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.045]">
-                <button
-                  type="button"
-                  onClick={() => setIsSettingsOpen(true)}
-                  className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left"
-                  aria-expanded={isSettingsOpen}
-                >
-                  <span className="flex min-w-0 items-center gap-3">
-                    <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-white/10">
-                      <SlidersHorizontal className="h-4 w-4 text-cyan-200" />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-sm font-semibold text-white">
-                        {copy.dashboard}
+              <div className="mt-4">
+                <ModelSettingsModal
+                  title={copy.dashboard}
+                  subtitle={`${selectedModel.name} · ${copy.dashboardHint}`}
+                  open={isSettingsOpen}
+                  onOpenChange={setIsSettingsOpen}
+                  trigger={
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 text-left transition-colors hover:bg-white/[0.07]"
+                      aria-expanded={isSettingsOpen}
+                    >
+                      <span className="flex min-w-0 items-center gap-3">
+                        <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-white/10">
+                          <SlidersHorizontal className="h-4 w-4 text-cyan-200" />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-sm font-semibold text-white">
+                            {copy.dashboard}
+                          </span>
+                          <span className="block truncate text-xs text-white/45">
+                            {selectedModel.name} · {selectedModel.credit} {copy.credit}
+                          </span>
+                        </span>
                       </span>
-                      <span className="block truncate text-xs text-white/45">
-                        {selectedModel.name} · {selectedModel.credit} {copy.credit}
+                      <span className="rounded-lg border border-white/10 px-3 py-1 text-xs font-medium text-white/65">
+                        {copy.openDashboard}
                       </span>
-                    </span>
-                  </span>
-                  <span className="rounded-lg border border-white/10 px-3 py-1 text-xs font-medium text-white/65">
-                    {copy.openDashboard}
-                  </span>
-                </button>
+                    </button>
+                  }
+                  schema={{
+                    fields: [
+                      {
+                        key: "__model_id",
+                        label: copy.model,
+                        type: "select",
+                        default: selectedModelId,
+                        options: (props.modelOptions || [selectedModel]).map((option) => ({
+                          label: `${option.name} · ${option.credit} ${copy.credit}`,
+                          value: option.id.toString(),
+                        })),
+                      },
+                      ...selectedSchema.fields,
+                    ],
+                  }}
+                  values={{ __model_id: selectedModelId, ...modelParams }}
+                  onChange={(key, value) => {
+                    if (key === "__model_id") {
+                      setSelectedModelId(String(value));
+                      return;
+                    }
+                    setModelParams((current) => ({ ...current, [key]: value }));
+                  }}
+                  applyLabel={copy.applySettings}
+                />
               </div>
 
               <Button
@@ -524,36 +555,6 @@ export default function Worker(props: {
           </div>
         )}
       </div>
-      <ModelSettingsModal
-        title={copy.dashboard}
-        subtitle={`${selectedModel.name} · ${copy.dashboardHint}`}
-        open={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        schema={{
-          fields: [
-            {
-              key: "__model_id",
-              label: copy.model,
-              type: "select",
-              default: selectedModelId,
-              options: (props.modelOptions || [selectedModel]).map((option) => ({
-                label: `${option.name} · ${option.credit} ${copy.credit}`,
-                value: option.id.toString(),
-              })),
-            },
-            ...selectedSchema.fields,
-          ],
-        }}
-        values={{ __model_id: selectedModelId, ...modelParams }}
-        onChange={(key, value) => {
-          if (key === "__model_id") {
-            setSelectedModelId(String(value));
-            return;
-          }
-          setModelParams((current) => ({ ...current, [key]: value }));
-        }}
-        applyLabel={copy.applySettings}
-      />
       </div>
     </section>
   );

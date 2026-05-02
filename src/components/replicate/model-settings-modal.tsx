@@ -1,7 +1,11 @@
 "use client";
 
-import { Button } from "@nextui-org/react";
-import { X } from "lucide-react";
+import {
+  Button,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@nextui-org/react";
 import type {
   ModelParameterSchema,
   ModelParameterValues,
@@ -11,7 +15,8 @@ export default function ModelSettingsModal({
   title,
   subtitle,
   open,
-  onClose,
+  onOpenChange,
+  trigger,
   schema,
   values,
   onChange,
@@ -20,47 +25,51 @@ export default function ModelSettingsModal({
   title: string;
   subtitle: string;
   open: boolean;
-  onClose: () => void;
+  onOpenChange: (open: boolean) => void;
+  trigger: React.ReactNode;
   schema: ModelParameterSchema;
   values: ModelParameterValues;
   onChange: (key: string, value: string | number | boolean) => void;
   applyLabel: string;
 }) {
-  if (!open) return null;
-
   return (
-    <div className="fixed inset-0 z-[80] flex items-end justify-center bg-black/55 p-3 backdrop-blur-sm sm:items-center">
-      <div className="max-h-[86dvh] w-full max-w-3xl overflow-hidden rounded-3xl border border-white/10 bg-gray-950 text-white shadow-2xl">
-        <div className="flex items-start justify-between gap-4 border-b border-white/10 px-5 py-4">
+    <Popover
+      isOpen={open}
+      onOpenChange={onOpenChange}
+      placement="bottom-start"
+      offset={10}
+      showArrow
+      classNames={{
+        base: "z-[80]",
+        content:
+          "w-[calc(100vw-24px)] max-w-[560px] rounded-2xl border border-white/10 bg-gray-950 p-0 text-white shadow-2xl",
+      }}
+    >
+      <PopoverTrigger>{trigger}</PopoverTrigger>
+      <PopoverContent>
+        <div className="w-full">
+        <div className="flex items-start justify-between gap-4 border-b border-white/10 px-4 py-3">
           <div className="min-w-0">
-            <h3 className="text-base font-semibold text-white">{title}</h3>
+            <h3 className="text-sm font-semibold text-white">{title}</h3>
             <p className="mt-1 truncate text-xs text-white/45">{subtitle}</p>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] text-white/70 hover:bg-white/10 hover:text-white"
-            aria-label="Close settings"
-          >
-            <X className="h-4 w-4" />
-          </button>
         </div>
 
-        <div className="max-h-[calc(86dvh-128px)] overflow-y-auto p-5">
-          <div className="grid gap-4 sm:grid-cols-2">
+        <div className="max-h-[58dvh] overflow-y-auto p-4">
+          <div className="grid gap-3 sm:grid-cols-2">
             {schema.fields.map((field) => (
               <div
                 key={field.key}
                 className={field.type === "textarea" ? "sm:col-span-2" : ""}
               >
-                <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                <label className="mb-1.5 block text-[11px] font-medium uppercase tracking-wider text-white/45">
                   {field.label}
                 </label>
                 {field.type === "select" ? (
                   <select
                     value={String(values[field.key] ?? field.default ?? "")}
                     onChange={(event) => onChange(field.key, event.target.value)}
-                    className="h-11 w-full rounded-xl border border-white/10 bg-white/10 px-3 text-sm text-white outline-none transition-colors hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
+                    className="h-10 w-full rounded-xl border border-white/10 bg-white/10 px-3 text-sm text-white outline-none transition-colors hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
                   >
                     {(field.options || []).map((option) => (
                       <option
@@ -76,7 +85,7 @@ export default function ModelSettingsModal({
                   <button
                     type="button"
                     onClick={() => onChange(field.key, !values[field.key])}
-                    className={`flex h-11 w-full items-center justify-between rounded-xl border px-3 text-sm transition-colors ${
+                    className={`flex h-10 w-full items-center justify-between rounded-xl border px-3 text-sm transition-colors ${
                       values[field.key]
                         ? "border-cyan-300/50 bg-cyan-300/15 text-cyan-100"
                         : "border-white/10 bg-white/10 text-white/60"
@@ -100,7 +109,7 @@ export default function ModelSettingsModal({
                     value={String(values[field.key] ?? "")}
                     placeholder={field.placeholder}
                     onChange={(event) => onChange(field.key, event.target.value)}
-                    className="min-h-[96px] w-full resize-none rounded-xl border border-white/10 bg-white/[0.07] px-3 py-3 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/30 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
+                    className="min-h-[84px] w-full resize-none rounded-xl border border-white/10 bg-white/[0.07] px-3 py-3 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/30 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
                   />
                 ) : (
                   <input
@@ -118,7 +127,7 @@ export default function ModelSettingsModal({
                           : event.target.value
                       )
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-white/10 px-3 text-sm text-white outline-none transition-colors placeholder:text-white/30 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
+                    className="h-10 w-full rounded-xl border border-white/10 bg-white/10 px-3 text-sm text-white outline-none transition-colors placeholder:text-white/30 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
                   />
                 )}
               </div>
@@ -126,15 +135,16 @@ export default function ModelSettingsModal({
           </div>
         </div>
 
-        <div className="border-t border-white/10 px-5 py-4">
+        <div className="border-t border-white/10 px-4 py-3">
           <Button
-            className="h-11 w-full rounded-xl bg-white text-sm font-semibold text-gray-950"
-            onPress={onClose}
+            className="h-10 w-full rounded-xl bg-white text-sm font-semibold text-gray-950"
+            onPress={() => onOpenChange(false)}
           >
             {applyLabel}
           </Button>
         </div>
-      </div>
-    </div>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 }
