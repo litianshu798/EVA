@@ -25,9 +25,9 @@ export const tiers: Array<Tier> = [
       [FrequencyEnum.OneTime]: 1,
     },
     amount: {
-      [FrequencyEnum.Monthly]: 1490,
-      [FrequencyEnum.Yearly]: 15000,
-      [FrequencyEnum.OneTime]: 2500,
+      [FrequencyEnum.Monthly]: 4390,
+      [FrequencyEnum.Yearly]: 4390,
+      [FrequencyEnum.OneTime]: 4390,
     },
     interval: {
       [FrequencyEnum.Monthly]: "month",
@@ -36,13 +36,13 @@ export const tiers: Array<Tier> = [
     },
     title: "Basic",
     price: {
-      yearly: "$11.9",
-      monthly: "$14.9",
-      onetime: "$15.9",
+      yearly: "R$43.9",
+      monthly: "R$43.9",
+      onetime: "R$43.9",
     },
     previousPrice: {
-      yearly: "$15.9",
-      monthly: "$15.9",
+      yearly: "",
+      monthly: "",
       onetime: "",
     },
     href: "#",
@@ -50,14 +50,14 @@ export const tiers: Array<Tier> = [
     mostPopular: false,
     description: "For starters and hobbyists that want to try out.",
     features: {
-      yearly: ["1000 credits per year", "All tools available", "Email support"],
+      yearly: ["1800 credits per year", "All tools available", "Email support"],
       monthly: [
-        "100 credits per month",
+        "150 credits per month",
         "All tools available",
         "Email support",
       ],
       onetime: [
-        "100 credits one month",
+        "150 credits one month",
         "All tools available",
         "Email support",
       ],
@@ -74,9 +74,9 @@ export const tiers: Array<Tier> = [
       [FrequencyEnum.OneTime]: 9,
     },
     amount: {
-      [FrequencyEnum.Yearly]: 28800,
-      [FrequencyEnum.Monthly]: 2790,
-      [FrequencyEnum.OneTime]: 2990,
+      [FrequencyEnum.Yearly]: 11400,
+      [FrequencyEnum.Monthly]: 12900,
+      [FrequencyEnum.OneTime]: 14300,
     },
     interval: {
       [FrequencyEnum.Yearly]: "year",
@@ -88,25 +88,25 @@ export const tiers: Array<Tier> = [
     href: "#",
     mostPopular: true,
     price: {
-      yearly: "$23.9",
-      monthly: "$27.9",
-      onetime: "$29.9",
+      yearly: "R$114.0",
+      monthly: "R$129.0",
+      onetime: "R$143.0",
     },
     previousPrice: {
-      yearly: "$29.9",
-      monthly: "$29.9",
+      yearly: "R$129.0",
+      monthly: "R$143.0",
       onetime: "",
     },
     featured: false,
     features: {
-      yearly: ["2000 credits per year", "All tools available", "Email support"],
+      yearly: ["7200 credits per year", "All tools available", "Email support"],
       monthly: [
-        "200 credits per month",
+        "600 credits per month",
         "All tools available",
         "Email support",
       ],
       onetime: [
-        "200 credits one month",
+        "600 credits one month",
         "All tools available",
         "Email support",
       ],
@@ -123,9 +123,9 @@ export const tiers: Array<Tier> = [
       [FrequencyEnum.OneTime]: 11,
     },
     amount: {
-      [FrequencyEnum.Yearly]: 47000,
-      [FrequencyEnum.Monthly]: 4390,
-      [FrequencyEnum.OneTime]: 4890,
+      [FrequencyEnum.Yearly]: 23300,
+      [FrequencyEnum.Monthly]: 25600,
+      [FrequencyEnum.OneTime]: 29200,
     },
     interval: {
       [FrequencyEnum.Yearly]: "year",
@@ -138,25 +138,25 @@ export const tiers: Array<Tier> = [
     mostPopular: false,
     description: "For professionals that want to try out.",
     price: {
-      yearly: "$38.9",
-      monthly: "$43.9",
-      onetime: "$48.9",
+      yearly: "R$233.0",
+      monthly: "R$256.0",
+      onetime: "R$292.0",
     },
     previousPrice: {
-      yearly: "$48.9",
-      monthly: "$48.9",
+      yearly: "R$256.9",
+      monthly: "R$292.9",
       onetime: "",
     },
     priceSuffix: "",
     features: {
-      yearly: ["4200 credits per year", "All tools available", "Email support"],
+      yearly: ["18000 credits per year", "All tools available", "Email support"],
       monthly: [
-        "400 credits per month",
+        "1500 credits per month",
         "All tools available",
         "Email support",
       ],
       onetime: [
-        "400 credits one month",
+        "1500 credits one month",
         "All tools available",
         "Email support",
       ],
