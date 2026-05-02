@@ -12,22 +12,22 @@
   },
   "HomePage": {
     "seo": {
-      "title": "EVA — AI Asset Generation Platform for E-Commerce",
-      "description": "EVA is an AI-powered platform built for e-commerce. Generate product videos, images, and marketing assets in seconds."
+      "title": "gptimage — AI Asset Generation Platform for E-Commerce",
+      "description": "gptimage is an AI-powered platform built for e-commerce. Generate product videos, images, and marketing assets in seconds."
     },
     "top": {
-      "subTitle": "E-Commerce AI Assets, Instantly Generated",
-      "description": "EVA is purpose-built for e-commerce. Upload a product image and generate high-quality videos and marketing visuals — no design skills required.",
-      "button1": "Try EVA for Free",
+      "subTitle": "AI Commerce Studio Assets, Instantly Generated",
+      "description": "gptimage is purpose-built for e-commerce. Upload a product image and generate high-quality videos and marketing visuals — no design skills required.",
+      "button1": "Try gptimage for Free",
       "button2": "View Subscription Options"
     },
     "userExample": {
       "title": "Real Results from Real Sellers",
-      "description": "See how e-commerce brands use EVA to turn product images into compelling motion assets."
+      "description": "See how e-commerce brands use gptimage to turn product images into compelling motion assets."
     },
-    "testimonials-slogan": "Thousands of sellers already use EVA to produce assets at scale.",
+    "testimonials-slogan": "Thousands of sellers already use gptimage to produce assets at scale.",
     "what": {
-      "title": "What Can EVA Do for Your Store?",
+      "title": "What Can gptimage Do for Your Store?",
       "description": "An AI asset generation platform purpose-built for e-commerce — upload a product image, describe your vision, and get ready-to-use video and image assets in seconds.",
       "itemTitle1": "Dynamic Product Display",
       "itemDescription1": "Transform static product photos into smooth, engaging videos that increase buyer attention and conversions.",
@@ -48,7 +48,7 @@
     },
     "testimonials": {
       "title": "What Sellers Say",
-      "description": "See how EVA helps e-commerce teams produce quality assets faster."
+      "description": "See how gptimage helps e-commerce teams produce quality assets faster."
     },
     "FAQ": {
       "title": "Frequently Asked Questions",
@@ -67,14 +67,14 @@
     },
     "Features": {
       "heading": "Core Capabilities Built for E-Commerce",
-      "subheading": "From product photography to marketing campaigns, EVA covers the full asset pipeline.",
+      "subheading": "From product photography to marketing campaigns, gptimage covers the full asset pipeline.",
       "feature1": {
         "title": "Product Video Generation",
         "description": "Turn still product images into dynamic videos for listings, short-form content, and live stream covers."
       },
       "feature2": {
         "title": "Natural Language Prompting",
-        "description": "Describe your desired output in plain language — EVA's AI understands and generates accordingly."
+        "description": "Describe your desired output in plain language — gptimage's AI understands and generates accordingly."
       },
       "feature3": {
         "title": "High-Resolution Export",
@@ -96,8 +96,8 @@
     "generator": {
       "input": {
         "title": "Product Video Generator",
-        "text-to-video": "EVA Text-to-Video",
-        "img-to-video": "EVA Image-to-Video",
+        "text-to-video": "gptimage Text-to-Video",
+        "img-to-video": "gptimage Image-to-Video",
         "description": "Upload a product image, enter a prompt, and generate a high-quality video asset in seconds.",
         "createButton": "Generate Video",
         "upload": "Upload Product Image",
@@ -112,7 +112,7 @@
     },
     "cta": {
       "title": "Make Every Product Stand Out",
-      "description": "EVA helps e-commerce sellers produce high-quality AI assets at scale — from product images to marketing videos, fully automated.",
+      "description": "gptimage helps e-commerce sellers produce high-quality AI assets at scale — from product images to marketing videos, fully automated.",
       "cta": "Start for Free"
     }
   },
@@ -120,8 +120,8 @@
     "title": "Flexible Pricing Plans",
     "description": "Choose the plan that fits your creative flow—whether you're a casual user or a content creator.",
     "seo": {
-      "title": "EVA Pricing – Flexible Plans for Every Creator",
-      "description": "Discover EVA's flexible pricing options designed for creators, marketers, and storytellers to generate cinematic videos with ease."
+      "title": "gptimage Pricing – Flexible Plans for Every Creator",
+      "description": "Discover gptimage's flexible pricing options designed for creators, marketers, and storytellers to generate cinematic videos with ease."
     },
     "FAQ": {
       "title": "Subscription & Billing Questions",
@@ -142,19 +142,19 @@
       "Q8": "How do I contact support?",
       "A8": "Reach out to our support team through live chat or email—we're here to help.",
       "Q9": "Do I need to install anything?",
-      "A9": "Nope! EVA is completely web-based. All you need is a browser and an internet connection.",
+      "A9": "Nope! gptimage is completely web-based. All you need is a browser and an internet connection.",
       "Q10": "Is my payment information secure?",
       "A10": "Yes—we use Stripe to handle all transactions with the highest standards in security and encryption."
     }
   },
   "TextToImage": {
     "seo": {
-      "title": "EVA Text to Image — AI E-Commerce Assets Generator",
-      "description": "Generate professional e-commerce product images from text descriptions with EVA AI."
+      "title": "gptimage Text to Image — AI E-Commerce Assets Generator",
+      "description": "Generate professional e-commerce product images from text descriptions with gptimage AI."
     },
     "top": {
       "subTitle": "Text to Product Image",
-      "description": "Describe your product scene and style, and EVA AI will generate high-quality e-commerce images ready for immediate use."
+      "description": "Describe your product scene and style, and gptimage AI will generate high-quality e-commerce images ready for immediate use."
     },
     "input": {
       "title": "Text to Image",
@@ -189,7 +189,7 @@
     }
   },
   "Auth": {
-    "title": "Sign In to EVA",
+    "title": "Sign In to gptimage",
     "subtitle": "Use your email and password to access your workspace",
     "loginTab": "Sign In",
     "registerTab": "Register",
@@ -234,16 +234,16 @@
   },
   "Seo": {
     "home": {
-      "title": "EVA | Premier AI Video Generation Platform",
-      "description": "EVA is a leading AI platform that uses advanced artificial intelligence technology to craft personalized videos."
+      "title": "gptimage | Premier AI Video Generation Platform",
+      "description": "gptimage is a leading AI platform that uses advanced artificial intelligence technology to craft personalized videos."
     }
   },
   "Footer": {
-    "description": "EVA is an AI asset generation platform built for e-commerce. Generate product videos, images, and marketing assets — fast, simple, and at scale.",
+    "description": "gptimage is an AI asset generation platform built for e-commerce. Generate product videos, images, and marketing assets — fast, simple, and at scale.",
     "recommend": {
       "title": "Features",
       "item": {
-        "item1": "EVA Product Assets Generator"
+        "item1": "gptimage Product Assets Generator"
       }
     },
     "legal": {

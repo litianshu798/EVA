@@ -13,7 +13,7 @@ export default function NotFound() {
   return (
     <html>
       <head>
-        <title>Page Not Found | EVA</title>
+        <title>Page Not Found | gptimage</title>
         <meta name="robots" content="noindex, follow" />
         <meta
           name="description"
@@ -40,7 +40,7 @@ export default function NotFound() {
                 </div>
               </div>
               <h2 className="mt-4 text-4xl font-bold text-black dark:text-white">
-                Page Not Found In EVA
+                Page Not Found In gptimage
               </h2>
               <p className="mt-4 text-lg text-gray-800 dark:text-gray-200">
                 Sorry, the page you are looking for doesn't exist or has been

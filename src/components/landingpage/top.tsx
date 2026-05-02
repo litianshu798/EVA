@@ -97,7 +97,7 @@ export default function TopHero(params: {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-xs font-medium text-white/80 tracking-widest uppercase">
           <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
-          E-Commerce AI Platform
+          gptimage AI Commerce Studio
         </div>
 
         {/* Headline */}

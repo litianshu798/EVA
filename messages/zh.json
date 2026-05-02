@@ -12,22 +12,22 @@
   },
   "HomePage": {
     "seo": {
-      "title": "EVA — 专注电商的 AI 资产生成平台",
-      "description": "EVA 是专为电商设计的 AI 资产生成平台，快速生成商品视频、产品图、营销素材，助力品牌高效创作。"
+      "title": "gptimage — 专注电商的 AI 资产生成平台",
+      "description": "gptimage 是专为电商设计的 AI 资产生成平台，快速生成商品视频、产品图、营销素材，助力品牌高效创作。"
     },
     "top": {
       "subTitle": "电商 AI 素材，一键生成",
-      "description": "EVA 专为电商场景打造，上传产品图即可生成高质量视频与营销图像，告别繁琐修图，让每件商品都自带吸睛力。",
+      "description": "gptimage 专为电商场景打造，上传产品图即可生成高质量视频与营销图像，告别繁琐修图，让每件商品都自带吸睛力。",
       "button1": "免费体验",
       "button2": "查看套餐"
     },
     "userExample": {
       "title": "真实案例展示",
-      "description": "看看其他电商卖家如何用 EVA 快速制作吸引买家的商品素材。"
+      "description": "看看其他电商卖家如何用 gptimage 快速制作吸引买家的商品素材。"
     },
-    "testimonials-slogan": "已有数千电商卖家在使用 EVA 高效生产素材。",
+    "testimonials-slogan": "已有数千电商卖家在使用 gptimage 高效生产素材。",
     "what": {
-      "title": "EVA 能为你做什么？",
+      "title": "gptimage 能为你做什么？",
       "description": "专为电商打造的 AI 资产生成平台，上传商品图，输入创意描述，秒级生成视频与图像素材。",
       "itemTitle1": "商品动态展示",
       "itemDescription1": "将静态产品图转化为流畅的展示视频，提升买家停留时长与转化率。",
@@ -48,11 +48,11 @@
     },
     "testimonials": {
       "title": "卖家评价",
-      "description": "看看 EVA 如何帮助电商卖家轻松产出高质量素材。"
+      "description": "看看 gptimage 如何帮助电商卖家轻松产出高质量素材。"
     },
     "FAQ": {
       "title": "常见问题",
-      "Q1": "如何开始使用 EVA 生成我的第一条视频？",
+      "Q1": "如何开始使用 gptimage 生成我的第一条视频？",
       "A1": "点击上传按钮，选择一张商品图片或输入文字描述，AI 将自动为你生成视频。图片越清晰，效果越好。",
       "Q2": "我可以控制视频风格吗？",
       "A2": "可以。在提示词中描述你想要的场景风格，例如夜晚霓虹氛围，AI 会按照你的描述生成。",
@@ -67,7 +67,7 @@
     },
     "Features": {
       "heading": "专为电商打造的核心能力",
-      "subheading": "从商品拍摄到营销投放，EVA 覆盖电商素材全链路。",
+      "subheading": "从商品拍摄到营销投放，gptimage 覆盖电商素材全链路。",
       "feature1": {
         "title": "商品视频动效",
         "description": "一键将商品静图转化为动态视频，适配详情页、短视频、直播封面等多场景。"
@@ -96,8 +96,8 @@
     "generator": {
       "input": {
         "title": "商品视频生成",
-        "text-to-video": "EVA 文生视频",
-        "img-to-video": "EVA 图生视频",
+        "text-to-video": "gptimage 文生视频",
+        "img-to-video": "gptimage 图生视频",
         "description": "上传商品图，输入创意描述，秒级生成高质量视频素材。",
         "createButton": "生成视频",
         "upload": "上传商品图",
@@ -112,7 +112,7 @@
     },
     "cta": {
       "title": "现在开始，让每件商品都会说话",
-      "description": "EVA 帮助电商卖家快速生产高质量的 AI 素材，从商品图到营销视频，全程自动化。",
+      "description": "gptimage 帮助电商卖家快速生产高质量的 AI 素材，从商品图到营销视频，全程自动化。",
       "cta": "免费开始使用"
     }
   },
@@ -120,8 +120,8 @@
     "title": "灵活的套餐方案",
     "description": "按需选择适合你的方案，月付灵活，年付更省。",
     "seo": {
-      "title": "EVA 定价 — 专为电商卖家设计的灵活套餐",
-      "description": "查看 EVA 的定价方案，为电商卖家、品牌方和营销团队提供高效的 AI 素材生成服务。"
+      "title": "gptimage 定价 — 专为电商卖家设计的灵活套餐",
+      "description": "查看 gptimage 的定价方案，为电商卖家、品牌方和营销团队提供高效的 AI 素材生成服务。"
     },
     "FAQ": {
       "title": "订阅与计费问题",
@@ -142,19 +142,19 @@
       "Q8": "如何联系客服？",
       "A8": "可通过在线聊天或邮件联系我们的支持团队。",
       "Q9": "需要安装软件吗？",
-      "A9": "不需要。EVA 完全基于浏览器，打开即用。",
+      "A9": "不需要。gptimage 完全基于浏览器，打开即用。",
       "Q10": "支付安全吗？",
       "A10": "是的，我们使用 Stripe 处理所有支付，符合最高安全标准。"
     }
   },
   "TextToImage": {
     "seo": {
-      "title": "EVA 文生图 — AI 商品图像生成",
-      "description": "输入文字描述，EVA 为你生成专业级电商商品图，快速适配各类投放场景。"
+      "title": "gptimage 文生图 — AI 商品图像生成",
+      "description": "输入文字描述，gptimage 为你生成专业级电商商品图，快速适配各类投放场景。"
     },
     "top": {
       "subTitle": "文字描述，生成商品图",
-      "description": "输入产品风格与场景描述，EVA AI 自动生成高质量商品展示图，可直接用于电商平台投放。"
+      "description": "输入产品风格与场景描述，gptimage AI 自动生成高质量商品展示图，可直接用于电商平台投放。"
     },
     "input": {
       "title": "文生图生成",
@@ -188,7 +188,7 @@
     }
   },
   "Auth": {
-    "title": "登录 EVA",
+    "title": "登录 gptimage",
     "subtitle": "使用邮箱和密码进入你的工作台",
     "loginTab": "登录",
     "registerTab": "注册",
@@ -233,16 +233,16 @@
   },
   "Seo": {
     "home": {
-      "title": "EVA — 专注电商的 AI 资产生成平台",
-      "description": "EVA 帮助电商卖家快速生成商品视频与图像，提升素材生产效率。"
+      "title": "gptimage — 专注电商的 AI 资产生成平台",
+      "description": "gptimage 帮助电商卖家快速生成商品视频与图像，提升素材生产效率。"
     }
   },
   "Footer": {
-    "description": "EVA 是专为电商设计的 AI 资产生成平台，提供商品视频生成、文生图等核心功能，帮助品牌和卖家高效创作高质量营销素材。",
+    "description": "gptimage 是专为电商设计的 AI 资产生成平台，提供商品视频生成、文生图等核心功能，帮助品牌和卖家高效创作高质量营销素材。",
     "recommend": {
       "title": "产品功能",
       "item": {
-        "item1": "EVA 商品视频生成"
+        "item1": "gptimage 商品视频生成"
       }
     },
     "legal": {

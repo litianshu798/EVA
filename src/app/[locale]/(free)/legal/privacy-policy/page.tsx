@@ -5,7 +5,7 @@ const text = `
 
 
 
-Welcome to EVA. Your privacy is important to us, and we are committed to protecting the information you share with us. This Privacy Policy outlines how we collect, use, disclose, and safeguard your data when you visit our website or use our services.
+Welcome to gptimage. Your privacy is important to us, and we are committed to protecting the information you share with us. This Privacy Policy outlines how we collect, use, disclose, and safeguard your data when you visit our website or use our services.
 
 
 ## 1. Information We Collect
@@ -97,7 +97,7 @@ If you have any questions or concerns about this Privacy Policy or your personal
 **Email**: support@8ilx.com
 
 
-By using EVA, you agree to the terms of this Privacy Policy. If you do not agree, please refrain from using our services.
+By using gptimage, you agree to the terms of this Privacy Policy. If you do not agree, please refrain from using our services.
 
 
 

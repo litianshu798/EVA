@@ -69,13 +69,13 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
         <NavbarBrand>
           <img
             src="/logo.jpeg"
-            alt="EVA"
+            alt="gptimage"
             className="w-8 h-8 md:w-9 md:h-9 mr-2.5 rounded-md"
             loading="lazy"
           />
           <div className="hidden lg:flex flex-col leading-none">
-            <span className="text-base font-bold text-white tracking-tight">EVA</span>
-            <span className="text-[10px] text-white/40 tracking-widest uppercase font-medium">E-Commerce AI</span>
+            <span className="text-base font-bold text-white tracking-tight">gptimage</span>
+            <span className="text-[10px] text-white/40 tracking-widest uppercase font-medium">AI Commerce Studio</span>
           </div>
         </NavbarBrand>
 

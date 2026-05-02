@@ -25,9 +25,9 @@ const CONTENT = {
     titleZh: "从单张商品图到全渠道营销资产",
     titleEn: "From one product photo to full-funnel commerce assets",
     descZh:
-      "EVA 把商品理解、场景扩展、视频动效、图像生成和投放素材整理成一条连续工作流，适合电商团队高频生产。",
+      "gptimage 把商品理解、场景扩展、视频动效、图像生成和投放素材整理成一条连续工作流，适合电商团队高频生产。",
     descEn:
-      "EVA turns product understanding, scene expansion, motion generation, image creation, and campaign asset prep into one continuous workflow for commerce teams.",
+      "gptimage turns product understanding, scene expansion, motion generation, image creation, and campaign asset prep into one continuous workflow for commerce teams.",
     items: [
       ["商品识别", "Product parsing", "识别主体、材质、包装层级和电商展示角度", "Parse subject, material, packaging hierarchy, and marketplace angles", PackageCheck],
       ["创意扩展", "Creative expansion", "自动生成白底、场景、海报、短视频方向", "Generate white shots, scenes, posters, and short-video directions", Wand2],

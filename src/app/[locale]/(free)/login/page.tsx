@@ -45,11 +45,11 @@ function AuthField({
 }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-xs font-medium uppercase tracking-wider text-gray-500">
+      <span className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
         {label}
       </span>
-      <span className="flex h-12 items-center rounded-xl border border-gray-200 bg-white px-3 transition-colors focus-within:border-gray-900 focus-within:ring-2 focus-within:ring-gray-900/10">
-        <Icon className="mr-3 h-4 w-4 flex-shrink-0 text-gray-400" />
+      <span className="flex h-12 items-center rounded-xl border border-white/10 bg-white/[0.07] px-3 transition-colors focus-within:border-white/55 focus-within:ring-2 focus-within:ring-white/10">
+        <Icon className="mr-3 h-4 w-4 flex-shrink-0 text-white/38" />
         <input
           type={type}
           placeholder={placeholder}
@@ -57,7 +57,7 @@ function AuthField({
           onChange={(event) => onChange(event.target.value)}
           required={required}
           minLength={minLength}
-          className="h-full min-w-0 flex-1 bg-transparent text-sm text-gray-900 outline-none placeholder:text-gray-400"
+          className="h-full min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/30"
         />
         {endContent}
       </span>
@@ -135,30 +135,46 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-[calc(100vh-72px)] bg-gray-50">
-      <div className="mx-auto flex min-h-[calc(100vh-72px)] max-w-7xl items-center justify-center px-4 py-10 md:px-8">
-        <section className="grid w-full max-w-5xl grid-cols-1 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm md:grid-cols-[0.9fr_1.1fr]">
-          <div className="hidden bg-gray-900 p-10 text-white md:flex md:flex-col md:justify-between">
+    <main className="relative min-h-[calc(100vh-72px)] overflow-hidden bg-gray-950">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.18),transparent_32%),radial-gradient(circle_at_80%_18%,rgba(245,158,11,0.14),transparent_28%),linear-gradient(135deg,#020617,#111827_55%,#030712)]" />
+      <div className="relative mx-auto flex min-h-[calc(100vh-72px)] max-w-7xl items-center justify-center px-4 py-10 md:px-8">
+        <section className="grid w-full max-w-5xl grid-cols-1 overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.06] shadow-2xl backdrop-blur md:grid-cols-[0.9fr_1.1fr]">
+          <div className="hidden border-r border-white/10 bg-white/[0.04] p-10 text-white md:flex md:flex-col md:justify-between">
             <div>
               <div className="mb-8 flex items-center gap-3">
                 <img
                   src="/logo.jpeg"
-                  alt="EVA"
+                  alt="gptimage"
                   className="h-10 w-10 rounded-lg"
                 />
                 <div>
-                  <p className="text-lg font-semibold leading-tight">EVA</p>
-                  <p className="text-xs text-gray-400">E-Commerce AI</p>
+                  <p className="text-lg font-semibold leading-tight">gptimage</p>
+                  <p className="text-xs text-white/45">AI Commerce Studio</p>
                 </div>
               </div>
               <h1 className="max-w-xs text-3xl font-bold leading-tight">
                 {t("title")}
               </h1>
-              <p className="mt-4 max-w-sm text-sm leading-6 text-gray-300">
+              <p className="mt-4 max-w-sm text-sm leading-6 text-white/58">
                 {t("subtitle")}
               </p>
+              <div className="mt-8 grid grid-cols-2 gap-3">
+                {[
+                  "Product images",
+                  "Vertical videos",
+                  "Invite rewards",
+                  "Secure checkout",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm text-white/70"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="h-28 overflow-hidden rounded-xl border border-white/10">
+            <div className="h-32 overflow-hidden rounded-2xl border border-white/10">
               <video
                 src="/bg2.mp4"
                 className="h-full w-full object-cover opacity-80"
@@ -170,25 +186,25 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <div className="p-5 sm:p-8 md:p-10">
+          <div className="p-5 text-white sm:p-8 md:p-10">
             <div className="mb-7 md:hidden">
               <div className="mb-5 flex items-center gap-3">
                 <img
                   src="/logo.jpeg"
-                  alt="EVA"
+                  alt="gptimage"
                   className="h-10 w-10 rounded-lg"
                 />
                 <div>
-                  <p className="text-lg font-semibold leading-tight text-gray-900">
-                    EVA
+                  <p className="text-lg font-semibold leading-tight text-white">
+                    gptimage
                   </p>
-                  <p className="text-xs text-gray-500">E-Commerce AI</p>
+                  <p className="text-xs text-white/45">AI Commerce Studio</p>
                 </div>
               </div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-2xl font-bold text-white">
                 {t("title")}
               </h1>
-              <p className="mt-2 text-sm leading-6 text-gray-500">
+              <p className="mt-2 text-sm leading-6 text-white/55">
                 {t("subtitle")}
               </p>
             </div>
@@ -198,9 +214,11 @@ export default function LoginPage() {
               onSelectionChange={(key) => setMode(String(key) as AuthMode)}
               aria-label="Auth mode"
               classNames={{
-                tabList: "w-full bg-gray-100 p-1 rounded-xl",
+                tabList: "w-full bg-white/10 p-1 rounded-xl",
                 cursor: "bg-white shadow-sm rounded-lg",
                 tab: "h-10 text-sm",
+                tabContent:
+                  "group-data-[selected=true]:text-gray-950 group-data-[selected=false]:text-white/60",
               }}
             >
               <Tab key="login" title={t("loginTab")} />
@@ -240,7 +258,7 @@ export default function LoginPage() {
                 endContent={
                   <button
                     type="button"
-                    className="ml-2 rounded-md p-1 text-gray-400 transition-colors hover:text-gray-700"
+                    className="ml-2 rounded-md p-1 text-white/40 transition-colors hover:text-white"
                     onClick={() => setShowPassword((value) => !value)}
                     aria-label={showPassword ? "Hide password" : "Show password"}
                   >
@@ -265,7 +283,7 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="h-11 w-full rounded-xl bg-gray-900 text-sm font-medium text-white"
+                className="h-12 w-full rounded-xl bg-white text-sm font-semibold text-gray-950 hover:bg-white/90"
                 isLoading={isSubmitting}
               >
                 {mode === "login" ? t("signIn") : t("register")}

@@ -286,7 +286,7 @@ export default function Pricing() {
             <div className="mt-5 space-y-4">
               {[
                 [isZh ? "一次拍摄外包通常覆盖不了多个渠道尺寸。" : "A single outsourced shoot rarely covers every channel size."],
-                [isZh ? "EVA 可以围绕同一 SKU 反复扩展场景和素材。" : "EVA can expand multiple scenes and assets around the same SKU."],
+                [isZh ? "gptimage 可以围绕同一 SKU 反复扩展场景和素材。" : "gptimage can expand multiple scenes and assets around the same SKU."],
                 [isZh ? "素材测试速度越快，广告和上新损耗越低。" : "Faster creative testing lowers launch and ad waste."],
               ].map(([text], index) => (
                 <div key={text} className="flex gap-3 text-sm leading-6 text-gray-600">

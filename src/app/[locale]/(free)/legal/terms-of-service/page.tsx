@@ -5,24 +5,24 @@ import { getDomain } from "@/config/domain";
 const text = `
 
 
-Welcome to EVA! By accessing or using our platform, you agree to comply with and be bound by these Terms of Service . Please read them carefully. If you do not agree with these Terms, you must not use our services.
+Welcome to gptimage! By accessing or using our platform, you agree to comply with and be bound by these Terms of Service . Please read them carefully. If you do not agree with these Terms, you must not use our services.
 
 
 ## 1. Acceptance of Terms
 
-By accessing or using EVA's services, you confirm that:
+By accessing or using gptimage's services, you confirm that:
 - You are at least 13 years old (or the age of majority in your jurisdiction).
 - You have read, understood, and agree to these Terms.
 
 
 ## 2. Description of Services
 
-EVA provides tools for generating AI-powered videos and images. Users can upload media to create custom outputs. While we strive to deliver high-quality results, the outputs may vary based on input quality.
+gptimage provides tools for generating AI-powered videos and images. Users can upload media to create custom outputs. While we strive to deliver high-quality results, the outputs may vary based on input quality.
 
 
 ## 3. User Responsibilities
 
-When using EVA, you agree to:
+When using gptimage, you agree to:
 - Provide accurate and lawful information.
 - Use the platform only for personal or professional purposes permitted by these Terms.
 - Not upload content that is illegal, offensive, harmful, or violates the rights of others.
@@ -36,11 +36,11 @@ When using EVA, you agree to:
 ## 4. Intellectual Property Rights
 
 ### 4.1 Ownership of Content
-- All content, materials, and technology on EVA, including but not limited to software, designs, and trademarks, are owned by EVA or its licensors and are protected under applicable intellectual property laws.
+- All content, materials, and technology on gptimage, including but not limited to software, designs, and trademarks, are owned by gptimage or its licensors and are protected under applicable intellectual property laws.
 - You retain ownership of the content you upload to the platform.
 
 ### 4.2 License to Use Your Content
-By uploading content, you grant EVA a limited, non-exclusive, royalty-free license to process your content solely for the purpose of providing the requested services.
+By uploading content, you grant gptimage a limited, non-exclusive, royalty-free license to process your content solely for the purpose of providing the requested services.
 
 
 ## 5. Privacy and Data Protection
@@ -53,7 +53,7 @@ Our use of your personal data is governed by our [Privacy Policy](#). By using o
 ## 6. Payment and Subscription
 
 ### 6.1 Pricing
-Access to certain features of EVA may require payment or a subscription. Pricing details are available on our platform and are subject to change.
+Access to certain features of gptimage may require payment or a subscription. Pricing details are available on our platform and are subject to change.
 
 ### 6.2 Refund Policy
 Payments made are non-refundable unless required by applicable law. If you believe there has been an error, please contact us at **[support@${getDomain().replace(
@@ -64,7 +64,7 @@ Payments made are non-refundable unless required by applicable law. If you belie
 
 ## 7. Disclaimer of Warranties
 
-EVA provides its services on an "as-is" and "as-available" basis. We make no warranties, expressed or implied, about the accuracy, reliability, or suitability of the platform for your needs.
+gptimage provides its services on an "as-is" and "as-available" basis. We make no warranties, expressed or implied, about the accuracy, reliability, or suitability of the platform for your needs.
 
 To the fullest extent permitted by law, we disclaim:
 - Any warranties of merchantability, fitness for a particular purpose, or non-infringement.
@@ -74,13 +74,13 @@ To the fullest extent permitted by law, we disclaim:
 ## 8. Limitation of Liability
 
 To the maximum extent permitted by law:
-- EVA shall not be liable for any indirect, incidental, or consequential damages arising from the use of our platform.
+- gptimage shall not be liable for any indirect, incidental, or consequential damages arising from the use of our platform.
 - Our total liability for any claims related to your use of the platform shall not exceed the amount paid by you for the services in the past 12 months.
 
 
 ## 9. Indemnification
 
-You agree to indemnify, defend, and hold harmless EVA, its affiliates, and its employees from any claims, liabilities, damages, or expenses arising out of:
+You agree to indemnify, defend, and hold harmless gptimage, its affiliates, and its employees from any claims, liabilities, damages, or expenses arising out of:
 - Your use of the platform.
 - Your violation of these Terms or applicable laws.
 - Any content you upload that infringes the rights of others.
@@ -111,7 +111,7 @@ If you have any questions or concerns about these Terms, please contact us at:
 
 **Email:** support@8ilx.com
 
-By using EVA, you acknowledge that you have read, understood, and agreed to these Terms of Service.
+By using gptimage, you acknowledge that you have read, understood, and agreed to these Terms of Service.
 
 
 `;
