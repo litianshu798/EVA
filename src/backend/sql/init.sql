@@ -54,6 +54,7 @@ CREATE TABLE effect (
   model text NULL,                          -- 使用的AI模型名称
   version text NULL,                        -- 模型版本
   pre_prompt text NULL,                     -- 预设提示词
+  param_schema jsonb NULL,                  -- 前端参数面板配置（JSON Schema-like）
   created_at timestamp with time zone NULL -- 创建时间
 );
 INSERT INTO effect (id, name, type, des, platform, link, api, is_open, link_name, credit, model, version, pre_prompt, created_at) VALUES (1, 'Kling v2.1', 1, NULL, 'replicate', 'https://replicate.com/kwaivgi/kling-v2.1/api', 'kwaivgi/kling-v2.1', 1, 'kling-v12', 15, 'kwaivgi/kling-v2.1', NULL, NULL, NULL);

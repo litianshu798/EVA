@@ -12,7 +12,13 @@ import { UserSubscriptionInfo } from "@/backend/type/domain/user_subscription_in
 import CreditInfo from "@/components/landingpage/credit-info";
 import { useLocale, useTranslations } from "next-intl";
 import { ModelOption } from "@/components/replicate/model-option";
-import { ChevronDown, SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
+import ModelSettingsModal from "@/components/replicate/model-settings-modal";
+import {
+  FALLBACK_IMAGE_SCHEMA,
+  ModelParameterValues,
+  getDefaultParameterValues,
+} from "@/components/replicate/model-parameter-schema";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -33,6 +39,8 @@ const IMAGE_COPY = {
     negative: "负面词",
     dashboard: "生成参数",
     dashboardHint: "模型与高级设置",
+    openDashboard: "打开参数面板",
+    applySettings: "应用设置",
     generate: "生成图片",
     processing: "生成中...",
     credit: "积分",
@@ -57,6 +65,8 @@ const IMAGE_COPY = {
     negative: "Negative prompt",
     dashboard: "Generation Settings",
     dashboardHint: "Model and advanced controls",
+    openDashboard: "Open settings",
+    applySettings: "Apply settings",
     generate: "Generate Image",
     processing: "Processing...",
     credit: "credit",
@@ -81,6 +91,8 @@ const IMAGE_COPY = {
     negative: "Prompt negativo",
     dashboard: "Configurações de geração",
     dashboardHint: "Modelo e controles avançados",
+    openDashboard: "Abrir configurações",
+    applySettings: "Aplicar configurações",
     generate: "Gerar imagem",
     processing: "Processando...",
     credit: "crédito",
@@ -138,13 +150,7 @@ export default function Worker(props: {
 }) {
   const [prompt, setPrompt] = useState("");
   const [generating, setGenerating] = useState<boolean>(false);
-  const [outputFormat, setOutputFormat] = useState<string>("png");
-  const [ratio, setRatio] = useState<string>("1:1");
-  const [style, setStyle] = useState<string>("Premium studio");
-  const [lighting, setLighting] = useState<string>("Soft studio");
-  const [background, setBackground] = useState<string>("Premium solid backdrop");
-  const [quality, setQuality] = useState<string>("Commercial HD photo");
-  const [negativePrompt, setNegativePrompt] = useState<string>("");
+  const [modelParams, setModelParams] = useState<ModelParameterValues>({});
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [selectedModelId, setSelectedModelId] = useState<string>(
     props.defaultModelId?.toString() || props.modelOptions?.[0]?.id.toString() || ""
@@ -159,7 +165,6 @@ export default function Worker(props: {
   const locale = useLocale();
   const t = useTranslations(props.lang || "index");
   const copy = IMAGE_COPY[localeKey(locale)];
-  const ratioOption = RATIO_OPTIONS.find((option) => option.value === ratio) || RATIO_OPTIONS[0];
   const selectedModel =
     props.modelOptions?.find((option) => option.id.toString() === selectedModelId) ||
     props.modelOptions?.[0] || {
@@ -170,7 +175,16 @@ export default function Worker(props: {
       link_name: props.effect_link_name,
       credit: props.credit,
       pre_prompt: "",
+      param_schema: FALLBACK_IMAGE_SCHEMA,
     };
+  const selectedSchema =
+    selectedModel.param_schema?.fields?.length > 0
+      ? selectedModel.param_schema
+      : FALLBACK_IMAGE_SCHEMA;
+
+  useEffect(() => {
+    setModelParams(getDefaultParameterValues(selectedSchema));
+  }, [selectedModel.id]);
 
   useEffect(() => {
     if (user?.uuid) {
@@ -222,10 +236,6 @@ export default function Worker(props: {
       setGenerating(true);
       const enhancedPrompt = [
         prompt.trim(),
-        style,
-        lighting,
-        background,
-        quality,
         "professional e-commerce product image",
       ].filter(Boolean).join(", ");
       const response = await fetch("/api/predictions/text_to_image", {
@@ -235,11 +245,7 @@ export default function Worker(props: {
           model: selectedModel.model,
           version: selectedModel.version,
           prompt: enhancedPrompt,
-          width: ratioOption.width,
-          height: ratioOption.height,
-          output_format: outputFormat,
-          aspect_ratio: ratio,
-          negative_prompt: negativePrompt.trim(),
+          model_params: modelParams,
           user_id: user?.uuid,
           user_email: user?.email,
           effect_link_name: selectedModel.link_name,
@@ -296,19 +302,6 @@ export default function Worker(props: {
     fetchUserSubscriptionInfo();
   };
 
-  const currentLocale = localeKey(locale);
-
-  useEffect(() => {
-    setStyle(IMAGE_CONFIGS.style[currentLocale][0]);
-    setLighting(IMAGE_CONFIGS.lighting[currentLocale][0]);
-    setBackground(IMAGE_CONFIGS.background[currentLocale][0]);
-    setQuality(IMAGE_CONFIGS.quality[currentLocale][0]);
-  }, [currentLocale]);
-
-  const configSelectClass =
-    "h-11 w-full rounded-xl border border-white/10 bg-white/10 px-3 text-sm text-white outline-none transition-colors hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10";
-  const optionClass = "bg-gray-950 text-white";
-
   return (
     <section className="relative w-full overflow-hidden border-b border-white/10 bg-gray-950 shadow-2xl">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(14,165,233,0.2),transparent_32%),radial-gradient(circle_at_85%_12%,rgba(244,114,182,0.16),transparent_28%),linear-gradient(135deg,#020617,#111827_55%,#030712)]" />
@@ -347,7 +340,7 @@ export default function Worker(props: {
             <div className="rounded-2xl border border-white/10 bg-white/[0.045]">
               <button
                 type="button"
-                onClick={() => setIsSettingsOpen((value) => !value)}
+                onClick={() => setIsSettingsOpen(true)}
                 className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left"
                 aria-expanded={isSettingsOpen}
               >
@@ -360,106 +353,14 @@ export default function Worker(props: {
                       {copy.dashboard}
                     </span>
                     <span className="block truncate text-xs text-white/45">
-                      {selectedModel.name} · {copy.dashboardHint}
+                      {selectedModel.name} · {selectedModel.credit} {copy.credit}
                     </span>
                   </span>
                 </span>
-                <ChevronDown
-                  className={`h-4 w-4 flex-shrink-0 text-white/50 transition-transform ${
-                    isSettingsOpen ? "rotate-180" : ""
-                  }`}
-                />
+                <span className="rounded-lg border border-white/10 px-3 py-1 text-xs font-medium text-white/65">
+                  {copy.openDashboard}
+                </span>
               </button>
-
-              {isSettingsOpen && (
-                <div className="grid gap-4 border-t border-white/10 p-4 sm:grid-cols-2 xl:grid-cols-3">
-                  <div>
-                    <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                      {copy.model}
-                    </label>
-                    <select
-                      aria-label="Model"
-                      value={selectedModelId}
-                      onChange={(event) => setSelectedModelId(event.target.value)}
-                      className={configSelectClass}
-                    >
-                      {(props.modelOptions || [selectedModel]).map((option) => (
-                        <option className={optionClass} key={option.id.toString()} value={option.id.toString()}>
-                          {option.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                      {copy.ratio}
-                    </label>
-                    <select
-                      aria-label="Aspect ratio"
-                      value={ratio}
-                      onChange={(event) => setRatio(event.target.value)}
-                      className={configSelectClass}
-                    >
-                      {RATIO_OPTIONS.map((option) => (
-                        <option className={optionClass} key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                      {copy.format}
-                    </label>
-                    <select
-                      aria-label="Output format"
-                      value={outputFormat}
-                      onChange={(event) => setOutputFormat(event.target.value)}
-                      className={configSelectClass}
-                    >
-                      <option className={optionClass} value="webp">WEBP</option>
-                      <option className={optionClass} value="jpg">JPG</option>
-                      <option className={optionClass} value="png">PNG</option>
-                    </select>
-                  </div>
-                  {[
-                    [copy.style, style, setStyle, IMAGE_CONFIGS.style[currentLocale]],
-                    [copy.lighting, lighting, setLighting, IMAGE_CONFIGS.lighting[currentLocale]],
-                    [copy.background, background, setBackground, IMAGE_CONFIGS.background[currentLocale]],
-                    [copy.quality, quality, setQuality, IMAGE_CONFIGS.quality[currentLocale]],
-                  ].map(([label, value, setter, options]) => (
-                    <div key={label as string}>
-                      <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                        {label as string}
-                      </label>
-                      <select
-                        aria-label={label as string}
-                        value={value as string}
-                        onChange={(event) => (setter as React.Dispatch<React.SetStateAction<string>>)(event.target.value)}
-                        className={configSelectClass}
-                      >
-                        {(options as readonly string[]).map((option) => (
-                          <option className={optionClass} key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  ))}
-                  <div className="sm:col-span-2 xl:col-span-3">
-                    <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                      {copy.negative}
-                    </label>
-                    <textarea
-                      placeholder={copy.negativePlaceholder}
-                      value={negativePrompt}
-                      onChange={(e) => setNegativePrompt(e.target.value)}
-                      aria-label="Negative prompt"
-                      className="min-h-[90px] w-full resize-none rounded-2xl border border-white/10 bg-white/[0.055] px-4 py-4 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/30 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
-                    />
-                  </div>
-                </div>
-              )}
             </div>
           </div>
 
@@ -495,6 +396,36 @@ export default function Worker(props: {
           />
         </div>
       </div>
+      <ModelSettingsModal
+        title={copy.dashboard}
+        subtitle={`${selectedModel.name} · ${copy.dashboardHint}`}
+        open={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        schema={{
+          fields: [
+            {
+              key: "__model_id",
+              label: copy.model,
+              type: "select",
+              default: selectedModelId,
+              options: (props.modelOptions || [selectedModel]).map((option) => ({
+                label: `${option.name} · ${option.credit} ${copy.credit}`,
+                value: option.id.toString(),
+              })),
+            },
+            ...selectedSchema.fields,
+          ],
+        }}
+        values={{ __model_id: selectedModelId, ...modelParams }}
+        onChange={(key, value) => {
+          if (key === "__model_id") {
+            setSelectedModelId(String(value));
+            return;
+          }
+          setModelParams((current) => ({ ...current, [key]: value }));
+        }}
+        applyLabel={copy.applySettings}
+      />
     </section>
   );
 }

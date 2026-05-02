@@ -18,17 +18,26 @@ export async function POST(request: Request) {
   }
  
   const requestBody = await request.json();
-  const { model, prompt, width, height, output_format, aspect_ratio, user_id, user_email, effect_link_name, version, credit } = requestBody;
+  const { model, prompt, width, height, output_format, aspect_ratio, user_id, user_email, effect_link_name, version, credit, model_params } = requestBody;
   // check user
   const result = await generateCheck(user_id, user_email, credit);
   if (result !== 1) {
     return NextResponse.json({ detail: "Failed to create effect result" }, { status: 500 });
   }
 
+  const input = {
+    prompt,
+    ...(model_params && typeof model_params === "object" ? model_params : {}),
+  };
+
+  if (!model_params) {
+    Object.assign(input, { width, height, output_format, aspect_ratio });
+  }
+
   const options = {
     version: version,
     model: model,
-    input: { prompt, width, height, output_format, aspect_ratio, },
+    input,
     webhook: "",
     webhook_events_filter: [] as string[],
   };

@@ -12,7 +12,13 @@ import { handleApiErrors } from "@/components/replicate/common-logic/response";
 import { useRouter } from "next/navigation";
 import CreditInfo from "@/components/landingpage/credit-info";
 import { ModelOption } from "@/components/replicate/model-option";
-import { ChevronDown, SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
+import ModelSettingsModal from "@/components/replicate/model-settings-modal";
+import {
+  FALLBACK_VIDEO_SCHEMA,
+  ModelParameterValues,
+  getDefaultParameterValues,
+} from "@/components/replicate/model-parameter-schema";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const localeKey = (locale: string) =>
@@ -34,6 +40,8 @@ const VIDEO_COPY = {
     prompt: "提示词",
     dashboard: "生成参数",
     dashboardHint: "模型与高级设置",
+    openDashboard: "打开参数面板",
+    applySettings: "应用设置",
     generate: "生成视频",
     processing: "生成中...",
     wait: "请等待 2-3 分钟",
@@ -59,6 +67,8 @@ const VIDEO_COPY = {
     prompt: "Prompt",
     dashboard: "Generation Settings",
     dashboardHint: "Model and advanced controls",
+    openDashboard: "Open settings",
+    applySettings: "Apply settings",
     generate: "Generate Video",
     processing: "Processing...",
     wait: "Please wait 2-3 minutes",
@@ -84,6 +94,8 @@ const VIDEO_COPY = {
     prompt: "Prompt",
     dashboard: "Configurações de geração",
     dashboardHint: "Modelo e controles avançados",
+    openDashboard: "Abrir configurações",
+    applySettings: "Aplicar configurações",
     generate: "Gerar vídeo",
     processing: "Processando...",
     wait: "Aguarde 2-3 minutos",
@@ -138,12 +150,7 @@ export default function Worker(props: {
   );
   const [prompt, setPrompt] = useState(props.prompt);
   const [generating, setGenerating] = useState<boolean>(false);
-  const [duration, setDuration] = useState<string>("5s");
-  const [ratio, setRatio] = useState<string>("9:16");
-  const [camera, setCamera] = useState<string>("Slow push-in");
-  const [motion, setMotion] = useState<string>("Subtle natural motion");
-  const [scene, setScene] = useState<string>("PDP detail");
-  const [tone, setTone] = useState<string>("Premium commerce");
+  const [modelParams, setModelParams] = useState<ModelParameterValues>({});
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -166,7 +173,12 @@ export default function Worker(props: {
       link_name: props.effect_link_name,
       credit: props.credit,
       pre_prompt: props.prompt || "",
+      param_schema: FALLBACK_VIDEO_SCHEMA,
     };
+  const selectedSchema =
+    selectedModel.param_schema?.fields?.length > 0
+      ? selectedModel.param_schema
+      : FALLBACK_VIDEO_SCHEMA;
 
   useEffect(() => {
     if (selectedModel.pre_prompt) {
@@ -175,11 +187,8 @@ export default function Worker(props: {
   }, [selectedModel.id, selectedModel.pre_prompt]);
 
   useEffect(() => {
-    setCamera(VIDEO_CONFIGS.camera[currentLocale][0]);
-    setMotion(VIDEO_CONFIGS.motion[currentLocale][0]);
-    setScene(VIDEO_CONFIGS.scene[currentLocale][0]);
-    setTone(VIDEO_CONFIGS.tone[currentLocale][0]);
-  }, [currentLocale]);
+    setModelParams(getDefaultParameterValues(selectedSchema));
+  }, [selectedModel.id]);
 
   useEffect(() => {
     if (user?.uuid) {
@@ -256,21 +265,11 @@ export default function Worker(props: {
       formData.append("effect_link_name", selectedModel.link_name);
       const enhancedPrompt = [
         prompt.trim(),
-        `${duration} ${ratio}`,
-        camera,
-        motion,
-        scene,
-        tone,
         "professional e-commerce product video",
       ].filter(Boolean).join(", ");
       formData.append("prompt", enhancedPrompt);
       formData.append("credit", selectedModel.credit.toString());
-      formData.append("duration", duration);
-      formData.append("ratio", ratio);
-      formData.append("camera", camera);
-      formData.append("motion", motion);
-      formData.append("scene", scene);
-      formData.append("tone", tone);
+      formData.append("model_params", JSON.stringify(modelParams));
 
       if (prompt.trim() === "") {
         toast.warning(copy.promptRequired);
@@ -352,10 +351,6 @@ export default function Worker(props: {
     setImage(null);
   };
 
-  const configSelectClass =
-    "h-11 w-full rounded-xl border border-white/10 bg-white/10 px-3 text-sm text-white outline-none transition-colors hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10";
-  const optionClass = "bg-gray-950 text-white";
-
   return (
     <section className="relative w-full overflow-hidden border-b border-white/10 bg-gray-950 shadow-2xl">
       <div className="absolute inset-0">
@@ -433,7 +428,7 @@ export default function Worker(props: {
               <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.045]">
                 <button
                   type="button"
-                  onClick={() => setIsSettingsOpen((value) => !value)}
+                  onClick={() => setIsSettingsOpen(true)}
                   className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left"
                   aria-expanded={isSettingsOpen}
                 >
@@ -446,96 +441,14 @@ export default function Worker(props: {
                         {copy.dashboard}
                       </span>
                       <span className="block truncate text-xs text-white/45">
-                        {selectedModel.name} · {ratio} · {duration}
+                        {selectedModel.name} · {selectedModel.credit} {copy.credit}
                       </span>
                     </span>
                   </span>
-                  <ChevronDown
-                    className={`h-4 w-4 flex-shrink-0 text-white/50 transition-transform ${
-                      isSettingsOpen ? "rotate-180" : ""
-                    }`}
-                  />
+                  <span className="rounded-lg border border-white/10 px-3 py-1 text-xs font-medium text-white/65">
+                    {copy.openDashboard}
+                  </span>
                 </button>
-
-                {isSettingsOpen && (
-                  <div className="grid gap-3 border-t border-white/10 p-4 sm:grid-cols-2 xl:grid-cols-3">
-                    <div>
-                      <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                        {copy.model}
-                      </label>
-                      <select
-                        aria-label="Model"
-                        value={selectedModelId}
-                        onChange={(event) => setSelectedModelId(event.target.value)}
-                        className={configSelectClass}
-                      >
-                        {(props.modelOptions || [selectedModel]).map((option) => (
-                          <option className={optionClass} key={option.id.toString()} value={option.id.toString()}>
-                            {option.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                        {copy.ratio}
-                      </label>
-                      <select
-                        aria-label="Ratio"
-                        value={ratio}
-                        onChange={(event) => setRatio(event.target.value)}
-                        className={configSelectClass}
-                      >
-                        {VIDEO_CONFIGS.ratio.map((option) => (
-                          <option className={optionClass} key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                        {copy.duration}
-                      </label>
-                      <select
-                        aria-label="Duration"
-                        value={duration}
-                        onChange={(event) => setDuration(event.target.value)}
-                        className={configSelectClass}
-                      >
-                        {VIDEO_CONFIGS.duration.map((option) => (
-                          <option className={optionClass} key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    {[
-                      [copy.camera, camera, setCamera, VIDEO_CONFIGS.camera[currentLocale]],
-                      [copy.motion, motion, setMotion, VIDEO_CONFIGS.motion[currentLocale]],
-                      [copy.scene, scene, setScene, VIDEO_CONFIGS.scene[currentLocale]],
-                      [copy.tone, tone, setTone, VIDEO_CONFIGS.tone[currentLocale]],
-                    ].map(([label, value, setter, options]) => (
-                      <div key={label as string}>
-                        <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                          {label as string}
-                        </label>
-                        <select
-                          aria-label={label as string}
-                          value={value as string}
-                          onChange={(event) => (setter as React.Dispatch<React.SetStateAction<string>>)(event.target.value)}
-                          className={configSelectClass}
-                        >
-                          {(options as readonly string[]).map((option) => (
-                            <option className={optionClass} key={option} value={option}>
-                              {option}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
 
               <Button
@@ -611,6 +524,36 @@ export default function Worker(props: {
           </div>
         )}
       </div>
+      <ModelSettingsModal
+        title={copy.dashboard}
+        subtitle={`${selectedModel.name} · ${copy.dashboardHint}`}
+        open={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        schema={{
+          fields: [
+            {
+              key: "__model_id",
+              label: copy.model,
+              type: "select",
+              default: selectedModelId,
+              options: (props.modelOptions || [selectedModel]).map((option) => ({
+                label: `${option.name} · ${option.credit} ${copy.credit}`,
+                value: option.id.toString(),
+              })),
+            },
+            ...selectedSchema.fields,
+          ],
+        }}
+        values={{ __model_id: selectedModelId, ...modelParams }}
+        onChange={(key, value) => {
+          if (key === "__model_id") {
+            setSelectedModelId(String(value));
+            return;
+          }
+          setModelParams((current) => ({ ...current, [key]: value }));
+        }}
+        applyLabel={copy.applySettings}
+      />
       </div>
     </section>
   );

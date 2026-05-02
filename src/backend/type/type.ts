@@ -32,6 +32,7 @@ export interface Effect {
   model: string;
   version: string;
   pre_prompt: string;
+  param_schema?: unknown;
 }
 
 export interface EffectResult {

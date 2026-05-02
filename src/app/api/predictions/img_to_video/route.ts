@@ -90,12 +90,15 @@ export async function POST(request: Request) {
 const createOptions = async (formData: FormData) => { 
   let input;
   const model = formData.get("model") as string;
+  const params = parseModelParams(formData.get("model_params") as string | null);
+
   if (formData.get("effect_link_name") === "ai-dancing" || formData.get("effect_link_name") === "kling-v12") {
     const start_image = formData.get("image");
     const base64_image = await imageToBase64(start_image as File);
     input = {
       prompt: formData.get("prompt") as string,
       start_image: base64_image,
+      ...params,
     };
   } else if (formData.get("effect_link_name") === "text-to-video") {
     const first_frame_image = formData.get("image");
@@ -104,18 +107,22 @@ const createOptions = async (formData: FormData) => {
       input = {
         prompt: formData.get("prompt") as string,
         first_frame_image: base64_image,
+        ...params,
       };
     } else {
       input = {
         prompt: formData.get("prompt") as string,
+        ...params,
       };
     }
   } else {
     const first_frame_image = formData.get("image");
     const base64_image = await imageToBase64(first_frame_image as File);
+    const imageField = getImageField(formData.get("effect_link_name") as string);
     input = {
       prompt: formData.get("prompt") as string,
-      first_frame_image: base64_image,
+      [imageField]: base64_image,
+      ...params,
     };
   }
 
@@ -131,6 +138,28 @@ const createOptions = async (formData: FormData) => {
     options.webhook_events_filter = ["start", "completed"];
   }
   return options;
+}
+
+function getImageField(effectLinkName: string) {
+  if (
+    effectLinkName === "seedance-2-fast" ||
+    effectLinkName === "veo-3-1-fast" ||
+    effectLinkName === "wan-2-5-i2v"
+  ) {
+    return "image";
+  }
+  return "first_frame_image";
+}
+
+function parseModelParams(raw: string | null) {
+  if (!raw) return {};
+  try {
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
+    return parsed;
+  } catch {
+    return {};
+  }
 }
 
 async function imageToBase64(image: File): Promise<string> {
