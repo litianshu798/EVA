@@ -41,6 +41,7 @@ const VIDEO_SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: "3C 产品发售海报",
     titleEn: "Tech Launch Poster",
     type: "video",
+    asset: "/resources/example3.mp4",
     style: "科技光轨 / 快速转场 / 新品首发",
     styleEn: "Light trails / fast cuts / launch motion",
     prompt: "未来感科技蓝图背景，无线耳机产品微距穿梭，快速切换材质细节，冷色边缘光，新品发售广告视频",
@@ -52,6 +53,7 @@ const VIDEO_SHOWCASE_ITEMS: ShowcaseItem[] = [
     titleEn: "Food & Beverage Motion",
     type: "video",
     style: "清爽冰感 / 水珠 / 夏季促销",
+    asset: "/resources/example4.mp4",
     styleEn: "Icy fresh / droplets / summer campaign",
     prompt: "清爽冰块与水珠背景，罐装饮料居中，明亮夏季光线，飞溅液体慢动作，适合电商促销短视频",
     promptEn:
@@ -72,6 +74,7 @@ const VIDEO_SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: "电商白底 SKU 图",
     titleEn: "Marketplace SKU Spin",
     type: "video",
+    asset: "/resources/example6.mp4",
     style: "白底规范 / 360 展示 / 平台上架",
     styleEn: "White background / 360 spin / marketplace ready",
     prompt: "纯白无缝背景，单个产品居中，缓慢360度旋转，真实接触阴影，比例准确，适合商品详情页视频",
