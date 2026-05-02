@@ -12,6 +12,7 @@ import { UserSubscriptionInfo } from "@/backend/type/domain/user_subscription_in
 import CreditInfo from "@/components/landingpage/credit-info";
 import { useLocale, useTranslations } from "next-intl";
 import { ModelOption } from "@/components/replicate/model-option";
+import { ChevronDown, SlidersHorizontal } from "lucide-react";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -30,6 +31,8 @@ const IMAGE_COPY = {
     quality: "质量",
     prompt: "提示词",
     negative: "负面词",
+    dashboard: "生成参数",
+    dashboardHint: "模型与高级设置",
     generate: "生成图片",
     processing: "生成中...",
     credit: "积分",
@@ -52,6 +55,8 @@ const IMAGE_COPY = {
     quality: "Quality",
     prompt: "Prompt",
     negative: "Negative prompt",
+    dashboard: "Generation Settings",
+    dashboardHint: "Model and advanced controls",
     generate: "Generate Image",
     processing: "Processing...",
     credit: "credit",
@@ -74,6 +79,8 @@ const IMAGE_COPY = {
     quality: "Qualidade",
     prompt: "Prompt",
     negative: "Prompt negativo",
+    dashboard: "Configurações de geração",
+    dashboardHint: "Modelo e controles avançados",
     generate: "Gerar imagem",
     processing: "Processando...",
     credit: "crédito",
@@ -138,6 +145,7 @@ export default function Worker(props: {
   const [background, setBackground] = useState<string>("Premium solid backdrop");
   const [quality, setQuality] = useState<string>("Commercial HD photo");
   const [negativePrompt, setNegativePrompt] = useState<string>("");
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [selectedModelId, setSelectedModelId] = useState<string>(
     props.defaultModelId?.toString() || props.modelOptions?.[0]?.id.toString() || ""
   );
@@ -322,83 +330,7 @@ export default function Worker(props: {
             <CreditInfo credit={userSubscriptionInfo?.remain_count?.toString() || ""} />
           </div>
 
-          <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            <div>
-              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                {copy.model}
-              </label>
-              <select
-                aria-label="Model"
-                value={selectedModelId}
-                onChange={(event) => setSelectedModelId(event.target.value)}
-                className={configSelectClass}
-              >
-                {(props.modelOptions || [selectedModel]).map((option) => (
-                  <option className={optionClass} key={option.id.toString()} value={option.id.toString()}>
-                    {option.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                {copy.ratio}
-              </label>
-              <select
-                aria-label="Aspect ratio"
-                value={ratio}
-                onChange={(event) => setRatio(event.target.value)}
-                className={configSelectClass}
-              >
-                {RATIO_OPTIONS.map((option) => (
-                  <option className={optionClass} key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                {copy.format}
-              </label>
-              <select
-                aria-label="Output format"
-                value={outputFormat}
-                onChange={(event) => setOutputFormat(event.target.value)}
-                className={configSelectClass}
-              >
-                <option className={optionClass} value="webp">WEBP</option>
-                <option className={optionClass} value="jpg">JPG</option>
-                <option className={optionClass} value="png">PNG</option>
-              </select>
-            </div>
-            {[
-              [copy.style, style, setStyle, IMAGE_CONFIGS.style[currentLocale]],
-              [copy.lighting, lighting, setLighting, IMAGE_CONFIGS.lighting[currentLocale]],
-              [copy.background, background, setBackground, IMAGE_CONFIGS.background[currentLocale]],
-              [copy.quality, quality, setQuality, IMAGE_CONFIGS.quality[currentLocale]],
-            ].map(([label, value, setter, options]) => (
-              <div key={label as string}>
-                <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                  {label as string}
-                </label>
-                <select
-                  aria-label={label as string}
-                  value={value as string}
-                  onChange={(event) => (setter as React.Dispatch<React.SetStateAction<string>>)(event.target.value)}
-                  className={configSelectClass}
-                >
-                  {(options as readonly string[]).map((option) => (
-                    <option className={optionClass} key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            ))}
-          </div>
-
-          <div className="grid gap-4 xl:grid-cols-[1.4fr_0.8fr]">
+          <div className="grid gap-4">
             <div>
               <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
                 {copy.prompt}
@@ -408,20 +340,126 @@ export default function Worker(props: {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 aria-label="Prompt"
-                className="min-h-[260px] w-full resize-none rounded-3xl border border-white/10 bg-white/[0.07] px-5 py-5 text-base leading-7 text-white outline-none transition-colors placeholder:text-white/35 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
+                className="min-h-[210px] w-full resize-none rounded-3xl border border-white/10 bg-white/[0.07] px-5 py-5 text-base leading-7 text-white outline-none transition-colors placeholder:text-white/35 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10 md:min-h-[250px]"
               />
             </div>
-            <div>
-              <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                {copy.negative}
-              </label>
-              <textarea
-                placeholder={copy.negativePlaceholder}
-                value={negativePrompt}
-                onChange={(e) => setNegativePrompt(e.target.value)}
-                aria-label="Negative prompt"
-                className="min-h-[260px] w-full resize-none rounded-3xl border border-white/10 bg-white/[0.055] px-4 py-4 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/30 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
-              />
+
+            <div className="rounded-2xl border border-white/10 bg-white/[0.045]">
+              <button
+                type="button"
+                onClick={() => setIsSettingsOpen((value) => !value)}
+                className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left"
+                aria-expanded={isSettingsOpen}
+              >
+                <span className="flex min-w-0 items-center gap-3">
+                  <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-white/10">
+                    <SlidersHorizontal className="h-4 w-4 text-cyan-200" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-sm font-semibold text-white">
+                      {copy.dashboard}
+                    </span>
+                    <span className="block truncate text-xs text-white/45">
+                      {selectedModel.name} · {copy.dashboardHint}
+                    </span>
+                  </span>
+                </span>
+                <ChevronDown
+                  className={`h-4 w-4 flex-shrink-0 text-white/50 transition-transform ${
+                    isSettingsOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {isSettingsOpen && (
+                <div className="grid gap-4 border-t border-white/10 p-4 sm:grid-cols-2 xl:grid-cols-3">
+                  <div>
+                    <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                      {copy.model}
+                    </label>
+                    <select
+                      aria-label="Model"
+                      value={selectedModelId}
+                      onChange={(event) => setSelectedModelId(event.target.value)}
+                      className={configSelectClass}
+                    >
+                      {(props.modelOptions || [selectedModel]).map((option) => (
+                        <option className={optionClass} key={option.id.toString()} value={option.id.toString()}>
+                          {option.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                      {copy.ratio}
+                    </label>
+                    <select
+                      aria-label="Aspect ratio"
+                      value={ratio}
+                      onChange={(event) => setRatio(event.target.value)}
+                      className={configSelectClass}
+                    >
+                      {RATIO_OPTIONS.map((option) => (
+                        <option className={optionClass} key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                      {copy.format}
+                    </label>
+                    <select
+                      aria-label="Output format"
+                      value={outputFormat}
+                      onChange={(event) => setOutputFormat(event.target.value)}
+                      className={configSelectClass}
+                    >
+                      <option className={optionClass} value="webp">WEBP</option>
+                      <option className={optionClass} value="jpg">JPG</option>
+                      <option className={optionClass} value="png">PNG</option>
+                    </select>
+                  </div>
+                  {[
+                    [copy.style, style, setStyle, IMAGE_CONFIGS.style[currentLocale]],
+                    [copy.lighting, lighting, setLighting, IMAGE_CONFIGS.lighting[currentLocale]],
+                    [copy.background, background, setBackground, IMAGE_CONFIGS.background[currentLocale]],
+                    [copy.quality, quality, setQuality, IMAGE_CONFIGS.quality[currentLocale]],
+                  ].map(([label, value, setter, options]) => (
+                    <div key={label as string}>
+                      <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                        {label as string}
+                      </label>
+                      <select
+                        aria-label={label as string}
+                        value={value as string}
+                        onChange={(event) => (setter as React.Dispatch<React.SetStateAction<string>>)(event.target.value)}
+                        className={configSelectClass}
+                      >
+                        {(options as readonly string[]).map((option) => (
+                          <option className={optionClass} key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ))}
+                  <div className="sm:col-span-2 xl:col-span-3">
+                    <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                      {copy.negative}
+                    </label>
+                    <textarea
+                      placeholder={copy.negativePlaceholder}
+                      value={negativePrompt}
+                      onChange={(e) => setNegativePrompt(e.target.value)}
+                      aria-label="Negative prompt"
+                      className="min-h-[90px] w-full resize-none rounded-2xl border border-white/10 bg-white/[0.055] px-4 py-4 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/30 hover:border-white/25 focus:border-white/60 focus:ring-2 focus:ring-white/10"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

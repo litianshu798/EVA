@@ -28,10 +28,13 @@ export default function Locales() {
             <DropdownTrigger>
                 <Button
                     variant="light"
+                    aria-label="Change language"
                     className="h-10 min-w-0 gap-1 rounded-xl border border-white/10 bg-white/[0.06] px-2 text-sm text-white/60 hover:bg-white/10 hover:text-white md:border-0 md:bg-transparent"
                     startContent={<Icon icon="solar:global-linear" className="w-4 h-4 text-white/45" />}
                 >
-                    {localesName[locale] || locale.toUpperCase()}
+                    <span className="hidden sm:inline">
+                        {localesName[locale] || locale.toUpperCase()}
+                    </span>
                 </Button>
             </DropdownTrigger>
             <DropdownMenu

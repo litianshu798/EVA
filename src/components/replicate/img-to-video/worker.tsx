@@ -12,6 +12,7 @@ import { handleApiErrors } from "@/components/replicate/common-logic/response";
 import { useRouter } from "next/navigation";
 import CreditInfo from "@/components/landingpage/credit-info";
 import { ModelOption } from "@/components/replicate/model-option";
+import { ChevronDown, SlidersHorizontal } from "lucide-react";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const localeKey = (locale: string) =>
@@ -31,6 +32,8 @@ const VIDEO_COPY = {
     scene: "场景",
     tone: "氛围",
     prompt: "提示词",
+    dashboard: "生成参数",
+    dashboardHint: "模型与高级设置",
     generate: "生成视频",
     processing: "生成中...",
     wait: "请等待 2-3 分钟",
@@ -54,6 +57,8 @@ const VIDEO_COPY = {
     scene: "Scene",
     tone: "Tone",
     prompt: "Prompt",
+    dashboard: "Generation Settings",
+    dashboardHint: "Model and advanced controls",
     generate: "Generate Video",
     processing: "Processing...",
     wait: "Please wait 2-3 minutes",
@@ -77,6 +82,8 @@ const VIDEO_COPY = {
     scene: "Cena",
     tone: "Tom",
     prompt: "Prompt",
+    dashboard: "Configurações de geração",
+    dashboardHint: "Modelo e controles avançados",
     generate: "Gerar vídeo",
     processing: "Processando...",
     wait: "Aguarde 2-3 minutos",
@@ -137,6 +144,7 @@ export default function Worker(props: {
   const [motion, setMotion] = useState<string>("Subtle natural motion");
   const [scene, setScene] = useState<string>("PDP detail");
   const [tone, setTone] = useState<string>("Premium commerce");
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -412,84 +420,6 @@ export default function Worker(props: {
             </label>
 
             <div className="flex min-h-[310px] flex-col">
-              <div className="mb-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                <div>
-                  <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                    {copy.model}
-                  </label>
-                  <select
-                    aria-label="Model"
-                    value={selectedModelId}
-                    onChange={(event) => setSelectedModelId(event.target.value)}
-                    className={configSelectClass}
-                  >
-                    {(props.modelOptions || [selectedModel]).map((option) => (
-                      <option className={optionClass} key={option.id.toString()} value={option.id.toString()}>
-                        {option.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                    {copy.ratio}
-                  </label>
-                  <select
-                    aria-label="Ratio"
-                    value={ratio}
-                    onChange={(event) => setRatio(event.target.value)}
-                    className={configSelectClass}
-                  >
-                    {VIDEO_CONFIGS.ratio.map((option) => (
-                      <option className={optionClass} key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                    {copy.duration}
-                  </label>
-                  <select
-                    aria-label="Duration"
-                    value={duration}
-                    onChange={(event) => setDuration(event.target.value)}
-                    className={configSelectClass}
-                  >
-                    {VIDEO_CONFIGS.duration.map((option) => (
-                      <option className={optionClass} key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                {[
-                  [copy.camera, camera, setCamera, VIDEO_CONFIGS.camera[currentLocale]],
-                  [copy.motion, motion, setMotion, VIDEO_CONFIGS.motion[currentLocale]],
-                  [copy.scene, scene, setScene, VIDEO_CONFIGS.scene[currentLocale]],
-                  [copy.tone, tone, setTone, VIDEO_CONFIGS.tone[currentLocale]],
-                ].map(([label, value, setter, options]) => (
-                  <div key={label as string}>
-                    <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
-                      {label as string}
-                    </label>
-                    <select
-                      aria-label={label as string}
-                      value={value as string}
-                      onChange={(event) => (setter as React.Dispatch<React.SetStateAction<string>>)(event.target.value)}
-                      className={configSelectClass}
-                    >
-                      {(options as readonly string[]).map((option) => (
-                        <option className={optionClass} key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                ))}
-              </div>
-
               <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
                 {copy.prompt}
               </label>
@@ -499,6 +429,114 @@ export default function Worker(props: {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
               />
+
+              <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.045]">
+                <button
+                  type="button"
+                  onClick={() => setIsSettingsOpen((value) => !value)}
+                  className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left"
+                  aria-expanded={isSettingsOpen}
+                >
+                  <span className="flex min-w-0 items-center gap-3">
+                    <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-white/10">
+                      <SlidersHorizontal className="h-4 w-4 text-cyan-200" />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-sm font-semibold text-white">
+                        {copy.dashboard}
+                      </span>
+                      <span className="block truncate text-xs text-white/45">
+                        {selectedModel.name} · {ratio} · {duration}
+                      </span>
+                    </span>
+                  </span>
+                  <ChevronDown
+                    className={`h-4 w-4 flex-shrink-0 text-white/50 transition-transform ${
+                      isSettingsOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {isSettingsOpen && (
+                  <div className="grid gap-3 border-t border-white/10 p-4 sm:grid-cols-2 xl:grid-cols-3">
+                    <div>
+                      <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                        {copy.model}
+                      </label>
+                      <select
+                        aria-label="Model"
+                        value={selectedModelId}
+                        onChange={(event) => setSelectedModelId(event.target.value)}
+                        className={configSelectClass}
+                      >
+                        {(props.modelOptions || [selectedModel]).map((option) => (
+                          <option className={optionClass} key={option.id.toString()} value={option.id.toString()}>
+                            {option.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                        {copy.ratio}
+                      </label>
+                      <select
+                        aria-label="Ratio"
+                        value={ratio}
+                        onChange={(event) => setRatio(event.target.value)}
+                        className={configSelectClass}
+                      >
+                        {VIDEO_CONFIGS.ratio.map((option) => (
+                          <option className={optionClass} key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                        {copy.duration}
+                      </label>
+                      <select
+                        aria-label="Duration"
+                        value={duration}
+                        onChange={(event) => setDuration(event.target.value)}
+                        className={configSelectClass}
+                      >
+                        {VIDEO_CONFIGS.duration.map((option) => (
+                          <option className={optionClass} key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    {[
+                      [copy.camera, camera, setCamera, VIDEO_CONFIGS.camera[currentLocale]],
+                      [copy.motion, motion, setMotion, VIDEO_CONFIGS.motion[currentLocale]],
+                      [copy.scene, scene, setScene, VIDEO_CONFIGS.scene[currentLocale]],
+                      [copy.tone, tone, setTone, VIDEO_CONFIGS.tone[currentLocale]],
+                    ].map(([label, value, setter, options]) => (
+                      <div key={label as string}>
+                        <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-white/45">
+                          {label as string}
+                        </label>
+                        <select
+                          aria-label={label as string}
+                          value={value as string}
+                          onChange={(event) => (setter as React.Dispatch<React.SetStateAction<string>>)(event.target.value)}
+                          className={configSelectClass}
+                        >
+                          {(options as readonly string[]).map((option) => (
+                            <option className={optionClass} key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               <Button
                 isLoading={generating}
