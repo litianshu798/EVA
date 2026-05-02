@@ -10,10 +10,10 @@ import {
   NavbarItem,
   NavbarMenu,
   NavbarMenuItem,
-  NavbarMenuToggle,
   Link,
   cn,
 } from "@nextui-org/react";
+import { Menu, X } from "lucide-react";
 import Locales from "../../locales";
 import { useLocale } from "next-intl";
 import LoginButton from "@/components/button/login-button";
@@ -145,12 +145,21 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
           )}
         </NavbarContent>
 
-        <NavbarContent className="flex md:hidden" justify="end">
+        <NavbarContent className="flex basis-auto gap-2 md:hidden" justify="end">
           <Locales />
-          <NavbarMenuToggle
-            className="text-white"
+          <button
+            type="button"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          />
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen((value) => !value)}
+            className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] text-white transition-colors hover:bg-white/10"
+          >
+            {isMenuOpen ? (
+              <X className="h-5 w-5" aria-hidden="true" />
+            ) : (
+              <Menu className="h-5 w-5" aria-hidden="true" />
+            )}
+          </button>
         </NavbarContent>
 
         <NavbarMenu

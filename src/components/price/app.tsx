@@ -145,7 +145,7 @@ export default function Pricing() {
         <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
           <Tabs
             classNames={{
-              base: "w-full overflow-x-auto md:w-auto",
+              base: "md:w-auto",
               tabList:
                 "min-w-max border border-white/10 bg-white/10 p-1 rounded-full shadow-sm",
               cursor: "bg-white rounded-full",
