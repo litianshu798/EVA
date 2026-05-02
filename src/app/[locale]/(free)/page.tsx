@@ -38,8 +38,8 @@ export default function Home({
   ];
 
   const video = "/aivideo.mp4";
-  const whatImage = "/aivideo.mp4";
-  const howImage = "/resources/example2.webp";
+  const whatImage = "/resources/brandmarket.png";
+  const howImage = "/resources/showcase.png";
 
   const effectId = "1";
   const multiLanguage = "HomePage";
