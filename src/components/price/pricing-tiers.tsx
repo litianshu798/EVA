@@ -26,7 +26,7 @@ export const tiers: Array<Tier> = [
     },
     amount: {
       [FrequencyEnum.Monthly]: 4390,
-      [FrequencyEnum.Yearly]: 4390,
+      [FrequencyEnum.Yearly]: 36876,
       [FrequencyEnum.OneTime]: 4390,
     },
     interval: {
@@ -74,7 +74,7 @@ export const tiers: Array<Tier> = [
       [FrequencyEnum.OneTime]: 9,
     },
     amount: {
-      [FrequencyEnum.Yearly]: 11400,
+      [FrequencyEnum.Yearly]: 136800,
       [FrequencyEnum.Monthly]: 12900,
       [FrequencyEnum.OneTime]: 14300,
     },
@@ -123,7 +123,7 @@ export const tiers: Array<Tier> = [
       [FrequencyEnum.OneTime]: 11,
     },
     amount: {
-      [FrequencyEnum.Yearly]: 23300,
+      [FrequencyEnum.Yearly]: 279600,
       [FrequencyEnum.Monthly]: 25600,
       [FrequencyEnum.OneTime]: 29200,
     },
